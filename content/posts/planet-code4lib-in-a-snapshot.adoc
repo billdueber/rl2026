@@ -1,0 +1,14 @@
++++
+title = "Planet Code4Lib in a snapshot"
+date = 2008-07-07
+draft = false
+slug = "planet-code4lib-in-a-snapshot"
+tags = ["code4lib", "Fun", "old"]
+author = "billdueber"
++++
+
+Inspired by the link:http://inquiringlibrarian.blogspot.com/2008/07/i-couldnt-resist.html[Inquiring Librarian], I just used link:http://wordle.net[Wordle] to create a "tagcloud" of the current Planet Code4Lib feed.
+
+What kills me is the tiny little "Library" in the lower left-hand corner.
+
+<a href="link:http://wordle.net/gallery/wrdl/55861/Planet_Code4lib[http://wordle.net/gallery/wrdl/55861/Planet_Code4lib]" title="Wordle: Planet Code4lib"><img alt="" src="link:http://wordle.net/thumb/wrdl/55861/Planet_Code4lib[http://wordle.net/thumb/wrdl/55861/Planet_Code4lib]" style="padding:4px;border:1px solid #ddd" />

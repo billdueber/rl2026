@@ -1,0 +1,12 @@
++++
+title = "Enough with the freakin' LC Call Number normalization!"
+date = 2009-03-18
+draft = false
+slug = "enough-with-the-freakin-lc-call-number-normalization"
+tags = ["old"]
+author = "billdueber"
++++
+
+OK. I'm done with it, and this time I mean it.
+
+I've updated and improved the lc normalization code, documented the algorithm, and put it all into link:http://code.google.com/p/library-callnumber-lc/[Google Code]. In the next couple weeks, I'll be turning it into a Solr text filter so we can do some decent sorting on call-number search results.

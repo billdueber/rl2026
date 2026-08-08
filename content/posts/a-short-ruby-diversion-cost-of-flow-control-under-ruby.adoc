@@ -1,0 +1,53 @@
++++
+title = "A short ruby diversion: cost of flow control under Ruby"
+date = 2011-05-03
+draft = false
+slug = "a-short-ruby-diversion-cost-of-flow-control-under-ruby"
+tags = ["benchmark", "old", "ruby"]
+author = "billdueber"
++++
+
+A couple days ago I decided to finally get back to working on link:https://github.com/billdueber/threach[`threach`] to try to deal with problems it had -- essentially, it didn't deal well with non-local exits due to calls to `break` or even something simple like a `NoMethodError`.
+
+&#91;BTW, I think I managed it. As near as I can tell, `threach` version 0.4 won't deadlock anymore]
+
+Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.
+
+I re-discovered something that a lot of people already know: `raise`/`rescue` under MRI is slow, and under JRuby can be _unbearably_ slow. How slow?
+
+Let's look at four simple blocks that exercise four different block exit strategies: `break`, `catch` and `throw`, `raise` with the normal single (or zero) arguments, as well as the three-argument version of `raise`.
+
+[options="header",cols="1,1",width="100%"]
+|===
+| Simple break | Catch/Throw
+| Raise (1 arg) | Raise (3 args)
+| range.each do \|i\| break end | catch(:benchmarking) do range.each do \|i\| throw(:benchmarking) end end
+| begin range.each do \|i\| raise StandardError end rescue # do nothing end | begin range.each do \|i\| raise StandardError, :hi, nil end rescue # do nothing end
+|===
+
+In each case, we immediately exit the block without doing any work; the idea is to measure how long it takes to break out for each case.
+
+So....let's run them each 100K times and see what happens, shall we? Times are in seconds, averaged over two runs.
+
+[options="header",cols="1,1,1,1,1",width="100%"]
+|===
+|   | Ruby 1.8 | Ruby 1.9 | JRuby | JRuby --1.9
+| break | 0.12 | 0.07 | 0.29 | 0.21
+| catch/throw | 0.35 | 0.28 | 0.64 | 0.48
+| raise (1 arg) | 1.78 | 2.10 | 26.60 | 22.06
+| raise (3 arg) | 1.85 | 2.13 | 0.45 | 0.45
+|===
+
+The first thing to note is that this is 100K iterations. Three of the strategies are fast enough that you'd have to work really, really hard to notice them.
+
+In terms of speed, `raise (3 args)`, `catch/throw`, and `break` are fast enough that you shouldn't bother worrying about them (although you _should_ choose the method that makes your code easy to understand).
+
+The second things to note is _Holy Camoli!_ JRuby is slow there!
+
+link:http://jira.codehaus.org/browse/JRUBY-5534[This Jira ticket] tells the tale: The creation of the backtrace is very, very expensive for JRuby. That `nil` at the end of the `raise (3 args)` call suppresses the creation of that backtrace, so the speed is fine.
+
+Three things worth saying here:
+
+* If you're using `raise/rescue` for flow control, _you're already doing it wrong._ Reserve exceptions for, well, exceptional conditions that are only going to be raised once or twice, not all the time.
+* If you're writing code that, for some ungodly reason, is planning on raising a crapload of exceptions, use the three-arg version. I'm looking at you, gem authors.
+* If you're writing your code without worrying about how it will work under multiple threads, well, please don't do that. Everyone has multi-core systems these days, and it's silly to not be able to use them. Plus, counting on Matz to never move to a VM with real threads is a big gamble.

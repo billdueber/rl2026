@@ -1,0 +1,88 @@
++++
+title = "Five rules to make your open source more open"
+date = 2009-01-25
+draft = false
+slug = "five-rules-to-make-your-open-source-more-open"
+tags = ["old"]
+author = "billdueber"
++++
+
+&#91;I've noticed that a sure way to get people to look at stuff (as measured by, say, link:http://digg.com/[digg]) is to include a number. So I did. Five. ]
+
+Over at link:http://bibwild.wordpress.com/[Bibliographic Wilderness], Jonathan Rothkind has a great followup to an ongoing discussion on the Blacklight list called _link:http://bibwild.wordpress.com/2009/01/06/how-to-build-shared-open-source/[How to build shared open source]_ in which he tackles some of the differences between open-sourcing your code (a legal and distribution issue) and actually making it so someone else can usefully contribute to your code.
+
+The project I'm spending most of my time on right now, link:http://vufind.org/[VUFind], is a great piece of functional code but, in many ways, a nightmare in terms of trying to contribute code and abstract out local functionality. This isn't meant as a slam on the main contributor(s) to VUFind -- Andrew, especially, seems to be an almost frighteningly-productive coder -- but my experiences trying to customize the code to our local situation has given me a lot of time to think about how I _wish_ things had been architected.
+
+So, here I give some general rules and some specifics as to What I Wish I Had To Work With.
+
+== 1. Abstraction
+
+General rule:
+
+Abstract things out as much as makes sense
+
+*Specific rule:* Abstract _the living crap_ out of your authentication scheme.
+
+Look, pretty much everyone with anything worth protecting already has an auth/authZ infrastructure in place. Sometimes an extensive, perhaps multi-institutional infrastructure. One that isn't going to be bypassed without, say, getting fired.
+
+So if you're going to require people to log in, make sure you make that process as abstract as you possibly can, both in algorithm and in code. Have a singleton class that's easily subclassed to represent your user, and call it exclusively. Make sure that your URIs are easily separated into those that require auth and those that don't, for simple use of mod\_rewrite or whatnot to redirect to authentication. Make sure it's easy to hook into (or work around) AJAX links that might require authentication that has expired.
+
+And for the love of god, don't stuff username/password information into a cookie if you're doing web work. Use a session and session key. Any auth scheme that _I_ can spoof is no auth scheme at all, because I'm an idiot and not even trying hard.
+
+== 2. Configuration files
+
+General rule:
+
+use config files for anything local
+
+*Specific rule:* Use a configuration file format that can represent complex data
+
+That's right, I'm looking at you, _.ini_ and _.properties_ files.
+
+Use something like YAML, or XML, or even straight programming-language code (i.e., a file with a PHP hash or a perl hashref or whatnot) that can actually represent, in a logical way, the complexities of the stuff you need to configure. And then, again, have a singleton class that will read that data and expose it in a useful and safe way.
+
+And include a semantics checker if you can manage to write one.Â  It'll save everyone a load of trouble.
+
+_Huge bonus points_ if your configuration singleton class can read from multiple files, overriding previous (default) definitions with subsequent (local) ones.
+
+== 3. Hide subapplications
+
+General rule:
+
+Don't force your user to intimately understand every piece of every library/application you include
+
+*Specific rule:* Generate configuration information for sublibraries/applications
+
+This might be a little specific to the project I'm working on now, which uses link:http://lucene.apache.org/solr/[Solr] as a backend, but I think it applies more generally.
+
+_If_ you're using a non-brain-dead configuration file format, and _if_ you can assume reasonable defaults, _then_ generate configuration files for your user. A low-level extreme of this is the traditional unix _autoconf_, which essentially allows you to install software without knowing a damn thing about your own system. Which is useful to those of us that don't.
+
+In VUFind, there are three files -- a .properties file that specifies how to map MARC data intoÂ  field names,Â  Solr's _schema.xml_ that describes the structure and behavior of those same fields, and an XSLT stylesheet that pretties the data as it comes out of Solr to make it easier to work with. As you might expect, the overlap in data is about 80% across the three of them, and it would be a bazillion times easier to have a single file that generated all three.
+
+OK. Maybe not a _ba_zillion, because if it was that easy, I'd have taken a couple hours to write the code to do it already. Let's say just a _zillion_ times easier.
+
+The caveat to this is that you need to either make sure your config file specification is complete enough to encompass everything all the other files might need to know (bad), or that the other config files can import subsections that override your defaults (good).
+
+== 4.Testing
+
+General rule:
+
+practice test-first (TDD or BDD) development
+
+*Specific rule:* write your code in such a way that it's testable
+
+Look, we all know we should spend the first three weeks writing eight thousand tests to describe every corner of the code. And we all have bosses that will ask, every morning about 10:30am, "So, what do you have that you can show me?"
+
+Not everyone is going to be able to write tests first. That's not right, it's not smart, but it's the way the world works. But at least _put in the hooks_ so someone else can come along and write tests.
+
+Writing tests is one of the easiest ways that a newbie can come along to a project and instantly contribute in a meaningful way. But if you're constantly calling global variables, depending on live database connections and not providing a way to mock them up, or throwing fatal errors if every subsystem isn't present no matter the context, then it's going to be hard to write tests.Â  So hard, in fact, that not only will you not do it, but neither will anyone else.
+
+== 5. Error handling
+
+General rule:
+
+provide a sane, hierarchical set of error classes and hooks to catch them as necessary
+
+*Specific rule:* THROW SOME GODDAMN ERRORS!!!!
+
+Don't be an idiot. Things will fail. In the absense of Design by Contract or somesuch, errors will happen. Throw them. Catch them. But at least throw them, instead of letting your code die six hundred lines later with a "Cannot cast null value to string" when you finally get around to trying to print something out.

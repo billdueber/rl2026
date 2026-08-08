@@ -1,0 +1,89 @@
++++
+title = "Setting up your OPAC for Zotero support using unAPI"
+date = 2009-11-06
+draft = false
+slug = "setting-up-your-opac-for-zotero-support-using-unapi"
+tags = ["old"]
+author = "billdueber"
++++
+
+link:http://unapi.info[unAPI] is a very simple protocol to let a machine know what other formats a document is available in. link:http://zotero.org[Zotero] is a bibliographic management tool (like Endnote or Refworks) that operates as a Firefox plugin. And it speaks unAPI.
+
+Let's get them to play nice with each other!
+
+== How's it all work?
+
+. Zotero looks for a well-constructed <link> tag in the head of the page
+. It checks the document on the other side of that link to see what formats are offered, and picks one to use. No, you can't decide which one it uses. _It_ picks.
+. Zotero then looks for IDs in the body of the page
+. If both are found and everything seems kosher, Zotero will offer the option to import some or all of the records.
+
+== What you'll need
+
+. An OPAC whose output you can futz with
+. Access to an individual record's ID in that output
+. A URL based on the ID that gives an RIS representation of the records
+. A screwdriver. Made with decent -- but not too expensive -- vodka and fresh orange juice.
+
+== Yes. I'm cheating.
+
+I have all those things already. Hence, this is easy for me. If you had to, say, write some sort of weird redirection script because IDs are not first-class citizens in your OPAC's URL scheme, or write an RIS export tool by hand, well, this will take you a bit longer.
+
+== The process
+
+=== 1. Build an upAPI target script
+
+You need a script that'll do three things:
+
+. With no arguments, return a list of available formats _in general_
+. With one argument, id=<ID>, return a list of formats available _for that item_. This will likely be exactly the same as #1.
+. With two arguments, id=<ID> & format=<FORMAT>, return the record identified by <ID> in format <FORMAT>
+
+Mine looks like this:
+
+[source,php]
+----
+    // id is of the form urn:bibnum:000000000    $id = isset($_REQUEST['id'])? $_REQUEST['id'] : false;    // Format, at this point, had better be 'ris'   $format = isset($_REQUEST['format'])? $_REQUEST['format'] : false;    // Got neither? Return the general list   if (!($id || $format)) {     header('Content-type: application/xml');     echo '<?xml version="1.0" encoding="UTF-8"?>     <formats>       <format name="ris"               type="application/x-Research-Info-Systems"               docs="http://www.refman.com/support/risformat_intro.asp"/>     </formats>     ';   exit;     }     // Got just the id? Return formats for that ID   if ($id && !$format) {     header('Content-type: application/xml');     echo '<?xml version="1.0" encoding="UTF-8"?>     <formats id="' . $id . '">       <format name="ris"               type="application/x-Research-Info-Systems"               docs="http://www.refman.com/support/risformat_intro.asp"/>     </formats>     ';     exit;     }     // Otherwise...    // Parse out the actual numeric part of the id from the urn:<typeOfNumber> prefix   preg_match('/^urn:bibnum:(.*)$/', $id, $match);   $actualID = $match[1];    // Again: format had better be 'ris' because that's all I'm supporting at this point.   header("Location: /Search/SearchExport?id=$actualID&method=$format", true, 302); 
+----
+
+You can see that a <format> is a just a name, a mime-type, and an optional reference to documentation on the type.
+
+I take advantage of my existing RIS export process in the redirect, at the bottom. I also built in the possibility that other types of numbers could come in -- I'm hard-coding 'bibnum' for the moment, but could allow, say, "oclc" or "isbn" or whatnot, too.
+
+=== 2. Tell your OPAC where the script lives
+
+You'll need a line in the <head> section of all your pages that might have an ID on them:
+
+----
+<link rel="unapi-server" type="application/xml" title="unAPI" href="/unapi">
+----
+
+Everything should be left alone except for the actual _href_.
+
+=== 3. Add your IDs to the HTML
+
+In the HTML of your page, you can add one or more tags of the form:
+
+----
+<abbr class="unapi-id" title="urn:bibnum:000000002"></abbr>
+----
+
+(where the _title_ of the <abbr> conforms to what you're expecting in your script).
+
+You can put stuff inside the <abbr> but you need not. On a single-record page, you should have (I would think) only one of these things. On a search results page, you may decide to not have any, or you may decide to have one for each search result.
+
+=== 4. Final step
+
+Drink your screwdriver.
+
+== Where can I see it?
+
+Well...here's the thing.
+
+You can take a look at my test instance, link:http://dueberb.vufind.lib.umich.edu/[http://dueberb.vufind.lib.umich.edu/] and play there. You can _not_ see it in production, because there's a little problem.
+
+Our old OPAC -- now dubbed link:http://mirlyn-classic.lib.umich.edu[mirlyn-classic] -- had a custom translator written for it. And it worked fine, and that was great.
+
+But now we've got this new software running at mirlyn.lib.umich.edu, and Zotero keeps on using the old translator no matter what you do. The only way to override it is to actually fire up sqlite3 and remove the conflicting entry from the zotero translators table. And then never update that table again.
+
+I've asked around about getting it fixed (changing the target URL for the old translator to point at mirlyn-classic) but it's Friday, and no one is around. Hopefully soon.

@@ -1,0 +1,22 @@
++++
+title = "[RETRACTED] Code4Lib 2011 Lightning Talk Slides"
+date = 2011-02-09
+draft = false
+slug = "code4lib-2011-lightning-talk-slides"
+tags = ["old"]
+author = "billdueber"
++++
+
+____
+DANGER!
+*I was trying to re-verify my numbers and found a glaring and hugely important mistake. I'll make a new post with the details, but basically I was counting about 180k sessions (out of only 735k) that I should have been ignoring. Please ignore my basic stats until further notice.*
+== *See thelink:http://robotlibrarian.billdueber.com/corrected-code4lib-slides-are-up/[new numbers and corrected slides] for more accurate data.*
+____
+
+I did a little Lightning Talk at link:http://code4lib.org/conference/2011/[Code4Lib 2011]and cleaned up (and heavily annotated) my slides for anyone interested in them.
+
+The focus was on some basic stats about usage of our OPAC, link:http://mirlyn.lib.umich.edu/[Mirlyn], in calendar 2010.
+
+I'll be doing some posts and/or more rigorous writing on this stuff soon, but wanted to get these up in a timely fashion.
+
+link:http://robotlibrarian.billdueber.com/wp-content/uploads/2011/02/dueber_lightning_c4l11.ppt[Bill Dueber Lightening Talk Slides from Code{4}Lib 2011]. (powerpoint .ppt file, 1.2MB)

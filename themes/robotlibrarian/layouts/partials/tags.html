@@ -1,0 +1,6 @@
+{{- with .Params.tags -}}
+  {{- range . -}}
+    {{- $p := site.GetPage (printf "/tags/%s" (urlize .)) -}}
+    <a class="tag" href="{{- with $p -}}{{ $p.RelPermalink }}{{- else -}}#{{- end -}}">{{ . }}</a>
+  {{- end -}}
+{{- end -}}

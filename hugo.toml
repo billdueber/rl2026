@@ -1,0 +1,30 @@
+baseURL = 'https://robotlibrarian.billdueber.com/'
+locale = 'en-US'
+title = 'Robot Librarian'
+theme = 'robotlibrarian'
+
+[pagination]
+  pagerSize = 12
+  path = 'page'
+defaultContentLanguage = 'en'
+
+[params]
+  tagline = 'Disclaimer: I am neither a robot nor a librarian'
+
+[permalinks]
+  posts = '/:year/:month/:slug/'
+
+[taxonomies]
+  tag = 'tags'
+
+[markup]
+  [markup.asciidocExt]
+    backend = 'html5'
+    failureLevel = 'fatal'
+    safeMode = 'unsafe'
+    workingFolderCurrent = true
+    preserveTabs = true
+
+[security]
+  [security.exec]
+    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss$', '^asciidoctor$']
