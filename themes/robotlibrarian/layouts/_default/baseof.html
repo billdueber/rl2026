@@ -3,7 +3,7 @@
 <head>
   {{- partial "head.html" . -}}
 </head>
-<body>
+<body hx-boost="true" hx-select=".site-main" hx-target=".site-main" hx-swap="outerHTML">
   {{- partial "header.html" . -}}
   <main class="site-main">
     <div class="container">
