@@ -1,0 +1,26 @@
+{{/* Snippet for index/list/archive pages.
+  Keeps all HTML. Whichever comes first:
+  (a) a <pre> block, (b) a <table> block, (c) Hugo's 70-word auto summary.
+  If the auto summary already contains <pre>/<table>, cut .Content cleanly at
+  the first such block; otherwise render the auto summary as-is. */}}
+{{ if .Summary }}
+  <div class="post-excerpt">
+    {{ if findRE "<(pre|table)" .Summary 1 }}
+      {{ replaceRE "(?s)<(pre|table)[^>]*>.*" "" .Content | safeHTML }}
+      <a class="post-more" href="{{ .RelPermalink }}">
+        <span style="display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; font-weight: bold;">
+          <span style="transform: translateY(-0.1em);">&LongLeftArrow;</span>more<span style="transform: translateY(-0.1em);">&LongRightArrow;</span>
+        </span>
+      </a>
+    {{ else }}
+      {{ .Summary }}
+      {{ if .Truncated }}
+        <a class="post-more" href="{{ .RelPermalink }}">
+          <span style="display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; font-weight: bold;">
+            <span style="transform: translateY(-0.1em);">&LongLeftArrow;</span>more<span style="transform: translateY(-0.1em);">&LongRightArrow;</span>
+          </span>
+        </a>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}
