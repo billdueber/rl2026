@@ -1,11 +1,13 @@
-+++
-title = "Come work at the University of Michigan"
-date = 2013-04-18
-draft = false
-slug = "come-work-at-the-university-of-michigan"
-tags = ["Meta", "old"]
-author = "billdueber"
-+++
+---
+title: Come work at the University of Michigan
+date: '2013-04-18'
+draft: false
+slug: come-work-at-the-university-of-michigan
+tags:
+- Meta
+- old
+author: billdueber
+---
 
 The Library has three UX positions available right now -- interface designer, interface developer, and a web content strategist.
 

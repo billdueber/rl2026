@@ -1,11 +1,14 @@
-+++
-title = "Data structures and Serializations"
-date = 2010-04-20
-draft = false
-slug = "data-structures-and-serializations"
-tags = ["code", "old", "Rant"]
-author = "billdueber"
-+++
+---
+title: Data structures and Serializations
+date: '2010-04-20'
+draft: false
+slug: data-structures-and-serializations
+tags:
+- code
+- old
+- Rant
+author: billdueber
+---
 
 Jonathan Rochkind, in response to a long (and, IMHO, mostly ridiculous) thread on NGC4Lib, has been exploring the boundaries between a data model and its expression/serialization ( see link:http://bibwild.wordpress.com/2010/04/19/of-marc-serialization-formats-and-element-schemata/[here], link:http://bibwild.wordpress.com/2010/04/19/and-more-on-software-data-formats/[here], and link:http://bibwild.wordpress.com/2010/04/20/serialization-vs-metadata-schemavocabulary/[here] ) and I thought I'd jump in.
 

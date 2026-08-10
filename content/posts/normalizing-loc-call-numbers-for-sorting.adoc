@@ -1,11 +1,13 @@
-+++
-title = "Normalizing LoC Call Numbers for sorting"
-date = 2008-11-13
-draft = false
-slug = "normalizing-loc-call-numbers-for-sorting"
-tags = ["Callnumbers", "old"]
-author = "billdueber"
-+++
+---
+title: Normalizing LoC Call Numbers for sorting
+date: '2008-11-13'
+draft: false
+slug: normalizing-loc-call-numbers-for-sorting
+tags:
+- Callnumbers
+- old
+author: billdueber
+---
 
 *Updated*: _I missed a '?' in the original code that pushed a single cutter into the second-cutter position. Fixed below._
 

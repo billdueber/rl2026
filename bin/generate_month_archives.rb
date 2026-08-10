@@ -8,10 +8,13 @@
 # month needs a real content page at content/archive/<year>/<month>/index.md.
 # This script keeps those stubs in sync with the actual posts:
 #
-#   * Scans content/posts/*.adoc for the TOML frontmatter `date`.
+#   * Scans content/posts/*.adoc for the YAML frontmatter `date`.
 #   * Creates a leaf-bundle stub for every distinct year-month that has at
 #     least one (non-draft) post.
 #   * Deletes stubs for months that no longer have any posts.
+#
+# Front matter is read exclusively with Psych (require "yaml") and stubs are
+# written with YAML frontmatter as well. No regex, no TOML.
 #
 # It is idempotent and safe to run before every build (see bin/build.sh).
 # Existing stub bodies are preserved — only missing stubs are created, and
@@ -19,29 +22,53 @@
 
 require "date"
 require "fileutils"
+require "yaml"
 
 ROOT         = File.expand_path("..", __dir__)                    # .../hugo
 POSTS_GLOB   = File.join(ROOT, "content", "posts", "*.adoc")
 ARCHIVE_ROOT = File.join(ROOT, "content", "archive")
 
-# --- Read the TOML frontmatter block of a content file --------------------
+# --- Read the YAML frontmatter block of a content file ---------------------
+# Returns the parsed Hash, or nil when the file has no YAML frontmatter
+# (or its frontmatter cannot be parsed).
 def frontmatter(path)
-  content = File.read(path)
-  return nil unless content.start_with?("+++")
-  content[/\A\+\+\+\r?\n(.*?)\r?\n\+\+\+/m, 1]
+  lines = File.readlines(path)
+  return nil unless lines.first&.strip == "---"
+
+  closing = lines[1..].index { |line| line.strip == "---" }
+  return nil unless closing
+
+  body = lines[1..closing].join
+  YAML.safe_load(body, permitted_classes: [Time, Date, DateTime])
+rescue StandardError
+  nil
 end
 
 # --- Parse `date` from frontmatter; returns Date or nil --------------------
-# Skips drafts. Accepts `date = 2009-03-30` or a quoted string.
+# Skips drafts. Accepts YAML date scalars as quoted strings
+# ("2009-03-30" or "2026-08-09T08:19:33+01:00") or native Date/Time.
 def post_date(path)
   fm = frontmatter(path)
-  return nil unless fm
-  return nil if fm =~ /^\s*draft\s*=\s*true\s*i?$/i
+  return nil unless fm.is_a?(Hash)
+  return nil if fm["draft"] == true || fm["draft"].to_s == "true"
 
-  raw = fm[/^\s*date\s*=\s*(?:["']?)(\d{4}-\d{2}-\d{2})/, 1]
-  raw && Date.strptime(raw, "%Y-%m-%d")
+  case fm["date"]
+  when DateTime then fm["date"].to_date
+  when Time     then fm["date"].to_date
+  when Date     then fm["date"]
+  when String   then Date.parse(fm["date"])
+  end
 rescue StandardError
   nil
+end
+
+# --- YAML frontmatter block for a month stub -------------------------------
+def stub_frontmatter(first)
+  {
+    "title" => first.strftime("%B %Y"),
+    "date"  => first.strftime("%Y-%m-%d"),
+    "draft" => false
+  }
 end
 
 # --- 1. Collect distinct months that have at least one post ----------------
@@ -64,14 +91,7 @@ desired.each do |stub|
   year  = File.basename(File.dirname(File.dirname(stub)))
   first = Date.new(year.to_i, month.to_i, 1)
   FileUtils.mkdir_p(File.dirname(stub))
-  File.write(stub, <<~T
-    +++
-    title = "#{first.strftime("%B %Y")}"
-    date = #{first.strftime("%Y-%m-%d")}
-    draft = false
-    +++
-  T
-  )
+  File.write(stub, stub_frontmatter(first).to_yaml + "---\n")
   created += 1
 end
 

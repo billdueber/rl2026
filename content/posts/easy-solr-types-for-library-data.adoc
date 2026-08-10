@@ -1,11 +1,12 @@
-+++
-title = "Easy Solr types for library data"
-date = 2009-08-19
-draft = false
-slug = "easy-solr-types-for-library-data"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Easy Solr types for library data
+date: '2009-08-19'
+draft: false
+slug: easy-solr-types-for-library-data
+tags:
+- old
+author: billdueber
+---
 
 &#91;Yet another bit in a series about our Vufind installation]
 

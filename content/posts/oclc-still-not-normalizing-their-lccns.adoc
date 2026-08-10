@@ -1,11 +1,12 @@
-+++
-title = "OCLC still not (NO! They are!) normalizing their LCCNs"
-date = 2010-02-18
-draft = false
-slug = "oclc-still-not-normalizing-their-lccns"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: OCLC still not (NO! They are!) normalizing their LCCNs
+date: '2010-02-18'
+draft: false
+slug: oclc-still-not-normalizing-their-lccns
+tags:
+- old
+author: billdueber
+---
 
 ____
 NOTE 2: It turns out that I did find a minor bug in the system, but that in general LCCN normalization is working correctly. I just happened to hit a weirdness with a bad LCCN and a little bug in the parser on their end. Which is getting fixed. So...good news all around, and huge kudos to Xiaoming Liu for his quick response!

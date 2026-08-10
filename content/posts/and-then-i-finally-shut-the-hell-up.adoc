@@ -1,11 +1,12 @@
-+++
-title = "And then I finally shut the hell up"
-date = 2008-12-08
-draft = false
-slug = "and-then-i-finally-shut-the-hell-up"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: And then I finally shut the hell up
+date: '2008-12-08'
+draft: false
+slug: and-then-i-finally-shut-the-hell-up
+tags:
+- old
+author: billdueber
+---
 
 I had a great --- great! I tell you -- 30 second conversation with Ken Varnum (of link:http://www.rss4lib.com/[RSS4Lib] fame) that went something like this (much paraphrasing, obviously):
 

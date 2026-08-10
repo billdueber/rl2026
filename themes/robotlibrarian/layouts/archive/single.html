@@ -12,7 +12,8 @@
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
             {{ with .Params.tags }} &middot; {{ partial "tags.html" $ }}{{ end }}
           </div>
-          {{ with .Summary }}<p class="post-excerpt">{{ . | plainify }}</p>{{ end }}
+          {{ $post := . }}
+          {{ with .Summary }}<p class="post-excerpt">{{ . | plainify }} {{ if $post.Truncated }}<a class="post-more" href="{{ $post.RelPermalink }}">More...</a>{{ end }}</p>{{ end }}
         </article>
       {{ end }}
     {{ end }}

@@ -1,11 +1,14 @@
-+++
-title = "Reintroducing Traject: Traject 2.0"
-date = 2015-02-19
-draft = false
-slug = "reintroducing-traject"
-tags = ["Librarian code", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: 'Reintroducing Traject: Traject 2.0'
+date: '2015-02-19'
+draft: false
+slug: reintroducing-traject
+tags:
+- Librarian code
+- old
+- ruby
+author: billdueber
+---
 
 Traject 2.0.0 released! Now runs under MRI/RBX!
 

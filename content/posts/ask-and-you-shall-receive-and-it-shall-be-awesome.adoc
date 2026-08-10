@@ -1,11 +1,12 @@
-+++
-title = "Ask, and you shall receive, and it shall be AWESOME!"
-date = 2009-02-12
-draft = false
-slug = "ask-and-you-shall-receive-and-it-shall-be-awesome"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Ask, and you shall receive, and it shall be AWESOME!
+date: '2009-02-12'
+draft: false
+slug: ask-and-you-shall-receive-and-it-shall-be-awesome
+tags:
+- old
+author: billdueber
+---
 
 The good folks at link:http://www.tictocs.ac.uk[ticToc]s heard the call for open data, and they responded...exactly as I asked them to. Which makes me think I should have asked for a pony, too, but I'm still very, very happy!
 

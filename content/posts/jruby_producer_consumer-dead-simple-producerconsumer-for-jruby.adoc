@@ -1,11 +1,12 @@
-+++
-title = "jruby_producer_consumer dead-simple producer/consumer for JRuby"
-date = 2010-02-05
-draft = false
-slug = "jruby_producer_consumer-dead-simple-producerconsumer-for-jruby"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: jruby_producer_consumer dead-simple producer/consumer for JRuby
+date: '2010-02-05'
+draft: false
+slug: jruby_producer_consumer-dead-simple-producerconsumer-for-jruby
+tags:
+- old
+author: billdueber
+---
 
 Yea! My first gem ever released!
 

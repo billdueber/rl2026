@@ -1,5 +1,5 @@
-+++
-title = "December 2013"
-date = 2013-12-01
-draft = false
-+++
+---
+title: December 2013
+date: '2013-12-01'
+draft: false
+---

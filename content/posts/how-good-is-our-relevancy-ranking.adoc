@@ -1,11 +1,14 @@
-+++
-title = "How good is our relevancy ranking?"
-date = 2011-05-25
-draft = false
-slug = "how-good-is-our-relevancy-ranking"
-tags = ["Librarianship", "old", "Solr"]
-author = "billdueber"
-+++
+---
+title: How good is our relevancy ranking?
+date: '2011-05-25'
+draft: false
+slug: how-good-is-our-relevancy-ranking
+tags:
+- Librarianship
+- old
+- Solr
+author: billdueber
+---
 
 For those of us that spend our days trying to tweak link:http://mirlyn.lib.umich.edu/[Mirlyn] to make it better, one of the most important -- and, in many ways, most opaque -- questions is, "How good is our relevancy ranking?"
 

@@ -1,11 +1,15 @@
-+++
-title = "Why RDA is doomed to failure"
-date = 2010-04-23
-draft = false
-slug = "why-rda-is-doomed-to-failure"
-tags = ["Librarianship", "MARC", "old", "Rant"]
-author = "billdueber"
-+++
+---
+title: Why RDA is doomed to failure
+date: '2010-04-23'
+draft: false
+slug: why-rda-is-doomed-to-failure
+tags:
+- Librarianship
+- MARC
+- old
+- Rant
+author: billdueber
+---
 
 &#91;Note: edited for clarity thanks to rsinger's comment, below]
 

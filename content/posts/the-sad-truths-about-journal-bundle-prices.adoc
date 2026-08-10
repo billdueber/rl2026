@@ -1,11 +1,12 @@
-+++
-title = "The sad truths about journal bundle prices"
-date = 2009-09-23
-draft = false
-slug = "the-sad-truths-about-journal-bundle-prices"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: The sad truths about journal bundle prices
+date: '2009-09-23'
+draft: false
+slug: the-sad-truths-about-journal-bundle-prices
+tags:
+- old
+author: billdueber
+---
 
 &#91;Notes taken during a talk today, _Ted Bergstrom: "Some Economics of Saying Nix To Big Deals and the Terrible Fix"_. My own thoughts are interspersed throughout; please don't automatically ascribe everything to Dr. Bergstrom.
 

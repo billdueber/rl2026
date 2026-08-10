@@ -1,11 +1,12 @@
-+++
-title = "Eleven Years and Change"
-date = 2026-08-09T08:19:33+01:00
-draft = false
-slug = "eleven_years_and_change"
-tags = ["personal"]
-author = "billdueber"
-+++
+---
+title: Eleven Years and Change
+date: '2026-08-09T08:19:33+01:00'
+draft: false
+slug: eleven_years_and_change
+tags:
+- personal
+author: billdueber
+---
 
 ## Eleven Years...
 

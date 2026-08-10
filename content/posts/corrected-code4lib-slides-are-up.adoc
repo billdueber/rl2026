@@ -1,11 +1,12 @@
-+++
-title = "Corrected Code4Lib slides are up"
-date = 2011-02-15
-draft = false
-slug = "corrected-code4lib-slides-are-up"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Corrected Code4Lib slides are up
+date: '2011-02-15'
+draft: false
+slug: corrected-code4lib-slides-are-up
+tags:
+- old
+author: billdueber
+---
 
 ...at link:http://robotlibrarian.billdueber.com/wp-content/uploads/2011/02/dueber_lightning_c4l11.ppt[the same URL].
 

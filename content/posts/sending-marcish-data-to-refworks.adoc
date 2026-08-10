@@ -1,11 +1,12 @@
-+++
-title = "Sending MARC(ish) data to Refworks"
-date = 2009-05-11
-draft = false
-slug = "sending-marcish-data-to-refworks"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Sending MARC(ish) data to Refworks
+date: '2009-05-11'
+draft: false
+slug: sending-marcish-data-to-refworks
+tags:
+- old
+author: billdueber
+---
 
 Refworks has some link:http://www.refworks.com/DirectExport.htm[okish documentation] about how to deal with its callback import procedure, but I thought I'd put down how I'm doing it for our link:http://vufind.org/[vufind] install (link:http://mirlyn2-beta.lib.umich.edu/[mirlyn2-beta.lib.umich.edu]) in case other folks are interested.
 

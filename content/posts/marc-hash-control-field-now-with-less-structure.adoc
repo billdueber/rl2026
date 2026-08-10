@@ -1,11 +1,12 @@
-+++
-title = "MARC-HASH control field, now with less structure"
-date = 2009-04-15
-draft = false
-slug = "marc-hash-control-field-now-with-less-structure"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: MARC-HASH control field, now with less structure
+date: '2009-04-15'
+draft: false
+slug: marc-hash-control-field-now-with-less-structure
+tags:
+- old
+author: billdueber
+---
 
 Why do I ever, ever think that MARC might not rely on order? I don't know.
 

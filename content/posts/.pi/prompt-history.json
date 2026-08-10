@@ -1,4 +1,8 @@
 [
+  "The template for the index pages needs to put a `More...` link at the end of the snippet when the post is longer than is put on the index page. Ask",
+  "the ../../bin/generate_month_archives.rb script still seems to be looking for '+++' for TOML, and still uses regexp. Use the ruby YAML library to parse the frontmatter and pull the dates out in that way. Ask",
+  "Change all the *.adoc files in this directory to use yaml frontmatter instead of toml. the toml-rb gem is installed, and yaml is native to ruby, so you should be able to write a script that uses the battle-tested parsers in the required files and not use any regexp. Ask",
+  "Change all the *.adoc files in this directory to use yaml frontmatter instead of toml",
   "Can hugo use yaml frontmatter as well as TOML?",
   "Fix everythig execept the last",
   "Check ./eleven_years_and_change.adoc for grammatical errors"

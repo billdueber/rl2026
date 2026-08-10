@@ -1,11 +1,15 @@
-+++
-title = "Even better, even simpler multithreading with JRuby"
-date = 2011-07-01
-draft = false
-slug = "even-better-even-simpler-multithreading-with-jruby"
-tags = ["benchmark", "JRuby", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: Even better, even simpler multithreading with JRuby
+date: '2011-07-01'
+draft: false
+slug: even-better-even-simpler-multithreading-with-jruby
+tags:
+- benchmark
+- JRuby
+- old
+- ruby
+author: billdueber
+---
 
 &#91;Yes, another post about ruby code; I'll get back to library stuff soon.]
 

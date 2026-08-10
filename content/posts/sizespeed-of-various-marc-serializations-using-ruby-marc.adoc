@@ -1,11 +1,15 @@
-+++
-title = "Size/speed of various MARC serializations using ruby-marc"
-date = 2010-09-29
-draft = false
-slug = "sizespeed-of-various-marc-serializations-using-ruby-marc"
-tags = ["benchmark", "MARC", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: Size/speed of various MARC serializations using ruby-marc
+date: '2010-09-29'
+draft: false
+slug: sizespeed-of-various-marc-serializations-using-ruby-marc
+tags:
+- benchmark
+- MARC
+- old
+- ruby
+author: billdueber
+---
 
 link:http://dilettantes.code4lib.org/[Ross Singer] recently updated link:http://marc.rubyforge.org/[ruby-marc] to include a `#to_hash` method that creates a data structure that is (a) round-trippable without any data loss, and (b) amenable to serializing to JSON. He's calling it _link:http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/[marc-in-json]_ (even though the serialization is up to the programmer, it's expected most of us will use JSON), and I think it's the way to go in terms of JSON-able MARC data.
 

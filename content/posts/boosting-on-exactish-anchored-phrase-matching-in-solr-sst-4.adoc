@@ -1,11 +1,13 @@
-+++
-title = "Boosting on Exactish (anchored) phrase matching in Solr: (SST #4)"
-date = 2012-03-19
-draft = false
-slug = "boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: 'Boosting on Exactish (anchored) phrase matching in Solr: (SST #4)'
+date: '2012-03-19'
+draft: false
+slug: boosting-on-exactish-anchored-phrase-matching-in-solr-sst-4
+tags:
+- old
+- Solr
+author: billdueber
+---
 
 ____
 Check out link:http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/[introduction to the Stupid Solr Tricks series] if you're just joining us.]

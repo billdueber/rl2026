@@ -1,11 +1,14 @@
-+++
-title = "Ruby gem library_stdnums goes to version 1.0"
-date = 2011-05-06
-draft = false
-slug = "ruby-gem-library_stdnums-goes-to-version-1-0"
-tags = ["Librarian code", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: Ruby gem library_stdnums goes to version 1.0
+date: '2011-05-06'
+draft: false
+slug: ruby-gem-library_stdnums-goes-to-version-1-0
+tags:
+- Librarian code
+- old
+- ruby
+author: billdueber
+---
 
 I just released another (this time pretty good) version of my gem for normalizing/validating library standard numbers, `library_stdnums` (link:https://github.com/billdueber/library_stdnums[github source] / link:http://rubydoc.info/github/billdueber/library_stdnums/master/frames[docs]).
 

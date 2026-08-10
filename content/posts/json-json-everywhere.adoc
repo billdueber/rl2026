@@ -1,11 +1,13 @@
-+++
-title = "JSON, JSON everywhere"
-date = 2008-05-13
-draft = false
-slug = "json-json-everywhere"
-tags = ["APIs", "old"]
-author = "billdueber"
-+++
+---
+title: JSON, JSON everywhere
+date: '2008-05-13'
+draft: false
+slug: json-json-everywhere
+tags:
+- APIs
+- old
+author: billdueber
+---
 
 Via Ajaxian, just saw an announcement for link:http://sitepen.com/labs/persevere.php[Persevere], a network-centric, JSON-based generic storage engine. It features:
 

@@ -1,11 +1,14 @@
-+++
-title = "Intuition-based librarianship?"
-date = 2008-07-02
-draft = false
-slug = "intuition-based-librarianship"
-tags = ["Librarianship", "old", "Rant"]
-author = "billdueber"
-+++
+---
+title: Intuition-based librarianship?
+date: '2008-07-02'
+draft: false
+slug: intuition-based-librarianship
+tags:
+- Librarianship
+- old
+- Rant
+author: billdueber
+---
 
 Not long after I started working in the library, I heard someone talking about "Evidence Based Librarianship." Like the good little kind-of-a-librarian I'd become, I looked it up and found link:http://www.pubmedcentral.nih.gov/articlerender.fcgi?artid=35250[this article] which states that:
 

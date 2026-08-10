@@ -1,11 +1,13 @@
-+++
-title = "Does anyone use those prev/next/back-to-search links?"
-date = 2010-11-03
-draft = false
-slug = "does-anyone-use-those-prevnextback-to-search-links"
-tags = ["Librarianship", "old"]
-author = "billdueber"
-+++
+---
+title: Does anyone use those prev/next/back-to-search links?
+date: '2010-11-03'
+draft: false
+slug: does-anyone-use-those-prevnextback-to-search-links
+tags:
+- Librarianship
+- old
+author: billdueber
+---
 
 There's a common problem among developers of websites that paginate, including OPACs: how do you provide a single item view that can have links that go back to the search (or to the prev/next item) without making your URLs look ugly?
 

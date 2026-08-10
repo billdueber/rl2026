@@ -1,11 +1,12 @@
-+++
-title = "VuFind Midwest gathering"
-date = 2010-09-16
-draft = false
-slug = "vufind-midwest-gathering"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: VuFind Midwest gathering
+date: '2010-09-16'
+draft: false
+slug: vufind-midwest-gathering
+tags:
+- old
+author: billdueber
+---
 
 A couple weeks ago, representatives from UMich (that'd be me), Purdue, Notre Dame, UChicago, and our hosts at Western Michigan got together in lovely Kalamazoo to talk about our VuFind implementations.
 

@@ -1,11 +1,13 @@
-+++
-title = "Stupid Solr tricks: Introduction (SST #0)"
-date = 2012-02-29
-draft = false
-slug = "stupid-solr-tricks-introduction"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: 'Stupid Solr tricks: Introduction (SST #0)'
+date: '2012-02-29'
+draft: false
+slug: stupid-solr-tricks-introduction
+tags:
+- old
+- Solr
+author: billdueber
+---
 
 *Completed parts of the series:*
 

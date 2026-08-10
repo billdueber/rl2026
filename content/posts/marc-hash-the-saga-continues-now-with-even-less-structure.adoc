@@ -1,11 +1,12 @@
-+++
-title = "MARC-HASH: The saga continues (now with even less structure)"
-date = 2009-04-15
-draft = false
-slug = "marc-hash-the-saga-continues-now-with-even-less-structure"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: 'MARC-HASH: The saga continues (now with even less structure)'
+date: '2009-04-15'
+draft: false
+slug: marc-hash-the-saga-continues-now-with-even-less-structure
+tags:
+- old
+author: billdueber
+---
 
 After a medium-sized discussion on #code4lib, we've collectively decided that...well, ok, no one really cares all that much, but a few people weighed in.
 

@@ -1,11 +1,13 @@
-+++
-title = "Why bother with threading in jruby? Because it's easy."
-date = 2010-03-12
-draft = false
-slug = "why-bother-with-threading-in-jruby-because-its-easy"
-tags = ["JRuby", "old"]
-author = "billdueber"
-+++
+---
+title: Why bother with threading in jruby? Because it's easy.
+date: '2010-03-12'
+draft: false
+slug: why-bother-with-threading-in-jruby-because-its-easy
+tags:
+- JRuby
+- old
+author: billdueber
+---
 
 &#91;*Edit 2011-July-1*: I've written a jruby\_specific threach that takes advantage of better underlying java libraries called link:http://robotlibrarian.billdueber.com/even-better-even-simpler-multithreading-with-jruby/[jruby_threach] that is a much better option if you're running jruby]
 

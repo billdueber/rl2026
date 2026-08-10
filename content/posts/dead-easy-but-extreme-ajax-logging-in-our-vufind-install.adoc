@@ -1,11 +1,12 @@
-+++
-title = "Dead-easy (but extreme) AJAX logging in our VuFind install"
-date = 2009-09-25
-draft = false
-slug = "dead-easy-but-extreme-ajax-logging-in-our-vufind-install"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Dead-easy (but extreme) AJAX logging in our VuFind install
+date: '2009-09-25'
+draft: false
+slug: dead-easy-but-extreme-ajax-logging-in-our-vufind-install
+tags:
+- old
+author: billdueber
+---
 
 One of the advantages of having complete control over the OPAC is that I change things pretty easily. The downside of that is that we need to know _what_ to change.
 

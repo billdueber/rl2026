@@ -1,11 +1,14 @@
-+++
-title = "How good/bad is MARC data? The case of place-of-publication"
-date = 2014-11-10
-draft = false
-slug = "how_goodbad_is_marc_data_the_case_of_place-of-publication"
-tags = ["Data Cleanup", "MARC", "old"]
-author = "billdueber"
-+++
+---
+title: How good/bad is MARC data? The case of place-of-publication
+date: '2014-11-10'
+draft: false
+slug: how_goodbad_is_marc_data_the_case_of_place-of-publication
+tags:
+- Data Cleanup
+- MARC
+- old
+author: billdueber
+---
 
 I complain a lot about link:/2010/04/data-structures-and-serializations/[the MARC format], link:/2011/04/why-programmers-hate-free-text-in-marc-records/[the way people put data in MARC records], the link:/2011/04/isbn-parenthetical-notes-bad-marc-data-1/[actual data themselves I find in MARC records], the link:/yet-another-lc-callnumber-parser/[inexplicably complex syntax for identifiers] and, ironically, link:/2010/04/why-rda-is-doomed-to-failure/[attempts to replace MARC with something else].
 

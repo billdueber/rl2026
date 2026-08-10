@@ -1,11 +1,15 @@
-+++
-title = "Pushing MARC to Solr; processing times and threading and such"
-date = 2010-03-04
-draft = false
-slug = "pushing-marc-to-solr-processing-times-and-threading-and-such"
-tags = ["benchmark", "old", "ruby", "Solr"]
-author = "billdueber"
-+++
+---
+title: Pushing MARC to Solr; processing times and threading and such
+date: '2010-03-04'
+draft: false
+slug: pushing-marc-to-solr-processing-times-and-threading-and-such
+tags:
+- benchmark
+- old
+- ruby
+- Solr
+author: billdueber
+---
 
 &#91;This is in response to a link:http://groups.google.com/group/blacklight-development/browse_thread/thread/672b7269ada16a61?hl=en[thread on the blacklight mailing] list about getting MARC data into Solr.]
 
