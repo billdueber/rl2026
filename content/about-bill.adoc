@@ -7,10 +7,31 @@ author = "billdueber"
 
 Hi. I'm Bill.
 
-I'm a programmer at the link:http://www.lib.umich.edu[University of Michigan Libraries] and link:http://hathitrust.org/[the Hathitrust], husband to a link:https://smile.amazon.com/Ask-Convertible-Stories-Danit-Brown/dp/0375424547[great writer] and link:https://www.albion.edu/departments/english/faculty-and-staff/[English Professor], father to three great kids, and .... actually, that's about it.
+I'm a programmer at the link:http://www.lib.umich.edu[University of Michigan
+Libraries] (and, formerly, link:http://hathitrust.org/[the Hathitrust]),
+husband
+to a link:https://smile.amazon.com/Ask-Convertible-Stories-Danit-Brown/dp/0375424547[great writer] and link:https://www.albion.edu/departments/english/faculty-and-staff/[English Professor], father to three great kids, and .... actually, that's about it.
 
-I have a BA and MS in Computer Science and another MS in Instructional Technology, but these days I'm mostly a run-of-the-mill programmer.
+I have a BA and MS in Computer Science and another MS in Instructional
+Technology, but these days I'm a run-of-the-mill programmer. My official
+title probably has the word "enginneer" in it,
+but I know some real engineers and I know what
+I do doesn't deserve the title. Maybe some of the
+rest of you are closer.
 
-My focus for a few years has been on the library and Hathitrust catalogs, with my interest lying mostly in figuring out how to improve search results. That opens up a whole can of worms, including how to configure our search engine (Solr), how to figure out if our search results are good or good-enough, and fighting tooth-and-nail with the data and metadata available.
+My focus for a few years has been on search
+within the library, with my interest lying mostly in
+figuring out how to improve search results. That opens up a whole can of
+worms, including how to configure our search engine (Solr or OpenSearch), how
+ to
+figure out if our search results are good or good-enough, and fighting
+tooth-and-nail with the data and metadata available. The advent of LLMs,
+embeddings, and so on are making things more
+complicated -- I'm still trying to decide if
+they're materially better or not.
 
-In my Copious Free Time, I've recently started woodworking, or at least trying. We'll see how that goes, and whether I can keep all my fingers. So far I've mastered the 88° angle and the process of turning random pieces of wood into smaller, still random, pieces of wood.
+In my Copious Free Time, I've started woodworking, or at least trying. We'll
+see how that goes, and whether I can keep all my fingers.
+My specialty so far is taking a combination of hardwood,
+softwood, and engineered products like MDF and
+plywood and turning them into sawdust and garbage.

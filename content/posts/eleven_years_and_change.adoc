@@ -1,0 +1,113 @@
++++
+title = "Eleven Years and Change"
+date = 2026-08-09T08:19:33+01:00
+draft = false
+slug = "eleven_years_and_change"
+tags = ["personal"]
+author = "billdueber"
++++
+
+## Eleven Years...
+
+It's been more than 11 years since I wrote a blog post.
+
+That seems impossibly long ago now. My oldest kid was only 7, and starting to
+ go through what we can now nonchalantly call his "3rd grade phase" but at
+ the time made us worry about how he was going to turn out (Spoiler: he's
+ awesome), and just trying to get to the end of the day dealing with the 5-
+ and 3-year-olds. I was going through a mid-life crisis as I realized that my
+  days of thinking I was going to Change the World had narrowed to Change the
+   Carseat,
+  and my day-to-day work life was built around trying to improve the catalog results and, even more so, trying to prove to myself (and thus hopefully others) that the stuff I was producing was worthwhile.
+
+I saw blogging as a mechanism to force myself to write, building on a heartfelt belief that writing is a critical component of thinking in general -- that ideas, when expressed in print, emerge more fully formed and solid than beforehand. Writing, I tell my kids, is the act of convincing yourself that you know what you're talking about, and that if you haven't written it down, you haven't really thought it through.
+
+Then Google Reader went dark, and I stopped writing. Apparently, all that lip service to critical thinking and high-minded exploration of ideas was completely subsumed by ego and the desire to be read.
+
+I don't feel bad about it. If you go back to all those old blogs I used to read, a lot of us stopped around the same time. Dancing like no one is watching is one thing, but writing when no one is reading is clearly another. I'm married to a writer, so I have a little insight into it.
+
+I didn't totally abandon the blog, of course. I just stopped writing in it. I changed the technology it was based on more than once, in lieu of actually writing, and managed to lose the comments and a lot of the formatting and such along the way. None of the old stuff is particularly interesting, anyway, and the more technical stuff is so hilariously out of date that it's more "fun" than useful.
+
+I have, in fact, been having a pretty good time going over the old posts.
+Never before have I been able to look back ten years and see so little change.
+Still married to a great woman, still a father of three kids, still working at
+the University of Michigan Libraries, still focused on programming in ruby and
+trying to make search better. Many of the technologies have changed,
+as has the data I'm dealing with on the regular, but it's nothing I wouldn't
+have recognized ten years ago. Libraries aren't particularly dynamic,
+no matter what we tell ourselves.
+
+The tone on those old posts is a little...strident, maybe? I had clearly heard someone use the phrase,
+"Personal Brand" at some point and taken it to heart. But it's mostly good or good-enough work, and I'm still
+the best audience for my own humor, so that's all a lot of fun.
+
+The point being, I guess, that I'm actually in a position to look back at
+Slightly-Less-Old Bill Dueber and his life
+and make a valid, apples-to-apple-like-fruit comparison.
+
+A big part of what happened over the last ten years is that, in a lot of ways, I "settled in" to the job. I
+acquired all that vaunted "Organizational knowledge" that I was so quick to mock in the past. I got more
+familiar with the data we deal with, and the methods we use. I got to know more people at more institutions,
+and then watch most of them move on as they got older, switching careers or moving into management. I like to
+think that I didn't get complacent, but I did get, for lack of a better word, "comfortable."
+
+My hair got gray, my forehead turned into a "five-head" ("Like a forehead, but One Bigger"), and a recent
+retirement turned me into the Old Man of my group. Given that I have a
+14-year-old kid, retirement is not going to be an
+option anytime soon, so I'll be soldiering on despite being 57 now. Things
+haven't always been smooth, but they were always at least a little familiar.
+
+## ...and Change
+
+I didn't fool myself into thinking things were static, of course. My colleagues started getting younger and
+smarter, and made me think fondly (and/or bitterly, depending on the day) of when I was able to consider
+myself Young and Smart.
+
+Code4Lib turned into a conference that was more welcoming to more interests and skill levels, which is an
+unambiguously Good Thing, but resulted in a conference that wasn't
+narrowly targeted straight at me anymore, which
+makes me feel a little sense of loss.
+
+I also acutely feel that I am, to put it mildly, no longer on the ballot for the Smartest Guy in the Room.
+Like a lot of engineering-types, I pride myself on my ability to learn things super-fast, grasp new
+concepts with little to go on, and put things into use quickly. These days, it feels more like I'm running as
+hard as I can just to stay in place. Much of it is that I have a life at home
+that needs more attention than it
+once did, but a lot of it is just that I've lost a few steps and things are
+just harder for me.
+
+## The burden of non-greatness
+
+This can on occasion fill me with despair.
+
+Over my years of personal relationships and work (and, it will shock no one, professional therapy), it's
+become clear that essentially my whole sense of self is based around a single
+ideal: "Don't be a burden." Once I
+managed to articulate it to myself, it's easy to see in my dad and uncles,
+but of course
+recognizing it isn't the same
+as successfully dealing with it.
+
+It can be easy to feel like I'm slowly becoming a burden at work --  the guy
+who you're not quite sure is
+going to get his shit done, who can't be trusted to do the hard stuff
+anymore, who needs a babysitter of some kind. I know if I were my manager,
+I'd be considering a lot of that stuff when I look at me.
+
+I'm not sure exactly what mid-life crisis that puts me in right now. Probably
+right around 3 or 4.
+
+## Getting back on the horse. Or maybe the pelican on a bike.
+
+This isn't a "boo hoo, I'm so stupid and old" post. Or, at least not _just_ that. Because the whole LLM
+revolution has really kind of kick-started me again. I'm finding it easier to apply the stuff I'm actually
+good at -- architecture, algorithms, a hard-won intuition about the underlying data and where it might give us
+problems -- and can largely take care of the stuff I suck at on its own.
+
+So, for the foreseeable future, I'm going to try to understand what it all
+means for me, in a very narrow, narcissistic way. I'm not sure I'm calling it
+a "revolution" as of yet, but I'm damn close. It'll depend on how much it
+actually costs once the dust settles -- we really don't know how much it's
+costing the private US companies to build and serve their models yet --
+but I'm really enjoying myself in the meantime.
+

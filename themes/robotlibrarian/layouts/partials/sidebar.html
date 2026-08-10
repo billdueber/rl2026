@@ -1,0 +1,36 @@
+<aside class="sidebar" aria-label="Sidebar">
+  <section class="sidebar-widget recent-posts">
+    <h3>Recent posts</h3>
+    <ul>
+      {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <span class="widget-date">{{ .Date.Format "Jan 2006" }}</span>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+
+  <section class="sidebar-widget widgets-tags">
+    <h3>Tags</h3>
+    <div class="widget-tags">
+      {{ range .Site.Taxonomies.tags.ByCount | first 25 }}
+        <a class="tag" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}<span class="tag-count"> {{ .Count }}</span></a>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="sidebar-widget archives">
+    <h3>Archives</h3>
+    <ul>
+      {{ $posts := where .Site.RegularPages "Section" "posts" }}
+      {{ range where .Site.RegularPages "Type" "archive" }}
+        {{ $count := len (where (where $posts "Date.Year" .Date.Year) "Date.Month" .Date.Month) }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <span class="widget-date">({{ $count }})</span>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+</aside>

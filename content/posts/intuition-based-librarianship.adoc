@@ -19,15 +19,18 @@ The sad truth, of course, is that in general folks working in libraries do _not_
 
 That's an over-simplification, of course. But I have found, across a bunch of situations, that practicing librarians tend to think:
 
-. their time is much better spent directly helping patrons than reading about research regarding how to help patrons,
-. "data" (defined incredibly loosely) derived from reference desk interviews are sufficient to make decisions
-. "I know my patrons better than anyone"
+- their time is much better spent directly helping patrons than reading about research regarding how to help patrons,
+- "data" (defined incredibly loosely) derived from reference desk interviews are sufficient to make decisions
+- "I know my patrons better than anyone"
 
 The logical conclusions to this is that:
 
-. Most library research is essentially being thrown down a dark hole because the people that could most benefit from it don't read it
-. We're assuming that the 99.999% of users who never talk to a librarian (many of whom, in fact, never enter the library building) have the exact same needs and perspective as those who engage in reference interviews
-. Librarians, as a group, confuse casual and/or episodic interaction with self-selected patrons with actual social-science research.
+1. Most library research is essentially being thrown down a dark hole because the people that
+could most benefit from it don't read it
+2. We're assuming that the 99.999% of users who never talk to a librarian (many of whom, in fact,
+ never enter the library building) have the exact same needs and perspective as those who engage in reference interviews
+3. Librarians, as a group, confuse casual and/or episodic interaction with self-selected patrons
+with actual social-science research.
 
 And the over-simplified solutions:
 
