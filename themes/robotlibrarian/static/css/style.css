@@ -46,8 +46,9 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
 }
 .site-logo {
-  width: 29px;
-  height: 33px;
+  width: auto;
+  height: auto;
+  align-self: stretch;
   flex-shrink: 0;
 }
 .brand-text {

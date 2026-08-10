@@ -11,7 +11,13 @@
           {{ with .Params.tags }} &middot; {{ partial "tags.html" $ }}{{ end }}
         </div>
         {{ $post := . }}
-        {{ with .Summary }}<p class="post-excerpt">{{ . | plainify }} {{ if $post.Truncated }}<a class="post-more" href="{{ $post.RelPermalink }}">More...</a>{{ end }}</p>{{ end }}
+        {{ with .Summary }}<p class="post-excerpt">{{ . | plainify }} {{ if $post.Truncated }}
+          <a class="post-more" href="{{ $post.RelPermalink }}">
+            <span style="display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; font-weight: bold;">
+               <span style="transform: translateY(-0.1em);">&LongLeftArrow;</span>more...<span style="transform: translateY(-0.1em);">&LongRightArrow;</span>
+           </span>
+         </a>
+        {{ end }}</p>{{ end }}
       </article>
     {{ end }}
   </div>
