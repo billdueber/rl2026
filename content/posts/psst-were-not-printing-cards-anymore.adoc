@@ -4,9 +4,9 @@ date: '2008-05-12'
 draft: false
 slug: psst-were-not-printing-cards-anymore
 tags:
-- Data Cleanup
+- cataloging
+- rant
 - old
-- Rant
 author: billdueber
 ---
 

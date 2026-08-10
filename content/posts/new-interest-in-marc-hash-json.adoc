@@ -4,6 +4,8 @@ date: '2010-02-26'
 draft: false
 slug: new-interest-in-marc-hash-json
 tags:
+- marc
+- serialization
 - old
 author: billdueber
 ---

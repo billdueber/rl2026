@@ -4,6 +4,9 @@ date: '2009-11-18'
 draft: false
 slug: running-blacklight-under-jruby
 tags:
+- ruby
+- jruby
+- tutorial
 - old
 author: billdueber
 ---

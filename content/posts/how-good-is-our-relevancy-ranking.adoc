@@ -4,9 +4,9 @@ date: '2011-05-25'
 draft: false
 slug: how-good-is-our-relevancy-ranking
 tags:
-- Librarianship
+- solr
+- discovery
 - old
-- Solr
 author: billdueber
 ---
 

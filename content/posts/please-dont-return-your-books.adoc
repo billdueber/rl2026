@@ -4,8 +4,8 @@ date: '2013-02-12'
 draft: false
 slug: please-dont-return-your-books
 tags:
-- Fun
-- Librarianship
+- code4lib
+- fun
 - old
 author: billdueber
 ---

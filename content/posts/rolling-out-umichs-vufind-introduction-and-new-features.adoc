@@ -4,6 +4,9 @@ date: '2009-08-14'
 draft: false
 slug: rolling-out-umichs-vufind-introduction-and-new-features
 tags:
+- vufind
+- discovery
+- announcement
 - old
 author: billdueber
 ---

@@ -4,6 +4,9 @@ date: '2009-03-18'
 draft: false
 slug: enough-with-the-freakin-lc-call-number-normalization
 tags:
+- callnumbers
+- data-quality
+- rant
 - old
 author: billdueber
 ---

@@ -4,10 +4,10 @@ date: '2010-04-23'
 draft: false
 slug: why-rda-is-doomed-to-failure
 tags:
-- Librarianship
-- MARC
+- cataloging
+- marc
+- rant
 - old
-- Rant
 author: billdueber
 ---
 

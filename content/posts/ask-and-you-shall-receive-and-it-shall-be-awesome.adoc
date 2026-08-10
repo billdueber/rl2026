@@ -4,6 +4,8 @@ date: '2009-02-12'
 draft: false
 slug: ask-and-you-shall-receive-and-it-shall-be-awesome
 tags:
+- e-resources
+- announcement
 - old
 author: billdueber
 ---

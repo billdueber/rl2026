@@ -4,6 +4,8 @@ date: '2009-04-13'
 draft: false
 slug: marc-hash-a-proposed-format-for-jsonyamlwhatever-compatible-marc-records
 tags:
+- marc
+- serialization
 - old
 author: billdueber
 ---

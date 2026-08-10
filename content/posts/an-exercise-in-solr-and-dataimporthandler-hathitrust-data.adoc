@@ -4,6 +4,8 @@ date: '2009-09-28'
 draft: false
 slug: an-exercise-in-solr-and-dataimporthandler-hathitrust-data
 tags:
+- solr
+- hathitrust
 - old
 author: billdueber
 ---

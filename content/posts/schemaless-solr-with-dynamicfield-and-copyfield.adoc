@@ -4,8 +4,9 @@ date: '2014-10-02'
 draft: false
 slug: schemaless-solr-with-dynamicfield-and-copyfield
 tags:
+- solr
+- tutorial
 - old
-- Solr
 author: billdueber
 ---
 

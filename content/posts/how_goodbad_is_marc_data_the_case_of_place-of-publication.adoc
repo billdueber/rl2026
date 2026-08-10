@@ -4,8 +4,9 @@ date: '2014-11-10'
 draft: false
 slug: how_goodbad_is_marc_data_the_case_of_place-of-publication
 tags:
-- Data Cleanup
-- MARC
+- marc
+- cataloging
+- data-quality
 - old
 author: billdueber
 ---

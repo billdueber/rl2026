@@ -4,6 +4,7 @@ date: '2008-05-07'
 draft: false
 slug: upenn-library-has-video-commercials
 tags:
+- fun
 - old
 author: billdueber
 ---

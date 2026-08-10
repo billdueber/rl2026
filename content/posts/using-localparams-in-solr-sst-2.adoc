@@ -5,8 +5,9 @@ date: '2012-03-06'
 draft: false
 slug: using-localparams-in-solr-sst-2
 tags:
+- solr
+- tutorial
 - old
-- Solr
 author: billdueber
 ---
 

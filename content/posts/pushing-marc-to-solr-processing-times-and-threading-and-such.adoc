@@ -4,10 +4,12 @@ date: '2010-03-04'
 draft: false
 slug: pushing-marc-to-solr-processing-times-and-threading-and-such
 tags:
+- ruby
+- jruby
+- marc
+- solr
 - benchmark
 - old
-- ruby
-- Solr
 author: billdueber
 ---
 

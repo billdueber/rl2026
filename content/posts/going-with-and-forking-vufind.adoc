@@ -4,6 +4,8 @@ date: '2009-08-19'
 draft: false
 slug: going-with-and-forking-vufind
 tags:
+- vufind
+- discovery
 - old
 author: billdueber
 ---

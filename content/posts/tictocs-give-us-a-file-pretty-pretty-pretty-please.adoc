@@ -4,6 +4,7 @@ date: '2009-02-02'
 draft: false
 slug: tictocs-give-us-a-file-pretty-pretty-pretty-please
 tags:
+- e-resources
 - old
 author: billdueber
 ---

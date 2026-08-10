@@ -4,6 +4,9 @@ date: '2009-08-20'
 draft: false
 slug: building-a-solr-text-filter-for-normalizing-data
 tags:
+- solr
+- data-quality
+- tutorial
 - old
 author: billdueber
 ---

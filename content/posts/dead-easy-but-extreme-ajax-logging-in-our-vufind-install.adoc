@@ -4,6 +4,8 @@ date: '2009-09-25'
 draft: false
 slug: dead-easy-but-extreme-ajax-logging-in-our-vufind-install
 tags:
+- vufind
+- tutorial
 - old
 author: billdueber
 ---

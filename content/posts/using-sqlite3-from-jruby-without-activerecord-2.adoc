@@ -4,7 +4,9 @@ date: '2011-05-26'
 draft: false
 slug: using-sqlite3-from-jruby-without-activerecord-2
 tags:
-- JRuby
+- ruby
+- jruby
+- tutorial
 - old
 author: billdueber
 ---

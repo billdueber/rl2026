@@ -4,8 +4,9 @@ date: '2011-01-13'
 draft: false
 slug: four-things-i-hate-about-ruby
 tags:
-- old
 - ruby
+- rant
+- old
 author: billdueber
 ---
 

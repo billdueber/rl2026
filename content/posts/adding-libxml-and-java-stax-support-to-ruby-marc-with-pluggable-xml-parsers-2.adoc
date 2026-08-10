@@ -4,6 +4,9 @@ date: '2009-10-07'
 draft: false
 slug: adding-libxml-and-java-stax-support-to-ruby-marc-with-pluggable-xml-parsers-2
 tags:
+- ruby
+- jruby
+- marc
 - old
 author: billdueber
 ---

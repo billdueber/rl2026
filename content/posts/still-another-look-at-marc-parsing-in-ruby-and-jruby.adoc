@@ -4,6 +4,10 @@ date: '2010-01-29'
 draft: false
 slug: still-another-look-at-marc-parsing-in-ruby-and-jruby
 tags:
+- ruby
+- jruby
+- marc
+- benchmark
 - old
 author: billdueber
 ---

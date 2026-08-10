@@ -4,6 +4,7 @@ date: '2009-01-25'
 draft: false
 slug: five-rules-to-make-your-open-source-more-open
 tags:
+- rant
 - old
 author: billdueber
 ---

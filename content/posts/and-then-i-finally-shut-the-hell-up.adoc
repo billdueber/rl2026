@@ -4,6 +4,8 @@ date: '2008-12-08'
 draft: false
 slug: and-then-i-finally-shut-the-hell-up
 tags:
+- discovery
+- rant
 - old
 author: billdueber
 ---

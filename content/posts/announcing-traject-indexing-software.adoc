@@ -4,8 +4,10 @@ date: '2013-10-14'
 draft: false
 slug: announcing-traject-indexing-software
 tags:
-- Librarian code
-- MARC
+- ruby
+- marc
+- solr
+- announcement
 - old
 author: billdueber
 ---

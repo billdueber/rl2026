@@ -4,10 +4,10 @@ date: '2010-03-02'
 draft: false
 slug: ruby-marc-with-pluggable-readers
 tags:
-- Librarian code
-- MARC
-- old
 - ruby
+- marc
+- tutorial
+- old
 author: billdueber
 ---
 

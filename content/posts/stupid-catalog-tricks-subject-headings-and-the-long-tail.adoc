@@ -4,8 +4,10 @@ date: '2010-04-13'
 draft: false
 slug: stupid-catalog-tricks-subject-headings-and-the-long-tail
 tags:
-- Data Cleanup
-- MARC
+- cataloging
+- marc
+- data-quality
+- discovery
 - old
 author: billdueber
 ---

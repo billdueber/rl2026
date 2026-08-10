@@ -4,9 +4,9 @@ date: '2008-07-02'
 draft: false
 slug: intuition-based-librarianship
 tags:
-- Librarianship
+- rant
+- discovery
 - old
-- Rant
 author: billdueber
 ---
 

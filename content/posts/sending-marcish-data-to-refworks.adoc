@@ -4,6 +4,8 @@ date: '2009-05-11'
 draft: false
 slug: sending-marcish-data-to-refworks
 tags:
+- vufind
+- tutorial
 - old
 author: billdueber
 ---

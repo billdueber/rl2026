@@ -4,7 +4,8 @@ date: '2008-05-13'
 draft: false
 slug: json-json-everywhere
 tags:
-- APIs
+- serialization
+- apis
 - old
 author: billdueber
 ---

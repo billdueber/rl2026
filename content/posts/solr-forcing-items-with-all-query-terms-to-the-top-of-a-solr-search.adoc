@@ -4,8 +4,10 @@ date: '2010-08-18'
 draft: false
 slug: solr-forcing-items-with-all-query-terms-to-the-top-of-a-solr-search
 tags:
+- solr
+- discovery
+- tutorial
 - old
-- Solr
 author: billdueber
 ---
 

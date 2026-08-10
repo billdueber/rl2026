@@ -4,6 +4,8 @@ date: '2010-09-16'
 draft: false
 slug: vufind-midwest-gathering
 tags:
+- vufind
+- discovery
 - old
 author: billdueber
 ---

@@ -4,6 +4,8 @@ date: '2010-02-18'
 draft: false
 slug: oclc-still-not-normalizing-their-lccns
 tags:
+- standard-numbers
+- data-quality
 - old
 author: billdueber
 ---

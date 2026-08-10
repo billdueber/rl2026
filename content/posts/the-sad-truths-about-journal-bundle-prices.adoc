@@ -4,6 +4,7 @@ date: '2009-09-23'
 draft: false
 slug: the-sad-truths-about-journal-bundle-prices
 tags:
+- e-resources
 - old
 author: billdueber
 ---

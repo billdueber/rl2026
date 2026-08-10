@@ -4,6 +4,8 @@ date: '2008-10-02'
 draft: false
 slug: wanted-a-better-proxy-server
 tags:
+- e-resources
+- rant
 - old
 author: billdueber
 ---

@@ -4,10 +4,10 @@ date: '2011-07-01'
 draft: false
 slug: even-better-even-simpler-multithreading-with-jruby
 tags:
-- benchmark
-- JRuby
-- old
 - ruby
+- jruby
+- tutorial
+- old
 author: billdueber
 ---
 

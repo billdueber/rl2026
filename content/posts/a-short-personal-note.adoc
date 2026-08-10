@@ -4,8 +4,8 @@ date: '2011-10-11'
 draft: false
 slug: a-short-personal-note
 tags:
+- personal
 - old
-- Personal
 author: billdueber
 ---
 

@@ -4,9 +4,10 @@ date: '2010-09-13'
 draft: false
 slug: simple-ruby-gem-for-dealing-with-isbnissnlccn
 tags:
-- Librarian code
-- old
 - ruby
+- standard-numbers
+- announcement
+- old
 author: billdueber
 ---
 

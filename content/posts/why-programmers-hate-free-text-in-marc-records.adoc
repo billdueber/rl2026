@@ -4,8 +4,9 @@ date: '2011-04-11'
 draft: false
 slug: why-programmers-hate-free-text-in-marc-records
 tags:
-- Data Cleanup
-- MARC
+- marc
+- cataloging
+- data-quality
 - old
 author: billdueber
 ---

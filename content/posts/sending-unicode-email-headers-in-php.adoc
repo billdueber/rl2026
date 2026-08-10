@@ -4,6 +4,7 @@ date: '2009-08-17'
 draft: false
 slug: sending-unicode-email-headers-in-php
 tags:
+- tutorial
 - old
 author: billdueber
 ---

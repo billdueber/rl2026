@@ -4,10 +4,11 @@ date: '2014-10-09'
 draft: false
 slug: marc_serialization_revisited
 tags:
-- benchmark
-- MARC
-- old
 - ruby
+- marc
+- serialization
+- benchmark
+- old
 author: billdueber
 ---
 

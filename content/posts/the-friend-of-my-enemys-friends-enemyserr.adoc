@@ -4,6 +4,7 @@ date: '2008-05-15'
 draft: false
 slug: the-friend-of-my-enemys-friends-enemyserr
 tags:
+- fun
 - old
 author: billdueber
 ---

@@ -4,9 +4,10 @@ date: '2011-05-06'
 draft: false
 slug: ruby-gem-library_stdnums-goes-to-version-1-0
 tags:
-- Librarian code
-- old
 - ruby
+- standard-numbers
+- announcement
+- old
 author: billdueber
 ---
 

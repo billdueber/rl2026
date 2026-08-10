@@ -4,6 +4,7 @@ date: '2008-05-15'
 draft: false
 slug: google-doctype-open-documentation-open-code
 tags:
+- announcement
 - old
 author: billdueber
 ---

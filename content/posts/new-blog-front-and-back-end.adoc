@@ -4,7 +4,7 @@ date: '2013-12-17'
 draft: false
 slug: new-blog-front-and-back-end
 tags:
-- Meta
+- personal
 - old
 author: billdueber
 ---
