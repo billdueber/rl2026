@@ -1,11 +1,13 @@
-+++
-title = "Another short personal note"
-date = 2012-02-27
-draft = false
-slug = "another-short-personal-note"
-tags = ["old", "Personal"]
-author = "billdueber"
-+++
+---
+title: Another short personal note
+date: '2012-02-27'
+draft: false
+slug: another-short-personal-note
+tags:
+- personal
+- old
+author: billdueber
+---
 
 The baby spent all last week in the hospital. Nothing life-threatening (so long as he was in the hospital and could get O2 when needed); it was just annoying.
 

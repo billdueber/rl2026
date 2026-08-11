@@ -1,10 +1,12 @@
-+++
-title = "UPenn library has video \"commercials"
-date = 2008-05-07
-draft = false
-slug = "upenn-library-has-video-commercials"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: UPenn library has video "commercials
+date: '2008-05-07'
+draft: false
+slug: upenn-library-has-video-commercials
+tags:
+- fun
+- old
+author: billdueber
+---
 
 The University of Pennsylvania Library has a set of link:http://www.library.upenn.edu/common/allvideos.html[video commercials] touting their products -- some of which are musicals! Worth a look-see.

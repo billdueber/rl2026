@@ -1,11 +1,14 @@
-+++
-title = "Thinking through a simple API for HathiTrust item metadata"
-date = 2009-11-03
-draft = false
-slug = "thinking-through-a-simple-api-for-hathitrust-item-metadata"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Thinking through a simple API for HathiTrust item metadata
+date: '2009-11-03'
+draft: false
+slug: thinking-through-a-simple-api-for-hathitrust-item-metadata
+tags:
+- hathitrust
+- apis
+- old
+author: billdueber
+---
 
 *EDITS*:
 

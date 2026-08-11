@@ -1,0 +1,5 @@
+---
+title: November 2010
+date: '2010-11-01'
+draft: false
+---

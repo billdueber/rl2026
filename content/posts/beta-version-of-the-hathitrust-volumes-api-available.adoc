@@ -1,11 +1,15 @@
-+++
-title = "Beta version of the HathiTrust Volumes API available"
-date = 2009-12-15
-draft = false
-slug = "beta-version-of-the-hathitrust-volumes-api-available"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Beta version of the HathiTrust Volumes API available
+date: '2009-12-15'
+draft: false
+slug: beta-version-of-the-hathitrust-volumes-api-available
+tags:
+- hathitrust
+- announcement
+- apis
+- old
+author: billdueber
+---
 
 == #red[MAJOR CHANGE]
 

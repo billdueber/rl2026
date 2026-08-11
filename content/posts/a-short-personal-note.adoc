@@ -1,11 +1,13 @@
-+++
-title = "A short personal note"
-date = 2011-10-11
-draft = false
-slug = "a-short-personal-note"
-tags = ["old", "Personal"]
-author = "billdueber"
-+++
+---
+title: A short personal note
+date: '2011-10-11'
+draft: false
+slug: a-short-personal-note
+tags:
+- personal
+- old
+author: billdueber
+---
 
 We had another baby. :-)
 

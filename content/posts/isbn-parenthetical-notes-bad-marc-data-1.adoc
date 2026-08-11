@@ -1,11 +1,15 @@
-+++
-title = "ISBN parenthetical notes: Bad MARC data #1"
-date = 2011-04-12
-draft = false
-slug = "isbn-parenthetical-notes-bad-marc-data-1"
-tags = ["Data Cleanup", "MARC", "old"]
-author = "billdueber"
-+++
+---
+title: 'ISBN parenthetical notes: Bad MARC data #1'
+date: '2011-04-12'
+draft: false
+slug: isbn-parenthetical-notes-bad-marc-data-1
+tags:
+- marc
+- cataloging
+- data-quality
+- old
+author: billdueber
+---
 
 Yesterday, I gave a brief overview of link:http://robotlibrarian.billdueber.com/why-programmers-hate-free-text-in-marc-records/[why free text is hard to deal with].
 

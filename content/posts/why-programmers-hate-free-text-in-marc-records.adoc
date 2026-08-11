@@ -1,11 +1,15 @@
-+++
-title = "Why programmers hate free text in MARC records"
-date = 2011-04-11
-draft = false
-slug = "why-programmers-hate-free-text-in-marc-records"
-tags = ["Data Cleanup", "MARC", "old"]
-author = "billdueber"
-+++
+---
+title: Why programmers hate free text in MARC records
+date: '2011-04-11'
+draft: false
+slug: why-programmers-hate-free-text-in-marc-records
+tags:
+- marc
+- cataloging
+- data-quality
+- old
+author: billdueber
+---
 
 One of the frustrating things about dealing with MARC (nee AACR2) data is how much nonsense is stored in free text when a unique identifier in a well-defined place would have done a much better job.
 

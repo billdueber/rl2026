@@ -1,11 +1,15 @@
-+++
-title = "Benchmarking MARC record parsing in Ruby"
-date = 2009-09-17
-draft = false
-slug = "benchmarking-marc-record-parsing-in-ruby"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Benchmarking MARC record parsing in Ruby
+date: '2009-09-17'
+draft: false
+slug: benchmarking-marc-record-parsing-in-ruby
+tags:
+- ruby
+- marc
+- benchmark
+- old
+author: billdueber
+---
 
 &#91;Note: since I started writing this, I found out Bess & Co. store MARC-XML. That makes a difference, since XML in Ruby can be really, really slow]
 

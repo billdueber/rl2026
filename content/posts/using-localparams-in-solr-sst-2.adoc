@@ -1,11 +1,15 @@
-+++
-title = "Using localparams in Solr (or, how to boost records that contain all terms) (SST #2)"
-date = 2012-03-06
-draft = false
-slug = "using-localparams-in-solr-sst-2"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: 'Using localparams in Solr (or, how to boost records that contain all terms)
+  (SST #2)'
+date: '2012-03-06'
+draft: false
+slug: using-localparams-in-solr-sst-2
+tags:
+- solr
+- tutorial
+- old
+author: billdueber
+---
 
 &#91;Note: this isn't so much a _Stupid Solr Trick_ as a _Thing You Should Probably Know_; consider it required reading for the next SST. If you're just joining us, check out the link:http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/[introduction to the Stupid Solr Tricks series]]
 

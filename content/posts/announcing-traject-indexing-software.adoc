@@ -1,11 +1,16 @@
-+++
-title = "Announcing \"traject\" indexing software"
-date = 2013-10-14
-draft = false
-slug = "announcing-traject-indexing-software"
-tags = ["Librarian code", "MARC", "old"]
-author = "billdueber"
-+++
+---
+title: Announcing "traject" indexing software
+date: '2013-10-14'
+draft: false
+slug: announcing-traject-indexing-software
+tags:
+- ruby
+- marc
+- solr
+- announcement
+- old
+author: billdueber
+---
 
 &#91;Over the next few days I'll be writing a series of posts that highlight a new indexing solution by Jonathan Rochkind and myself called `traject` that we're using to index MARC data into Solr. This is the introduction.]
 

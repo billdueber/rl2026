@@ -1,11 +1,15 @@
-+++
-title = "A plea: use Solr to normalize your data"
-date = 2009-03-30
-draft = false
-slug = "a-plea-use-solr-to-normalize-your-data"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: 'A plea: use Solr to normalize your data'
+date: '2009-03-30'
+draft: false
+slug: a-plea-use-solr-to-normalize-your-data
+tags:
+- solr
+- data-quality
+- vufind
+- old
+author: billdueber
+---
 
 &#91;Only, of course, if you're using Solr. Otherwise, that'd be dumb.]
 

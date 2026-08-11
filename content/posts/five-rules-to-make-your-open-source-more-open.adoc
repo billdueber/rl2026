@@ -1,11 +1,13 @@
-+++
-title = "Five rules to make your open source more open"
-date = 2009-01-25
-draft = false
-slug = "five-rules-to-make-your-open-source-more-open"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Five rules to make your open source more open
+date: '2009-01-25'
+draft: false
+slug: five-rules-to-make-your-open-source-more-open
+tags:
+- rant
+- old
+author: billdueber
+---
 
 &#91;I've noticed that a sure way to get people to look at stuff (as measured by, say, link:http://digg.com/[digg]) is to include a number. So I did. Five. ]
 

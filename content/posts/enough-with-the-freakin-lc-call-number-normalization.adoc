@@ -1,11 +1,15 @@
-+++
-title = "Enough with the freakin' LC Call Number normalization!"
-date = 2009-03-18
-draft = false
-slug = "enough-with-the-freakin-lc-call-number-normalization"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Enough with the freakin' LC Call Number normalization!
+date: '2009-03-18'
+draft: false
+slug: enough-with-the-freakin-lc-call-number-normalization
+tags:
+- callnumbers
+- data-quality
+- rant
+- old
+author: billdueber
+---
 
 OK. I'm done with it, and this time I mean it.
 

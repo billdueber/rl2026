@@ -1,11 +1,14 @@
-+++
-title = "Planet Code4Lib in a snapshot"
-date = 2008-07-07
-draft = false
-slug = "planet-code4lib-in-a-snapshot"
-tags = ["code4lib", "Fun", "old"]
-author = "billdueber"
-+++
+---
+title: Planet Code4Lib in a snapshot
+date: '2008-07-07'
+draft: false
+slug: planet-code4lib-in-a-snapshot
+tags:
+- code4lib
+- fun
+- old
+author: billdueber
+---
 
 Inspired by the link:http://inquiringlibrarian.blogspot.com/2008/07/i-couldnt-resist.html[Inquiring Librarian], I just used link:http://wordle.net[Wordle] to create a "tagcloud" of the current Planet Code4Lib feed.
 

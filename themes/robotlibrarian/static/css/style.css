@@ -33,11 +33,13 @@ a:hover { text-decoration: underline; }
   padding: 1.4rem 0 1rem;
 }
 .header-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2.5rem;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 .brand-link {
   display: inline-flex;
@@ -46,8 +48,9 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
 }
 .site-logo {
-  width: 29px;
-  height: 33px;
+  width: auto;
+  height: auto;
+  align-self: stretch;
   flex-shrink: 0;
 }
 .brand-text {
@@ -228,6 +231,143 @@ a:hover { text-decoration: underline; }
 .site-footer a { color: var(--accent); }
 
 @media (max-width: 600px) {
-  .header-inner { flex-direction: column; align-items: flex-start; }
   .post { padding: 1.3rem 1.2rem; }
+}
+
+/* Two-column layout: content + right-hand sidebar */
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 1120px;
+}
+.content-grid .site-main { min-width: 0; }
+
+/* Sidebar */
+.sidebar { display: flex; flex-direction: column; gap: 1.4rem; }
+.sidebar-widget {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+}
+.sidebar-widget h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li { margin: 0 0 0.5rem; font-size: 0.86rem; line-height: 1.4; }
+.sidebar a { color: var(--accent); }
+.widget-date { color: var(--muted); font-size: 0.76rem; white-space: nowrap; }
+.widget-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; line-height: 1.9; }
+
+@media (max-width: 820px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .header-inner { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
+/* Stock admonitions (NOTE / TIP / IMPORTANT / CAUTION / WARNING):
+   boxed callouts with the type label kept — theme has no default styling,
+   and the generic table rules would otherwise render them as data tables */
+.admonitionblock {
+  margin: 1.2rem 0;
+}
+.admonitionblock table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.admonitionblock td {
+  border: 0;
+  padding: 0;
+  vertical-align: top;
+}
+/* The type label lives in its own cell ("Note", "Tip", ... in default mode) */
+.admonitionblock td.icon {
+  width: 1%;
+  white-space: nowrap;
+  padding: 0.9rem 0.7rem 0.9rem 0.2rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+/* If :icons: font is ever enabled, style the glyph instead of the text label */
+.admonitionblock td.icon i {
+  font-style: normal;
+  font-size: 1.15em;
+  color: var(--accent);
+}
+/* The box: accent border + soft wash on the content cell */
+.admonitionblock td.content {
+  border-left: 4px solid var(--accent);
+  background: #f6f9fc;
+  padding: 0.85rem 1.1rem;
+}
+.admonitionblock td.content > :first-child { margin-top: 0; }
+.admonitionblock td.content > :last-child,
+.admonitionblock td.content p:last-child { margin-bottom: 0; }
+/* Semantic colors per type (muted, theme-friendly) */
+.admonitionblock.tip td.icon { color: #2e7d32; }
+.admonitionblock.tip td.content { border-left-color: #2e7d32; }
+.admonitionblock.important td.icon { color: #6a4fa3; }
+.admonitionblock.important td.content { border-left-color: #6a4fa3; }
+.admonitionblock.caution td.icon { color: #b26a00; }
+.admonitionblock.caution td.content { border-left-color: #b26a00; }
+.admonitionblock.warning td.icon { color: #c0392b; }
+.admonitionblock.warning td.content { border-left-color: #c0392b; }
+
+/* Pull-quote: admonition with the label stripped, floated left at 30% width */
+.admonitionblock.pullquote {
+  float: left;
+  width: 30%;
+  margin: 0.4em 1.5em 0.6em 0;
+  background: none;
+}
+/* Right-floated variant: [.pullquote.right] */
+.admonitionblock.pullquote.right {
+  float: right;
+  margin: 0.4em 0 0.6em 1.5em;
+}
+/* The label/icon lives in its own table cell; remove it entirely */
+.admonitionblock.pullquote td.icon { display: none; }
+/* Strip the generic post-table styling so the quote isn't boxed like data */
+.admonitionblock.pullquote table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.admonitionblock.pullquote td.content {
+  border: 0;
+  border-left: 4px solid var(--accent);
+  background: #f6f9fc;
+  padding: 0.9em 1em;
+  font-size: 1.2em;
+  font-style: italic;
+  color: #444;
+  line-height: 1.5;
+}
+/* Next heading starts below the float instead of hugging it */
+.post-content h2,
+.post-content h3,
+.post-content h4 { clear: both; }
+
+@media (max-width: 600px) {
+  .admonitionblock.pullquote,
+  .admonitionblock.pullquote.right {
+    float: none;
+    width: 100%;
+    margin: 1rem 0;
+  }
 }

@@ -1,11 +1,14 @@
-+++
-title = "Requiring/Preferring searches that don't span multiple values (SST #3)"
-date = 2012-03-09
-draft = false
-slug = "requiringpreferring-searches-that-dont-span-multiple-values-sst-3"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: 'Requiring/Preferring searches that don''t span multiple values (SST #3)'
+date: '2012-03-09'
+draft: false
+slug: requiringpreferring-searches-that-dont-span-multiple-values-sst-3
+tags:
+- solr
+- tutorial
+- old
+author: billdueber
+---
 
 ____
 Check out link:http://robotlibrarian.billdueber.com/stupid-solr-tricks-introduction/[introduction to the Stupid Solr Tricks series] if you're just joining us.]

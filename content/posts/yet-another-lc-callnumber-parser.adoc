@@ -1,11 +1,15 @@
-+++
-title = "Help me test yet another LC Callnumber parser"
-date = 2014-01-30
-draft = false
-slug = "yet-another-lc-callnumber-parser"
-tags = ["Callnumbers", "old"]
-author = "billdueber"
-+++
+---
+title: Help me test yet another LC Callnumber parser
+date: '2014-01-30'
+draft: false
+slug: yet-another-lc-callnumber-parser
+tags:
+- callnumbers
+- ruby
+- tutorial
+- old
+author: billdueber
+---
 
 Those who have followed this blog and my code for a while know that I have a link:http://robotlibrarian.billdueber.com/normalizing-loc-call-numbers-for-sorting/[long], slightly link:http://robotlibrarian.billdueber.com/enough-with-the-freakin-lc-call-number-normalization/[sad], and borderline link:https://github.com/billdueber/lib.umich.edu-solr-stuff[abusive] relationship with Library of Congress call numbers.
 

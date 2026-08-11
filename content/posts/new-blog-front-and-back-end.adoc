@@ -1,11 +1,13 @@
-+++
-title = "New blog front- and back-end"
-date = 2013-12-17
-draft = false
-slug = "new-blog-front-and-back-end"
-tags = ["Meta", "old"]
-author = "billdueber"
-+++
+---
+title: New blog front- and back-end
+date: '2013-12-17'
+draft: false
+slug: new-blog-front-and-back-end
+tags:
+- personal
+- old
+author: billdueber
+---
 
 A while back, link:http://dreamhost.com/[Dreamhost] had some problems and my blog and assorted other websites I help keep track of went down.
 

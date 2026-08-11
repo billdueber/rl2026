@@ -1,11 +1,14 @@
-+++
-title = "An exercise in Solr and DataImportHandler: HathiTrust data"
-date = 2009-09-28
-draft = false
-slug = "an-exercise-in-solr-and-dataimporthandler-hathitrust-data"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: 'An exercise in Solr and DataImportHandler: HathiTrust data'
+date: '2009-09-28'
+draft: false
+slug: an-exercise-in-solr-and-dataimporthandler-hathitrust-data
+tags:
+- solr
+- hathitrust
+- old
+author: billdueber
+---
 
 Many of the folks who read this blog (hi, both of you! Mom, say hello to Dad!) are aware, at least tangentially, of the link:http://www.hathitrust.org/[HathiTrust]. Currently hosted by us at the link:http://www.lib.umich.edu/[University of Michigan], the most public interface to its data is a link:http://www.vufind.org/[VuFind] installation you can access at link:http://catalog.hathitrust.org[catalog.hathitrust.org] (or, for you smart-phone types, at link:http://m.catalog.hathitrust.org/[m.catalog.hathitrust.org]). Once you do a metadata search, you get links into the actual page images or a chance to search the fulltext of the selected item (depending on its copyright status).
 

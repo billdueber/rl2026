@@ -1,0 +1,20 @@
+{{ define "main" }}
+  <h1 class="page-title">{{ .Title }} archive</h1>
+  <div class="post-list">
+    {{ $posts := where .Site.RegularPages "Section" "posts" }}
+    {{ $year  := .Date.Year }}
+    {{ $month := .Date.Month }}
+    {{ range $posts }}
+      {{ if and (eq .Date.Year $year) (eq .Date.Month $month) }}
+        <article class="post-summary">
+          <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <div class="post-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+            {{ with .Params.tags }} &middot; {{ partial "tags.html" $ }}{{ end }}
+          </div>
+          {{ partial "snippet.html" . }}
+        </article>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}

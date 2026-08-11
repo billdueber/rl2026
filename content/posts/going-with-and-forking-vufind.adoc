@@ -1,11 +1,14 @@
-+++
-title = "Going with and \"forking\" VUFind"
-date = 2009-08-19
-draft = false
-slug = "going-with-and-forking-vufind"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Going with and "forking" VUFind
+date: '2009-08-19'
+draft: false
+slug: going-with-and-forking-vufind
+tags:
+- vufind
+- discovery
+- old
+author: billdueber
+---
 
 _Note: This is the second in a series I'm doing about our VUFind installation, link:http://mirlyn.lib.umich.edu/[Mirlyn]. Here I talk about how we got to where we are. Next I'll start looking at specific technologies, how we solved various problems, and generally more nerd-centered stuff._
 

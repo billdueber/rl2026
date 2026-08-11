@@ -1,11 +1,15 @@
-+++
-title = "Building a solr text filter for normalizing data"
-date = 2009-08-20
-draft = false
-slug = "building-a-solr-text-filter-for-normalizing-data"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Building a solr text filter for normalizing data
+date: '2009-08-20'
+draft: false
+slug: building-a-solr-text-filter-for-normalizing-data
+tags:
+- solr
+- data-quality
+- tutorial
+- old
+author: billdueber
+---
 
 &#91;Kind of part of a continuing series on our VUFind implementation; more of a sidebar, really.]
 

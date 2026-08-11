@@ -1,11 +1,16 @@
-+++
-title = "Still another look at MARC parsing in ruby and jruby"
-date = 2010-01-29
-draft = false
-slug = "still-another-look-at-marc-parsing-in-ruby-and-jruby"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Still another look at MARC parsing in ruby and jruby
+date: '2010-01-29'
+draft: false
+slug: still-another-look-at-marc-parsing-in-ruby-and-jruby
+tags:
+- ruby
+- jruby
+- marc
+- benchmark
+- old
+author: billdueber
+---
 
 I've been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.
 

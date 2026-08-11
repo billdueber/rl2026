@@ -1,11 +1,15 @@
-+++
-title = "Indexing data into Solr via JRuby (with threads!)"
-date = 2010-02-16
-draft = false
-slug = "indexing-data-into-solr-via-jruby-with-threads"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Indexing data into Solr via JRuby (with threads!)
+date: '2010-02-16'
+draft: false
+slug: indexing-data-into-solr-via-jruby-with-threads
+tags:
+- solr
+- jruby
+- tutorial
+- old
+author: billdueber
+---
 
 &#91;Note: in this post I'm just going to focus on the "get stuff into Solr" part. My normal focus -- MARC data -- will make an appearance in the next post when I talk about using this in addition to / instead of solrmarc.]
 

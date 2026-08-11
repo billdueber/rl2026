@@ -13,6 +13,7 @@ defaultContentLanguage = 'en'
 
 [permalinks]
   posts = '/:year/:month/:slug/'
+  archive = '/:year/:month/'
 
 [taxonomies]
   tag = 'tags'

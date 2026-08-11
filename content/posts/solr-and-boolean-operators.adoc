@@ -1,11 +1,14 @@
-+++
-title = "Solr and boolean operators"
-date = 2011-12-01
-draft = false
-slug = "solr-and-boolean-operators"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: Solr and boolean operators
+date: '2011-12-01'
+draft: false
+slug: solr-and-boolean-operators
+tags:
+- solr
+- tutorial
+- old
+author: billdueber
+---
 
 &#91;Summary: *ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!*]
 

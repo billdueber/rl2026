@@ -1,11 +1,16 @@
-+++
-title = "Ruby MARC serialization/deserialization revisited"
-date = 2014-10-09
-draft = false
-slug = "marc_serialization_revisited"
-tags = ["benchmark", "MARC", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: Ruby MARC serialization/deserialization revisited
+date: '2014-10-09'
+draft: false
+slug: marc_serialization_revisited
+tags:
+- ruby
+- marc
+- serialization
+- benchmark
+- old
+author: billdueber
+---
 
 A few years ago, I link:http://robotlibrarian.billdueber.com/2010/09/sizespeed-of-various-marc-serializations-using-ruby-marc/[benchmarked] various methods of serializing/deserialzing MARC data using the link:http://github.com/ruby-marc/ruby-marc/[ruby-marc] gem. Given that I'm planning on starting fresh with my catalog setup, I thought I'd take a moment to revisit them.
 

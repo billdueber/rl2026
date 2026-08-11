@@ -1,11 +1,14 @@
-+++
-title = "[RETRACTED] Code4Lib 2011 Lightning Talk Slides"
-date = 2011-02-09
-draft = false
-slug = "code4lib-2011-lightning-talk-slides"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: "[RETRACTED] Code4Lib 2011 Lightning Talk Slides"
+date: '2011-02-09'
+draft: false
+slug: code4lib-2011-lightning-talk-slides
+tags:
+- code4lib
+- announcement
+- old
+author: billdueber
+---
 
 ____
 DANGER!

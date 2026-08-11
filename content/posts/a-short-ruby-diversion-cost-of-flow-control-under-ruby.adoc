@@ -1,11 +1,14 @@
-+++
-title = "A short ruby diversion: cost of flow control under Ruby"
-date = 2011-05-03
-draft = false
-slug = "a-short-ruby-diversion-cost-of-flow-control-under-ruby"
-tags = ["benchmark", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: 'A short ruby diversion: cost of flow control under Ruby'
+date: '2011-05-03'
+draft: false
+slug: a-short-ruby-diversion-cost-of-flow-control-under-ruby
+tags:
+- ruby
+- benchmark
+- old
+author: billdueber
+---
 
 A couple days ago I decided to finally get back to working on link:https://github.com/billdueber/threach[`threach`] to try to deal with problems it had -- essentially, it didn't deal well with non-local exits due to calls to `break` or even something simple like a `NoMethodError`.
 

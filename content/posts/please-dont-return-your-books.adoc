@@ -1,11 +1,14 @@
-+++
-title = "Please: don't return your books"
-date = 2013-02-12
-draft = false
-slug = "please-dont-return-your-books"
-tags = ["Fun", "Librarianship", "old"]
-author = "billdueber"
-+++
+---
+title: 'Please: don''t return your books'
+date: '2013-02-12'
+draft: false
+slug: please-dont-return-your-books
+tags:
+- code4lib
+- fun
+- old
+author: billdueber
+---
 
 So, I'm at link:http://code4lib.org/conference/2013[code4lib 2013] right now, where side conversations and informal exchanges tend to be the most interesting part.
 

@@ -1,11 +1,14 @@
-+++
-title = "Psst. We're not printing cards anymore"
-date = 2008-05-12
-draft = false
-slug = "psst-were-not-printing-cards-anymore"
-tags = ["Data Cleanup", "old", "Rant"]
-author = "billdueber"
-+++
+---
+title: Psst. We're not printing cards anymore
+date: '2008-05-12'
+draft: false
+slug: psst-were-not-printing-cards-anymore
+tags:
+- cataloging
+- rant
+- old
+author: billdueber
+---
 
 &#91;From a series I'm calling, "Things About The Library I Think Are Stoooopid", part one of about a zillion.]
 

@@ -1,11 +1,15 @@
-+++
-title = "Rolling out UMich's \"VUFind\": Introduction and New Features"
-date = 2009-08-14
-draft = false
-slug = "rolling-out-umichs-vufind-introduction-and-new-features"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: 'Rolling out UMich''s "VUFind": Introduction and New Features'
+date: '2009-08-14'
+draft: false
+slug: rolling-out-umichs-vufind-introduction-and-new-features
+tags:
+- vufind
+- discovery
+- announcement
+- old
+author: billdueber
+---
 
 For the last few months, I've been working on rolling out a ridiculous-modified version of link:http://vufind.org/[Vufind], which we just launched as our primary OPAC, link:http://mirlyn.lib.umich.edu/[Mirlyn], with a slightly-different version powering link:http://catalog.hathitrust.org/[catalog.hathitrust.org], a temporary metadata search on the HathiTrust data until the OCLC takes it over at some undetermined date.
 

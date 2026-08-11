@@ -1,11 +1,13 @@
-+++
-title = "TicTocs: Give us a file! Pretty pretty pretty please!"
-date = 2009-02-02
-draft = false
-slug = "tictocs-give-us-a-file-pretty-pretty-pretty-please"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: 'TicTocs: Give us a file! Pretty pretty pretty please!'
+date: '2009-02-02'
+draft: false
+slug: tictocs-give-us-a-file-pretty-pretty-pretty-please
+tags:
+- e-resources
+- old
+author: billdueber
+---
 
 For those who haven't heard, link:http://www.tictocs.ac.uk/[ticTOCs] is a service that provides web-based access to a database of Journal RSS/Atom Table of Contents feeds. Awesome.
 

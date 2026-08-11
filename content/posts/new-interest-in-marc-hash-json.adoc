@@ -1,11 +1,14 @@
-+++
-title = "New interest in MARC-HASH / JSON"
-date = 2010-02-26
-draft = false
-slug = "new-interest-in-marc-hash-json"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: New interest in MARC-HASH / JSON
+date: '2010-02-26'
+draft: false
+slug: new-interest-in-marc-hash-json
+tags:
+- marc
+- serialization
+- old
+author: billdueber
+---
 
 ____
 EDIT: This is historical -- the recommended serialization for marc in json is now Ross Singer's

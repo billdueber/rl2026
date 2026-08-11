@@ -1,11 +1,14 @@
-+++
-title = "Schemaless\" solr with dynamicField and copyField"
-date = 2014-10-02
-draft = false
-slug = "schemaless-solr-with-dynamicfield-and-copyfield"
-tags = ["old", "Solr"]
-author = "billdueber"
-+++
+---
+title: Schemaless" solr with dynamicField and copyField
+date: '2014-10-02'
+draft: false
+slug: schemaless-solr-with-dynamicfield-and-copyfield
+tags:
+- solr
+- tutorial
+- old
+author: billdueber
+---
 
 &#91;Holy Kamoly, it's been a long time since I blogged!]
 

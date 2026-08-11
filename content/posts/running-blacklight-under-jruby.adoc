@@ -1,11 +1,15 @@
-+++
-title = "Running Blacklight under JRuby"
-date = 2009-11-18
-draft = false
-slug = "running-blacklight-under-jruby"
-tags = ["old"]
-author = "billdueber"
-+++
+---
+title: Running Blacklight under JRuby
+date: '2009-11-18'
+draft: false
+slug: running-blacklight-under-jruby
+tags:
+- ruby
+- jruby
+- tutorial
+- old
+author: billdueber
+---
 
 I decided to see if I could get link:http://projectblacklight.org/[Blacklight] working under link:http://jruby.org/[JRuby], starting with running the test suite and working my way up from there.
 

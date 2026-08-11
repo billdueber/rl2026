@@ -1,11 +1,15 @@
-+++
-title = "ruby-marc with pluggable readers"
-date = 2010-03-02
-draft = false
-slug = "ruby-marc-with-pluggable-readers"
-tags = ["Librarian code", "MARC", "old", "ruby"]
-author = "billdueber"
-+++
+---
+title: ruby-marc with pluggable readers
+date: '2010-03-02'
+draft: false
+slug: ruby-marc-with-pluggable-readers
+tags:
+- ruby
+- marc
+- tutorial
+- old
+author: billdueber
+---
 
 I've been messing with easier ways of adding parsers to ruby-marc's MARC::Reader object. The idea is that you can do this:
 
