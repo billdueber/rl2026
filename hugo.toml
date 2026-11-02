@@ -29,3 +29,11 @@ defaultContentLanguage = 'en'
 [security]
   [security.exec]
     allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss$', '^asciidoctor$']
+
+
+[sitemap]
+  changeFreq = ''
+  disable = false
+  filename = 'sitemap.xml'
+  priority = -1
+

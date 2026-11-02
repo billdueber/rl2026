@@ -1,6 +1,6 @@
 ---
 title: Eleven Years and Change
-date: '2026-08-17T08:19:33+01:00'
+date: '2026-10-17T08:19:33+01:00'
 draft: falsex
 slug: eleven_years_and_change
 tags:
@@ -43,20 +43,21 @@ trying to convince
 yourself that you know what you're talking about. If you haven't written it
 down, you haven't really thought it through.
 
-Then Google Reader went dark, and I stopped writing. Apparently, all that lip service to critical thinking and high-minded exploration of ideas was completely subsumed by ego and the desire to be read.
+Then Google Reader went dark, and I stopped writing. Apparently, all my lip service to critical thinking and high-minded exploration of ideas was completely subsumed by ego and the desire to be read.
 
-I don't feel too bad about it. A lot of us stopped around the same time.
-Dancing like no one is watching is one thing, but writing when no one is reading is clearly another. I'm married to a writer, so I have a little insight into it.
+I don't feel too bad about it. A lot of us stopped blogging around the same time.
+Dancing like no one is watching is one thing, but writing when no one is reading is clearly another.
+I'm married to a writer, so I have a little insight into this.
 
 I didn't totally abandon the blog, of course. I just stopped writing in it. I
- changed the technology it was based on more than once, in lieu of actually
- writing, and managed to lose the comments and a lot of the formatting and
- such along the way. None of the old stuff is particularly interesting,
- anyway, and the posts with a more  technical lean are so hilariously out of
- date that they're more "fun" than useful.
+changed the technology it was based on more than once, in lieu of actually
+writing, and managed to lose the comments and a lot of the formatting and
+such along the way. None of the old stuff is particularly interesting,
+anyway, and the posts with a more  technical lean are so hilariously out of
+date that they're more "fun" than useful.
 
 I've been having a pretty good time going over the old posts.
-Part of it is the glimpses of a Me, back then, who's living a remarkably
+Part of it is the glimpses of a Me-Back-Then, who was living a remarkably
 similar life to the one I'm living now, especially my work life.
 Still working at
 the University of Michigan Libraries, still focused on programming and
@@ -70,11 +71,7 @@ The tone on those old posts is a little...strident, maybe? I had clearly heard s
 "Personal Brand" at some point and taken it to heart. But it's mostly good or good-enough work, and I'm still
 the best audience for my own humor, so that's all a lot of fun.
 
-The point being, I guess, that I'm actually in a position to look back a
-decade or more
-and make a valid, apples-to-apple-like-fruit comparison.
-
-A big part of what happened over the last ten years is that, in a lot of ways, I "settled in" to the job. I
+A big part of what happened over the last ten years is that, in a lot of ways, I "settled into" the job. I
 acquired all that vaunted "Organizational knowledge" that I was so quick to mock in the past. I got more
 familiar with the data we deal with, and the methods we use. I got to know more people at more institutions,
 and then watch most of them move on as they got older, switching careers or moving into management. I like to
@@ -98,20 +95,20 @@ myself Young and Smart.
 Code4Lib turned into a conference that was more welcoming to more interests and skill levels, which is an
 unambiguously Good Thing, but resulted in a conference that wasn't
 narrowly targeted straight at me anymore, which
-makes me feel a little sense of loss. It was an avenue which made it easy to
+makes me feel a little sense of loss. In the Old Days it was an affair which made it easy to
 find people doing more-or-less the same work I was doing, and to compare
 notes and ideas. I leaned on the conference and IRC channel perhaps a little
-too heavily, and the changes there plus my working from home since COVID
+too heavily, and the changes in that community, plus my working from home since COVID,
 have made me feel a little more isolated than I used to.
 
 I also acutely feel that I am, to put it mildly, no longer on the ballot for the Smartest Guy in the Room.
-Like every clichéd engineering-types, I pride myself on my ability to learn
+Like every clichéd engineering-type, I pride myself on my ability to learn
 things super-fast, grasp new
 concepts with little to go on, and put things into use quickly. These days, it feels more like I'm running as
 hard as I can just to stay in place. Some of it is that I have a life at home
 that needs more attention than it
-once did, but mostly I've lost a few steps and things are
-just harder for me.
+once did, but mostly it's simply that I've lost a few steps and things are
+ harder for me than they used to be.
 
 ## The burden of non-greatness
 
@@ -119,15 +116,13 @@ This can on occasion fill me with despair.
 
 Over the years, as I've started to struggle more it's become clear that
 essentially my whole sense of self is based around the
-ideal, "Don't be a burden."
-
-Yes, that's simplistic and reeking of traditional gender roles. No, it's not
-healthy.
-
-Once I
-managed to articulate it to myself, it was easy to see in my dad and uncles,
+ideal, "Don't be a burden." Once I
+managed to articulate this particular psychosis to myself, it was easy to see in my dad and uncles,
 but of course recognizing it isn't the same
 as successfully dealing with it.
+
+Yes, that's simplistic and reeking of traditional gender roles. No, it's not
+healthy. Yes, I'm from Minnesota and grew up German-Catholic, why do you ask?
 
 Part of working in a technical field is that it's relatively
 easy to tell how good of a job you -- or a colleague -- is doing.
@@ -136,37 +131,68 @@ who you're not quite sure is
 going to get his shit done, who can't be trusted to do the hard stuff
 anymore, who may need a babysitter of some kind. I know if I were my manager,
 I'd be considering a lot of those issues when I look at me. There are other
-reasons for that which I'll explore in another post, maybe.
+reasons for for my decline that I'll explore in another post, maybe, but
+it's unambiguously true that I'm not as productive as I once was, and slower to
+figure out what's going on.
 
-Don't get me wrong -- I'm still useful. Just not as much as I used to be,
-and the idea that people have to "manage" me (in the "keeping an eye on Bill"
+Don't get me wrong -- I'm still useful. Just not as much as I used to be.
+And the idea that people may have to "manage" me (in the "keep an eye on Bill"
  sense) is disquieting.
 
 I'm not sure exactly what mid-life crisis this puts me in right now. Probably
-right around 3 or 4. First was when I finally gave up on my dissertation.
-Second was realizing that despite my expectations, I didn't like having
-little kids. Then there was a bit when I realized I was never going to be
+right around 3 or 4. First was when I finally gave up on my dissertation, although calling
+that "mid-life" is a bit of a stretch.
+Second was realizing that, despite my expectations, I didn't like having
+little kids, and it took me a long time (both for me to "work on myself" and for
+them to get older) before that sorted itself out. Then there was a bit when I realized I was never going to be
 a particularly Big Deal, but I don't know if that one counts. And then
 there's now.
 
+
+## Raging against the machine.
+
+It's AI, of course.
+
+Quick anecdote: Some years back, I was going crazy trying to figure out how to get a performant
+SQL query that touched a ton of tables. I had foreign keys up the wazoo. I had query hints.
+I had eventually succumbed to de-normalizing some of the data in a pre-processing step. I don't
+doubt that someone could have made it work, but I couldn't. And then I finally, finally realized: the
+machine I building for had like 32GB of RAM -- which at the time was ungodly. I could do a
+dumb-as-rocks initial query, load the result into a _goddamn perl hash_,
+and do the rest of it in memory. I lost an enormous amount of time trying to solve a problem
+based on working around constraints that were no longer valid.
+
+[.pullquote.right]
+[NOTE]
+====
+The playing field is not just changing, it may well now be
+alien.
+====
+
+I feel the same way now when working with LLMs. The constraints have changed dramtically. The AI doesn't get confused
+with long methods, or 12-branch if/then statements. Writing for a human audience is demonstrably
+more expensive (at least initially) than writing for agents. Developing expertise in a platform
+(programming language, hardware, etc.) matters little when the models are so very, _very_ good
+at porting stuff. "Ergonomics" might mean wildly different things depending on the tooling you're
+using and how smart it is. There will come a point when it no longer makes sense to optimize
+the code "I" produce for human-readability, and I suspect that point may have already passed.
+
+The playing field is not just changing, it may well now be
+alien.
+
 ## Getting back on the horse. Or maybe on the pelican on a bike.
 
-This isn't a "boo hoo, I'm so stupid and old" post. Or, at least not _just_ that. Because the whole LLM
-revolution has really kind of kick-started me again. I'm finding it easier to apply the stuff I'm actually
+This isn't a "boo hoo, I'm so stupid and old" post. Or, at least not _just_ that.  I _am_
+finding it easier to apply the stuff I'm actually
 good at -- architecture, algorithms, a hard-won intuition about the underlying data and where it might give us
 problems -- and the LLMs can largely take care of the stuff I'm bad at.
 
-So, for the foreseeable future, I'm going to make a real effort to understand
-what it
- all
-means for me, in a very narrow, narcissistic way. I'm not sure I'm willing to
- call it
-a "revolution" as of yet, but I'm damn close. It'll depend on how much it
-actually costs once the dust settles -- we really don't know how much it's
-costing the private US companies to build and serve their models yet --
-but I'm really enjoying myself in the meantime.
+Problem is, the very latest frontier-level models are better than I am at roughly...everything.
+I'm not sure how to feel about that yet. I derive an unhealthy about of
+my self-worth from being smart and useful at work, and as opportunities to feel that way
+grow more scarce, I'm whistling in the dark and trying to find new ways to
+motivate myself.
 
-So whatever mid-life (two-thirds life?) crisis I'm in,
-I'm going to do something new and document it here. Because
-until I write it down, I haven't really thought it through.
-
+So whatever mid-life (well, "mid" is likely a bit optimisitc) crisis I'm in,
+I've decided to try and work through it by documenting it here.
+Because until I write it down, I haven't really thought it through.

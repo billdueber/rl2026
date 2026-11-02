@@ -1,5 +1,5 @@
 ---
 title: Posts
 sitemap:
-  disable: true
+  disable: false
 ---
