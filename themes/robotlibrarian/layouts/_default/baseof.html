@@ -3,7 +3,9 @@
 <head>
   {{- partial "head.html" . -}}
 </head>
-<body hx-boost="true" hx-select=".site-main" hx-target=".site-main" hx-swap="outerHTML">
+<body hx-boost:inherited="true transition:true"
+      hx-target:inherited=".site-main"
+      hx-swap:inherited="outerMorph">
   {{- partial "header.html" . -}}
   <div class="site-body">
     <div class="container content-grid">

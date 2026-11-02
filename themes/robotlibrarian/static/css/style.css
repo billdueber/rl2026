@@ -371,3 +371,12 @@ a:hover { text-decoration: underline; }
     margin: 1rem 0;
   }
 }
+
+/* htmx 4 view transitions (hx-boost="... transition:true").
+   The UA default is a 250ms cross-fade, which reads as lag at this page size. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 120ms;
+  }
+}
