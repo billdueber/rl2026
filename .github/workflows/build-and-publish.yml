@@ -21,23 +21,28 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4'
-          bundler-cache: true
 
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.164.0'
 
-      # Must run before Hugo so the /YYYY/MM/ permalinks resolve.
-      - name: Generate month archive stubs
-        run: bundle exec ruby bin/generate_month_archives.rb
+      # Hugo renders .adoc by *spawning* the asciidoctor binary, so the gem has
+      # to be resolvable on PATH as a normal gem install — not through bundler.
+      # A Gemfile-based install puts only a bundler binstub on PATH, and that
+      # binstub dies with:
+      #   can't find gem asciidoctor (>= 0.a) with executable asciidoctor
+      # because the spawned child gets no working Gem environment.
+      # Version matches the local build.
+      - name: Install Asciidoctor
+        run: gem install asciidoctor --no-document --version 2.0.26
 
-      # `bundle exec` matters here: Hugo shells out to the `asciidoctor`
-      # binary, and bundler-cache installs the gem into vendor/bundle without
-      # putting its binstub on PATH. Running Hugo through bundler prepends that
-      # binstub directory, so the render finds asciidoctor AND uses the version
-      # pinned in Gemfile.lock instead of whatever the runner image ships.
+      # Must run before Hugo so the /YYYY/MM/ permalinks resolve.
+      # Stdlib only — no gems needed.
+      - name: Generate month archive stubs
+        run: ruby bin/generate_month_archives.rb
+
       - name: Build site
-        run: bundle exec hugo --minify
+        run: hugo --minify
 
       # Publish the full tree — source *and* generated site — as a single
       # force-pushed root commit on `build`.

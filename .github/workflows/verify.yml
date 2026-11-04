@@ -13,16 +13,18 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.4'
-          bundler-cache: true
 
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: '0.164.0'
 
-      - name: Generate month archive stubs
-        run: bundle exec ruby bin/generate_month_archives.rb
+      # Hugo spawns the asciidoctor binary, so it must be a plain gem install
+      # on PATH — a bundler binstub fails in the spawned child.
+      - name: Install Asciidoctor
+        run: gem install asciidoctor --no-document --version 2.0.26
 
-      # Hugo shells out to `asciidoctor`; bundler puts the bundled binstub on
-      # PATH. See build-and-publish.yml for the full explanation.
+      - name: Generate month archive stubs
+        run: ruby bin/generate_month_archives.rb
+
       - name: Build site
-        run: bundle exec hugo --minify
+        run: hugo --minify

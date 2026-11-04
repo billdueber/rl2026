@@ -11,8 +11,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."   # hugo/
 
-bundle install --quiet
-bundle exec ruby bin/generate_month_archives.rb
+# Stdlib only in the generator, so no bundler here — keep this bundler-free to
+# match CI, where asciidoctor is a plain gem install. Hugo spawns the asciidoctor
+# binary, and a bundler-only binstub fails in the spawned child.
+ruby bin/generate_month_archives.rb
 
 # Default to --minify for production parity with CI.
 # Pass explicit args to override: ./bin/build.sh --gc
