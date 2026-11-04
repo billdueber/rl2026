@@ -1,0 +1,78 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>A short ruby diversion: cost of flow control under Ruby | Robot Librarian</title><meta name=description content="
+A couple days ago I decided to finally get back to working on threach to try to deal with problems it had — essentially, it didn’t deal well with non-local exits due to calls to break or even something simple like a NoMethodError.
+
+
+[BTW, I think I managed it. As near as I can tell, threach version 0.4 won’t deadlock anymore]
+
+
+Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>A short ruby diversion: cost of flow control under Ruby</h1><div class=post-content><div class=paragraph><p>A couple days ago I decided to finally get back to working on <a href=https://github.com/billdueber/threach><code>threach</code></a> to try to deal with problems it had — essentially, it didn’t deal well with non-local exits due to calls to <code>break</code> or even something simple like a <code>NoMethodError</code>.</p></div><div class=paragraph><p>[BTW, I think I managed it. As near as I can tell, <code>threach</code> version 0.4 won’t deadlock anymore]</p></div><div class=paragraph><p>Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.</p></div><div class=paragraph><p>I re-discovered something that a lot of people already know: <code>raise</code>/<code>rescue</code> under MRI is slow, and under JRuby can be <em>unbearably</em> slow. How slow?</p></div><div class=paragraph><p>Let’s look at four simple blocks that exercise four different block exit strategies: <code>break</code>, <code>catch</code> and <code>throw</code>, <code>raise</code> with the normal single (or zero) arguments, as well as the three-argument version of <code>raise</code>.</p></div><table class="tableblock frame-all grid-all stretch"><col style=width:50%><col style=width:50%><thead><tr><th class="tableblock halign-left valign-top">Simple break</th><th class="tableblock halign-left valign-top">Catch/Throw</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><p class=tableblock>Raise (1 arg)</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>Raise (3 args)</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class=tableblock>range.each do |i| break end</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>catch(:benchmarking) do range.each do |i| throw(:benchmarking) end end</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class=tableblock>begin range.each do |i| raise StandardError end rescue # do nothing end</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>begin range.each do |i| raise StandardError, :hi, nil end rescue # do nothing end</p></td></tr></tbody></table><div class=paragraph><p>In each case, we immediately exit the block without doing any work; the idea is to measure how long it takes to break out for each case.</p></div><div class=paragraph><p>So…​.let’s run them each 100K times and see what happens, shall we? Times are in seconds, averaged over two runs.</p></div><table class="tableblock frame-all grid-all stretch"><col style=width:20%><col style=width:20%><col style=width:20%><col style=width:20%><col style=width:20%><thead><tr><th class="tableblock halign-left valign-top"></th><th class="tableblock halign-left valign-top">Ruby 1.8</th><th class="tableblock halign-left valign-top">Ruby 1.9</th><th class="tableblock halign-left valign-top">JRuby</th><th class="tableblock halign-left valign-top">JRuby --1.9</th></tr></thead><tbody><tr><td class="tableblock halign-left valign-top"><p class=tableblock>break</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.12</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.07</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.29</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.21</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class=tableblock>catch/throw</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.35</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.28</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.64</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.48</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class=tableblock>raise (1 arg)</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>1.78</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>2.10</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>26.60</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>22.06</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class=tableblock>raise (3 arg)</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>1.85</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>2.13</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.45</p></td><td class="tableblock halign-left valign-top"><p class=tableblock>0.45</p></td></tr></tbody></table><div class=paragraph><p>The first thing to note is that this is 100K iterations. Three of the strategies are fast enough that you’d have to work really, really hard to notice them.</p></div><div class=paragraph><p>In terms of speed, <code>raise (3 args)</code>, <code>catch/throw</code>, and <code>break</code> are fast enough that you shouldn’t bother worrying about them (although you <em>should</em> choose the method that makes your code easy to understand).</p></div><div class=paragraph><p>The second things to note is <em>Holy Camoli!</em> JRuby is slow there!</p></div><div class=paragraph><p><a href=http://jira.codehaus.org/browse/JRUBY-5534>This Jira ticket</a> tells the tale: The creation of the backtrace is very, very expensive for JRuby. That <code>nil</code> at the end of the <code>raise (3 args)</code> call suppresses the creation of that backtrace, so the speed is fine.</p></div><div class=paragraph><p>Three things worth saying here:</p></div><div class=ulist><ul><li><p>If you’re using <code>raise/rescue</code> for flow control, <em>you’re already doing it wrong.</em> Reserve exceptions for, well, exceptional conditions that are only going to be raised once or twice, not all the time.</p></li><li><p>If you’re writing code that, for some ungodly reason, is planning on raising a crapload of exceptions, use the three-arg version. I’m looking at you, gem authors.</p></li><li><p>If you’re writing your code without worrying about how it will work under multiple threads, well, please don’t do that. Everyone has multi-core systems these days, and it’s silly to not be able to use them. Plus, counting on Matz to never move to a VM with real threads is a big gamble.</p></li></ul></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

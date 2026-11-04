@@ -1,0 +1,100 @@
+---
+title: 'Reintroducing Traject: Traject 2.0'
+date: '2015-02-19'
+draft: false
+slug: reintroducing-traject
+tags:
+- ruby
+- marc
+- solr
+- announcement
+- old
+author: billdueber
+---
+
+Traject 2.0.0 released! Now runs under MRI/RBX!
+
+`traject` is an ETL (extract/transform/load) system written in ruby with a special view towards extracting fields from MARC data and writing it out into Solr. link:http://bibwild.wordpress.com[Jonathan Rochkind] and I wrote this primarily out of frustration using other tools in this space (e.g., link:https://code.google.com/p/solrmarc/[Solrmarc], or my own precursor to `traject` , link:https://github.com/billdueber/marc2solr[marc2solr]
+
+Note: link:http://search.cpan.org/~nics/Catmandu-0.9210/bin/catmandu[Catmandu] is another, perl-based system I don't have any direct experience with.
+
+`traject` had its first release almost a year and a half ago (at least based on the date of my link:http://robotlibrarian.billdueber.com/2013/10/announcing-traject-indexing-software/[post introducting it]), and I've used it literally every day since then indexing data for the link:http://mirlyn.lib.umich.edu[Univeristy of Michigan] and link:http://catalog.hathitrust.org/[HathiTrust] library catalogs.
+
+== How does it work?
+
+`traject` is packaged as a gem, and ships with a command-line program (`traject`) that reads in configuration files or switches and the name of the file to operate on and transforms the incoming records as specified.
+
+The "configuration" is actually just ruby code, with some macros included to make it simple to do the common operations (e.g., get the ISBN) and possible to do ...well, anything you can do with ruby.
+
+[source,ruby]
+----
+require 'traject/macros/marc21_semantics'
+extend  Traject::Macros::Marc21Semantics
+require 'library_stdnums' # just a regular ruby gem
+
+to_field "id", extract_marc("001", :first => true)
+to_field 'marcxml_record', serialized_marc(:format=>:xml)
+to_field "allfields", extract_all_marc_values(:from=>'100', :to=>'999')
+
+to_field 'oclc', oclcnum('035a:035z')
+to_field 'isbn', extract_marc('020a') do |rec, acc|
+  acc.map!{|x| StdNum::ISBN.normalize(x)}
+end
+
+to_field 'title', extract_marc_filing_version('245abdefghknp', :include_original => true)
+to_field 'vtitle', extract_marc('245abdefghknp', :alternate_script=>:only, :trim_punctuation => true, :first=>true)
+to_field "publisher", extract_marc('260b:264|*1|:533c')
+to_field "edition", extract_marc('250a')
+----
+
+== Questions about `traject`
+
+*How do I get started?* The best way is likely to look at the link:https://github.com/traject-project/traject_sample[heavily-documented sample project] we provide, followed by checking out the `traject` documentation. And, of course, just ask me for help.
+
+*Do you need to use JRuby?* Not anymore. As of version 2.0.0, `traject` runs under MRI ("regular") ruby, although without all the speed-enhancing true threading that JRuby offers.
+
+*How fast is it?* Apple-to-apples comparison is difficult. The link:https://github.com/projectblacklight/blacklight-marc[stock Blacklight indexing scheme] is reportedly about as fast as Solarmarc when just using single-threaded MRI (JRuby would presumably speed things up). I run a link:http://github.com/billdueber/ht_traject/[hideously complex] indexing scheme using JRuby and a few threads and can average over 900 records/second during a longish run (e.g., I can index all eleven-million bib records before lunch). For me, it's fast enough.
+
+*What kinds of data can I throw at it?* In theory, anything you want -- it's pretty easy to write a Traject reader. Out of the box or with existing gems, though, we support a few kinds of MARC:
+
+* MARC (binary), via either link:http://github.com/ruby-marc/ruby-marc[ruby-marc] or link:https://github.com/traject-project/traject-marc4j_reader[marc4j] (the latter requiring JRuby)
+* MARC-XML (again, via either ruby-marc or marc4j)
+* link:http://dilettantes.code4lib.org/blog/2010/09/a-proposal-to-serialize-marc-in-json/[marc-in-json] in the form of newline-delimited json (a text file with one MARC-in-JSON record per line)
+* link:https://github.com/traject-project/traject_alephsequential_reader[Alephsequential], a human-readable serialization put out by the Aleph ILS from Ex Libris.
+* link:https://github.com/jrochkind/traject_horizon[Direct import from the Horizon ILS]
+
+*How does it make it easier to deal with MARC?* MARC is the bread-and-butter of what `traject` is currently used for. `traject` ships with macros for reading through MARC records and transforming the often-weird data within them. Some of these can:
+
+* extract data from fields based on tag, indicators, and subfield values
+* trim punctuation from extracted data
+* translate MARC codes into human-readable languages, countries, etc.
+* correctly deal with "filing characters" (e.g., leading articles like "a" or "the")
+* find field data repeated in other languages ("vernacular" data, usually in 880 fields)
+* find OCLC numbers, with their myriad of prefixes
+* ...and many others. And, if you know a little ruby, it's not hard to write your own.
+
+*What are the records transformed into?* Given its history focused on indexing data into Solr, the basic result of a `traject` transformation of a record is a hash (map) of arrays (e.g., `key1=>[val1, val2,...]` -- each key/fieldname is mapped to one or more values). This is easily transformed into something that you can send to Solr or write to a file. If you need to produce more complex hierarchical data, `traject` may not be the right tool for you.
+
+*What kind of output can it produce?* Obviously, the resulting documents can be sent to Solr, via `Traject::SolrJsonWriter`. Additionally, we ship Traject with writers that produce other formats.
+
+* `Traject::DebugWriter` produces a human-readable file with one field and its values per line.
+* `Traject::JsonWriter` produces newline-delimited JSON, one valid JSON record per line.
+* `Traject::YamlWriter` writes a yaml file that contains multiple documents, good for both further processing and human inspection.
+* `Traject::DelimitedWriter`, by default, writes a tab-delimited file suitable for further processing or import into Excel.
+* `Traject::CSVWriter` produces comma-separated value files, as you'd expect.
+
+== A 2.0 release?
+
+So, what's changed enough to warrant a 2.0 release?
+
+*No longer requires JRuby* The first release of `traject` only ran under JRuby, based on its need to use the `solrj` java library to efficiently indexing things into Solr. More modern versions of Solr (since version 3.2) allow indexing documents via HTTP with JSON; doing so not only works under any ruby implementation, but in my tests the JSON indexer goes about 20% faster than the old `solrj`-based indexer.
+
+*(Tab-)Delimited and CSV Writers:* How often are systems librarians asked to do things like "find all the records with publisher string XXX, and give me a list of them with the title, isbn, author, and date of publication"? For me, the answer is "often" and `traject` now makes it easy to output something that your user can inspect as text or import into Excel for further processing.
+
+*Cross-platform threading* For most applications of `traject` to date, the bottleneck is the transformation process of turning a MARC record into a Solr document. Under JRuby, you can throw as many cores as you have available at that transformation to speed up the indexing process. Even under MRI, which can't run multiple threads on ruby code at the same time, we can use a second thread to talk to Solr so indexing on the server doesn't slow down processing of MARC records.
+
+== So...give it a whirl!
+
+You can find `traject` and its related gems link:https://github.com/traject-project[on Github]. Besides `traject` itself and the associated reader/writers, there's a link:https://github.com/traject-project/traject_sample[heavily-documented sample project] to get you started.
+
+I'm heavily invested in `traject`, and am more than willing to assist folks as they start using it, so don't be afraid to contact me (via email or link:https://twitter.com/billdueber[twitter]) if you want a little advice or a helping hand.

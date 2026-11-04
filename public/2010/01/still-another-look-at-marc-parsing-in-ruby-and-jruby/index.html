@@ -1,0 +1,102 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Still another look at MARC parsing in ruby and jruby | Robot Librarian</title><meta name=description content="
+I’ve been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.
+
+
+
+
+Assertion: The upper bound on how fast I can process records and send them to Solr can be approximated by looking at how fast I can parse (and do nothing else to) marc records from a file.
+
+
+Assertion: If I can’t write a system that’s faster than what we have now, it’s probably not worth my time even though being able to fall back to ruby instead of java would be nice.
+
+
+The Big Question: Is the MARC parsing process fast enough that it seems I might be able to write a system that runs faster than the solrmarc setup I have now?
+
+
+The Answer (see below): Yes, if I use marc4j.
+
+
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Still another look at MARC parsing in ruby and jruby</h1><div class=post-content><div class=paragraph><p>I’ve been looking at making a jruby-based solr indexer for MARC documents, and started off wanting to make sure I could determine if anything I did would be faster than our existing (solrmarc-based) setup.</p></div><div class=ulist><ul><li><p><strong>Assertion</strong>: The upper bound on how fast I can process records and send them to Solr can be approximated by looking at how fast I can parse (and do nothing else to) marc records from a file.</p></li><li><p><strong>Assertion</strong>: If I can’t write a system that’s faster than what we have now, it’s probably not worth my time even though being able to fall back to ruby instead of java would be nice.</p></li><li><p><strong>The Big Question</strong>: Is the MARC parsing process fast enough that it seems I might be able to write a system that runs faster than the solrmarc setup I have now?</p></li><li><p><strong>The Answer (see below)</strong>: Yes, if I use marc4j.</p></li></ul></div><div class=paragraph><p>On our ridiculously-awesome hardware, right now we’re doing about 300 records/second for short files and 250 records/second for a full (6.5 million record) index, giving us a 7-8 hour reindex.</p></div><div class=paragraph><p>I’ll just post the results without a lot of commentary. I warmed stuff up in all cases, and ran on my desktop (so I could compare to MRI ruby, which isn’t installed on the server) and on the server where we usually run these things.</p></div><div class=paragraph><p>*
+<em>The machines</em> are my desktop OSX machine and the beefy linux server where we usually do this stuff
+*
+<em>The platforms</em> are jruby 1.4 --server and MRI ruby 1.87
+*
+<em>The libraries</em> are marc4j and ruby-marc 0.3.3
+*
+<em>The parsers</em> are
+* The standard binary parsers all around
+* A home-grown AlephSequential format reader for the 'seq' type. AlephSequential is a MARC representation that uses one line for each field. We use it because it doesn’t have length limitations and, not surprisingly, Aleph can spit it out pretty quickly compared to MARC-XML.
+* Whatever marc4j uses internally for MARC-XML
+* ruby-marc’s 'jstax' xml parser under jruby (which I wrote and apparently needs some love, see below)
+* ruby-marc’s 'libxml' xml parser under MRI ruby
+*
+<em>Seconds</em> is the average of two rounds, with measurements taken after a warmup run in each case.</p></div><div class=paragraph><p>The test files were 18,881 records in marc-xml, marc-binary, and AlephSequential formats.</p></div><div class=listingblock><div class=content><pre> MACHINE  PLATFORM LIBRARY     PARSER    SECONDS    REC/SECOND desktop  jruby    marc4j      binary      4.06       4650 desktop  jruby    marc4j      xml         5.55       3401 desktop  jruby    ruby-marc   binary     17.35       1088 desktop  jruby    ruby-marc   jstax      80.11        236  desktop  ruby     ruby-marc   binary     33.54        562 desktop  ruby     ruby-marc   libxml     46.87        402  server   jruby    marc4j      binary      2.29       8245 server   jruby    marc4j      xml         3.36       5619 server   jruby    marc4j      AlephSeq    3.68       5130 server   jruby    ruby-marc   binary      9.93       1901 server   jruby    ruby-marc   jstax      44.56        424</pre></div></div><div class=paragraph><p>The quick takeaways, with all the obvious caveats:</p></div><div class=ulist><ul><li><p>jruby with ruby-marc is twice as fast at binary and twice as slow at xml compared with MRI</p></li><li><p>marc4j is four times as fast for binary and about an order of magnitutde faster for xml compared with ruby-marc.</p></li><li><p>The server is fast.</p></li></ul></div><div class=paragraph><p>We know from previous experience that libxml is the fastest of the current MRI-based marc-xml readers and that jstax is the best of the current jruby-based marc-xml readers. And, finally, we know that many of us can’t use marc-binary format because our records are too big.</p></div><div class=paragraph><p>If I’m gonna use jruby (which I think I am due to wanting to use the StreamingUpdateSolrServer) I’m gonna need to use marc4j and just wrap it up in some nicer syntax.</p></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

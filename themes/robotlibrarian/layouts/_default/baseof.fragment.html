@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+<head>
+  <meta charset="utf-8" />
+  {{- partial "title.html" . }}
+</head>
+<body>
+{{- /* The exact region htmx targets. Served only when the request carries
+       HX-Request-Type: partial (see static/.htaccess). */}}
+<main class="site-main">
+{{- block "main" . }}{{ end }}
+</main>
+</body>
+</html>

@@ -1,0 +1,37 @@
++++
+title = "About Bill"
+date = 2022-05-28
+layout = "page"
+author = "billdueber"
++++
+
+Hi. I'm Bill.
+
+I'm a programmer at the link:http://www.lib.umich.edu[University of Michigan
+Libraries] (and, formerly, link:http://hathitrust.org/[the Hathitrust]),
+husband
+to a link:https://smile.amazon.com/Ask-Convertible-Stories-Danit-Brown/dp/0375424547[great writer] and link:https://www.albion.edu/departments/english/faculty-and-staff/[English Professor], father to three great kids, and .... actually, that's about it.
+
+I have a BA and MS in Computer Science and another MS in Instructional
+Technology, but these days I'm a run-of-the-mill programmer. My official
+title probably has the word "enginneer" in it,
+but I know some real engineers and I know what
+I do doesn't deserve the title. Maybe some of the
+rest of you are closer.
+
+My focus for a few years has been on search
+within the library, with my interest lying mostly in
+figuring out how to improve search results. That opens up a whole can of
+worms, including how to configure our search engine (Solr or OpenSearch), how
+ to
+figure out if our search results are good or good-enough, and fighting
+tooth-and-nail with the data and metadata available. The advent of LLMs,
+embeddings, and so on are making things more
+complicated -- I'm still trying to decide if
+they're materially better or not.
+
+With my Copious Free Time, I try to do some  woodworking. 
+My specialty so far is taking a combination of hardwood,
+softwood, and engineered products like MDF and
+plywood and using hand and power tools to turn
+them into sawdust and trash.

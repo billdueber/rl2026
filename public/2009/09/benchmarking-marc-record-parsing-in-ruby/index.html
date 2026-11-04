@@ -1,0 +1,78 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Benchmarking MARC record parsing in Ruby | Robot Librarian</title><meta name=description content="
+[Note: since I started writing this, I found out Bess & Co. store MARC-XML. That makes a difference, since XML in Ruby can be really, really slow]
+
+
+[*UPADTE* It turns out they don’t use MARC-XML. They use MARC-Binary just like the rest of us. Oops. ]
+
+
+[*UP-UPDATE* Well, no, they do use MARC-XML. I’m not afraid to constantly change my story. This is why I’m the best investigative reporter in the business]
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Benchmarking MARC record parsing in Ruby</h1><div class=post-content><div class=paragraph><p>[Note: since I started writing this, I found out Bess & Co. store MARC-XML. That makes a difference, since XML in Ruby can be really, really slow]</p></div><div class=paragraph><p>[*UPADTE* It turns out they <em>don’t</em> use MARC-XML. They use MARC-Binary just like the rest of us. Oops. ]</p></div><div class=paragraph><p>[*UP-UPDATE* Well, no, they <em>do</em> use MARC-XML. I’m not afraid to constantly change my story. This is why I’m the best investigative reporter in the business]</p></div><div class=paragraph><p>The other day on the blacklight mailing list, Bess Sadler wrote</p></div><div class=quoteblock><blockquote><div class=paragraph><p>Yes, we do still include the full marc record, but the rule of thumb we’re currently using is that anything that needs to display in the index view (the search results) needs to be broken out into a separate display field, because retrieving and parsing marc records for every item in a list of search results is too much of a performance hit.</p></div></blockquote></div><div class=paragraph><p>This surprised me a fair bit, because in our implementation of VuFind (which uses PHP, versus Ruby for Blacklight) I do just that — grab the MARC out of Solr, parse it, and pull stuff like full titles and such out of it.</p></div><div class=paragraph><p>As it turns out, I’d been screwing around with calling marc4j from jruby, anyway, so I threw that into the mix, and here’s what I found.</p></div><div class=sect1><h2 id=_what_the_benchmark_tries_to_measure>What the benchmark tries to measure</h2><div class=sectionbody><div class=paragraph><p>The focus is on measuring time to parse MARC records as returned in a field from Solr in MARC-binary.</p></div><div class=paragraph><p>I got 40 sets of 50 records each (2000 records) from our Solr instance in ruby format and extracted the binary MARC strings. This resulted in an array of 40 sets of 50 strings, each of which is a valid MARC record.</p></div><div class=paragraph><p>Fifty records seems largish to me — we only display 20 at a time — but thought I’d swing for the fences.</p></div><div class=paragraph><p>I’m testing along three(ish) dimensions:</p></div><div class=ulist><ul><li><p>jruby vs mri</p></li><li><p>marc4j vs ruby-marc (only on jruby, obviously)</p></li><li><p>parsing each string individually, or globbing them all together and treating it as if it’s a multi-record file</p></li></ul></div><div class=paragraph><p>[Note that MRI is using Net::HTTP to get the data; I presume Curl would be faster still. It’s already faster than jruby]</p></div><div class=paragraph><p>The following data show the average time to parse out each set of 50 records and extract the first 245 (title) field from each one, along with the totals for doing all 2000 records.</p></div><div class=listingblock><div class=content><pre>Method                           User       Total      Real  jruby Get/Eval data              0.134750   0.134750 (  0.134850) jruby Get/Eval data (2000)       5.390000   5.390000 (  5.394000)  MRI Get/Eval data                0.008500   0.012750 (  0.115942) MRI Get/Eval data (2000)         0.340000   0.510000 (  4.637677)  jruby-marc4j-oneAtATime          0.056075   0.056075  (0.056125) jruby-marc4j-multistring         0.027925   0.027925  (0.028000)  jruby-marc-oneAtATime            0.066625   0.066625  (0.066650) jruby-marc-multistring           0.034300   0.034300  (0.034325)  mri-marc-oneAtATime              0.084500   0.085250  (0.086597) mri-marc-multistring             0.085000   0.085750  (0.086026)  jruby-marc4j-oneAtATime (2000)   2.243000   2.243000  (2.244999) jruby-marc-oneAtATime (2000)     2.665001   2.665001  (2.666000) mri-marc-oneAtATime (2000)       3.380000   3.410000  (3.463888)   jruby-marc4j-multistring (2000)  1.117001   1.117001  (1.120001) jruby-marc-multistring (2000)    1.371999   1.371999  (1.372999) mri-marc-multistring (2000)      3.400000   3.430000  (3.441052)</pre></div></div><div class=paragraph><p>So…​the worst-case scenario is taking an average 0.085 second to get the first title field out of <strong>each one of 50 binary MARC records</strong> once we’ve got them.</p></div><div class=paragraph><p>Now, I’m sure all my records came out of the cache, so my query time wasn’t very long. But we still end up with a maximum of roughly 0.2 seconds plus the time to actually do the query to end up with a set of 50 marc records.</p></div><div class=paragraph><p>We can see from looking at the totals that it looks like MRI’s bottleneck is the actual parsing, whereas constructing the input streams is expensive under jruby (at least the way I’m doing it), resulting in a benefit of concatenating them all together into one longish string before parsing.</p></div><div class=paragraph><p>Marc4j is faster (20%ish), but not enough faster to be worth the effort in my mind. Keep in mind that I have no idea how fast Marc4j is when running under pure java, without all the jruby overhead.</p></div><div class=paragraph><p>Bottom line, though: that seems fast enough to me.</p></div><div class=paragraph><p>I’ll try to benchmark with XML later on today or tomorrow.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

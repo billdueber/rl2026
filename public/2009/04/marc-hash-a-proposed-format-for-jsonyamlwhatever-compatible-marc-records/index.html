@@ -1,0 +1,75 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>MARC-Hash: a proposed format for JSON/YAML/Whatever-compatible MARC records | Robot Librarian</title><meta name=description content='
+In my first shot at MARC-in-JSON, which I appropriately (and prematurely) named MARC-JSON, I made a point of losing round-tripability (to and from MARC) in order to end up with a nice, easy-to-work-with data structure based mostly on hashes. "Who really cares what order the subfields come in?" I asked myself.
+
+
+Well, of course, it turns out some people do. Some even care about the order of the tags. "Only in the 500s…​usually" I was told today. All my lovely dreams of using easy-to-access hashes up in so much smoke.
+'><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>MARC-Hash: a proposed format for JSON/YAML/Whatever-compatible MARC records</h1><div class=post-content><div class=paragraph><p>In my first shot at MARC-in-JSON, which I appropriately (and prematurely) named <a href=http://code.google.com/p/marc-json/>MARC-JSON</a>, I made a point of losing round-tripability (to and from MARC) in order to end up with a nice, easy-to-work-with data structure based mostly on hashes. "Who really cares what order the subfields come in?" I asked myself.</p></div><div class=paragraph><p>Well, of course, it turns out some people do. Some even care about the order of the tags. "Only in the 500s…​usually" I was told today. All my lovely dreams of using easy-to-access hashes up in so much smoke.</p></div><div class=paragraph><p>So…​I’m suggesting we try something a little simpler. Something so brain-dead, in fact, that I’m loathe to put it down because it’s pretty much the obvious way to do it. To wit:</p></div><div class=listingblock><div class=content><pre class=highlight><code class=language-javascript data-lang=javascript> {   &#34;type&#34; : &#34;marc-hash&#34;,   &#34;version&#34; : [1, 0],    &#34;leader&#34; : &#34;leader string&#34;   &#34;control&#34; : [      [&#34;001&#34;, [&#34;all&#34;, &#34;001&#34;, &#34;values&#34;]],      [&#34;002&#34;, [&#34;all&#34;, &#34;002&#34;, &#34;values&#34;]],   ],   &#34;data&#34; : [     [&#34;010&#34;, &#34; &#34;, &#34; &#34;,       [         [&#34;a&#34;, &#34;68009499&#34;]       ]     ],     [&#34;035&#34;, &#34; &#34;, &#34; &#34;,       [         [&#34;a&#34;, &#34;(RLIN)MIUG0000733-B&#34;]       ],     ]     [&#34;035&#34;, &#34; &#34;, &#34; &#34;,       [         [&#34;a&#34;, &#34;(CaOTULAS)159818014&#34;]       ],     ]     [&#34;245&#34;, &#34;1&#34;, &#34;0&#34;,       [         [&#34;a&#34;, &#34;Capitalism, primitive and modern;&#34;],         [&#34;b&#34;, &#34;some aspects of Tolai economic growth&#34; ],         [&#34;c&#34;, &#34;[by] T. Scarlett Epstein.&#34;]       ]     ]   ] }</code></pre></div></div><div class=paragraph><p>Stupid MARC allows all the stupid fields to stupid repeat and be out of stupid order and such, so it’s just a lot of arrays. Easily round-tripable.</p></div><div class=paragraph><p>Why bother? Excellent question, and one that’s a little harder to answer now that the data structure requires so much looping to find anything (the first time, anyway). I guess it’s still a lot easier than working with raw MARC (or, I would claim, MARC-XML), requires no special libraries in any language that supports strings, hashes, and arrays, and can be manipulated with basic language constructs.</p></div><div class=paragraph><p>A few things worth noting about the assumptions in my mind:</p></div><div class=ulist><ul><li><p>By definition, it’s always UTF-8. The leader should be changed to note this on the sending end, but it’s not required.</p></li><li><p>We include both a type "marc-hash", and a version with major/minor numbers.</p></li><li><p>Everything is a string.</p></li><li><p>Alpha characters in indicators/tags are all lowercased.</p></li><li><p>A control field is a duple: tag and array of values.</p></li><li><p>A data field has four values:</p></li><li><p>The tag</p></li><li><p>Indicator one</p></li><li><p>Indicator two</p></li><li><p>An array of duples: subfield and its value</p></li></ul></div><div class=sect1><h2 id=_a_simple_transformation_to_make_it_a_little_more_queryable>A simple transformation to make it a little more queryable</h2><div class=sectionbody><div class=paragraph><p>Let’s say you don’t give a damn about tags that appear out of order, because that’s just a crime against nature, anyway. And you really don’t care what order the subtags appear in most of the time, 'cause really, who does?</p></div><div class=paragraph><p>A simple run-through (psuedocode ahead):</p></div><div class=listingblock><div class=content><pre class=highlight><code class=language-perl data-lang=perl>   my marchash = getTheMarcHash();   my kindamarc;   kindamarc{leader} = marchash{leader};    # Map the control fields by tag =&gt; array-of-values   foreach cfield (marchash{control}) {     kindamarc{control}{cfield[0] ||= []};     kindamarc{control}{cfield[0]}.push(cfield[1]);   }    foreach d (marchash{data}) {     (tag, ind1, ind1) = (d[0], d[1], d[2]);      # build up a hash based on subfields for this tag     newd = {};     foreach subfield (d[3]) {       (stag, sval) = subfield;       newd{stag} = sval;     }      # Store the subfield hash in a few places so it&#39;s easy to find.     foreach i1 (&#39;*&#39;, ind1) {       foreach i2 (&#39;*&#39;, ind2) {         kindamarc{data}{tag}{i1}{i2} ||= [];         kindamarc{data}{tag}{i1}{i2}.push(newd);       }     }   }</code></pre></div></div><div class=paragraph><p>Control fields are stored as arrays of values associated with the tag. Data fields are built up as a hash of subfield to array-of-values pairs, and then stored both based on the indicator given and the wildcard indicator '\*'.</p></div><div class=paragraph><p>Basically, this will allow things like this:</p></div><div class=listingblock><div class=content><pre class=highlight><code class=language-perl data-lang=perl>  $leader = $kindamarc{leader};   $first001 = $kindamarc{control}{&#34;001&#34;}[0];    # Find 856s where indicator 2 is &#39;1&#39;    @mystuff = $kindamarc{data}{856}{&#39;*&#39;}{1};</code></pre></div></div><div class=paragraph><p>It’s easy to see how we could store the index from the original array to make it easy to find the original order, too.</p></div><div class=paragraph><p>For many, I’m sure, the prospect of dealing with something like this is more daunting than just learning to use MARC-XML or using existing libraries to deal with straight MARC. But there seems to be a set of folks out there for whom this might be useful, so I’m throwing it out there.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

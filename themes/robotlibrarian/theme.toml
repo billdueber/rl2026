@@ -1,0 +1,4 @@
+name = "robotlibrarian"
+license = "MIT"
+min_version = "0.120.0"
+description = "Minimal, 'Morning'-inspired theme for Robot Librarian (Bill Dueber). Clean white/gray, Montserrat headings."

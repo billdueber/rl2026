@@ -1,0 +1,98 @@
+---
+title: New interest in MARC-HASH / JSON
+date: '2010-02-26'
+draft: false
+slug: new-interest-in-marc-hash-json
+tags:
+- marc
+- serialization
+- old
+author: billdueber
+---
+
+____
+EDIT: This is historical -- the recommended serialization for marc in json is now Ross Singer's
+marc-in-json
+. The marc-in-json serialization has implementations in the core marc libraries for
+Ruby
+and
+PHP
+, and add-ons for
+Perl
+and
+Java
+. C'mon, Python people!
+____
+
+For reasons I'm still not entirely clear on (I wasn't there), the Code4Lib 2010 conference this week inspired renewed interest in a JSON-based format for MARC data.
+
+When I initially looked at MARC-HASH link:http://robotlibrarian.billdueber.com/marc-hash-the-saga-continues-now-with-even-less-structure/[almost a year ago], I was mostly looking for something that wasn't such a pain in the butt to work with, something that would marshall into multiple formats easily and would simply and easily round-trip.
+
+Now, though, a lot of us are looking for a MARC format that (a) doesn't suffer from the length limitations of binary MARC, but (b) is less painful (both in code and processing time) than MARC-XML, and it's worth re-visiting.
+
+For at least a few folks, un-marshaling time is a factor, since no matter what you're doing, processing XML is slower than most other options. Much of that expense is due to functionality and data-safety features that just aren't a big win with a brain-dead format like MARC, so it's worth looking at alternatives.
+
+== What is MARC-HASH?
+
+At some point, we'll want a real spec, but right now it's just this:
+
+[source,javascript]
+----
+   // A record is a four-pair hash, as follows. UTF-8 is mandatory.   {     "type" : "marc-hash"     "version" : [1, 0]     "leader" : "...leader string ... "     "fields" : [array, of, fields]   }    // A field is an array of either 2 or 4 elements   [tag, value] // a control field   [tag, ind1, ind2, [array, of subfields]]    // A subfield is an array of two elements    [code, value]
+----
+
+So, a short example:
+
+[source,json]
+----
+  {     "type" : "marc-hash",     "version" : [1, 0],      "leader" : "leader string"     "fields" : [        ["001", "001 value"]        ["002", "002 value"]        ["010", " ", " ",         [           ["a", "68009499"]         ]       ],       ["035", " ", " ",         [           ["a", "(RLIN)MIUG0000733-B"]         ],       ],       ["035", " ", " ",         [           ["a", "(CaOTULAS)159818014"]         ],       ],       ["245", "1", "0",         [           ["a", "Capitalism, primitive and modern;"],           ["b", "some aspects of Tolai economic growth" ],           ["c", "[by] T. Scarlett Epstein."]         ]       ]     ]   }
+----
+
+== How's the speed?
+
+I think it's important to separate the format marc-hash from the eventual marshaling format -- partly because someone might actually want to use something other than JSON as a final format, but mostly because it forces implementations to separate hash-creation from json-creation and makes it easy to swap in different json libraries when a faster one comes along.
+
+Having said that, in real life people are mostly concerned about JSON. So, let's look at JSON performance.
+
+The MARC-Binary and MARC-XML files are normal files, as you'd expect. The JSON file is link:http://trephine.org/t/index.php?title=Newline_delimited_JSON["Newline-Delimited JSON"] -- a single JSON record on each line.
+
+The benchmark code looks like this:
+
+[source,ruby]
+----
+  # Unmarshal   x.report("MARC Binary") do     reader = MARC::Reader.new('test.mrc')     reader.each do |r|       title = r['245']['a']     end   end    # Marshal   x.report("MARC Binary") do     reader = MARC::Reader.new('test.mrc')     writer = MARC::Writer.new('benchout.mrc')     reader.each do |r|       writer.write(r)     end     writer.close   end
+----
+
+Under MRI, I used the nokogiri XML parser and the yajl JSON gem. Under JRUby, it was the jstax XML parser and the json-jruby JSON gem.
+
+The test file is a set of 18,831 records I've been using for all my benchmarking of late. It's nothing special; just a nice size.
+
+=== Marshalling Speed (read from binary marc, dump to given format)
+
+Times are in seconds on my Macbook laptop, using ruby-marc.
+
+[options="header",cols="1,1,1,1,1",width="100%"]
+|===
+| Format | Ruby 1.87 | Ruby 1.9 | JRuby 1.4 | Jruby 1.4 --1.9
+| XML | 393 | 443 | 188 | 356
+| MARC Binary | 36 | 23 | 23 | 25
+| JSON/ NDJ | 31 | 19 | 25 | ERROR
+|===
+
+=== Unmarshalling speed (from pre-created file)
+
+Again, times are in seconds
+
+[options="header",cols="1,1,1,1,1",width="100%"]
+|===
+| Format | Ruby 1.87 | Ruby 1.9 | JRuby 1.4 | Jruby 1.4 --1.9
+| XML | 113 | 89 | 75 | 89
+| MARC Binary | 29 | 16 | 16 | 19
+| JSON/ NDJ | 17 | 9 | 13 | 16
+|===
+
+== And so...
+
+I'm not sure what else to say. The format is totally brain-dead. It round-trips. It's fast enough. It has no length limitations. We define it to have to be UTF-8. The NDJ format is easy to understand and allows streaming of large document collections.
+
+If folks are interested in implementing this across other libraries, that'd be great. Any thoughts?

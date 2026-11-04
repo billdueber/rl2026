@@ -1,0 +1,81 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Stupid catalog tricks: Subject Headings and the Long Tail | Robot Librarian</title><meta name=description content="
+Library of Congress Subject Headings (LCSH) in particular.
+
+
+I’ve always been down on LCSH because I don’t understand them. They kinda look like a hierarchy, but they’re not really. Things get modifiers. Geography is inline and …​weird.
+
+
+And, of course, in our faceting catalog when you click on a linked LCSH to do an automatic search, you often get nothing but the record you started from. Which is super-annoying.
+
+
+So, just for kicks, I ran some numbers.
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Stupid catalog tricks: Subject Headings and the Long Tail</h1><div class=post-content><div class=paragraph><p>Library of Congress Subject Headings (LCSH) in particular.</p></div><div class=paragraph><p>I’ve always been down on LCSH because I don’t understand them. They kinda look like a hierarchy, but they’re not really. Things get modifiers. Geography is inline and …​weird.</p></div><div class=paragraph><p>And, of course, in our faceting catalog when you click on a linked LCSH to do an automatic search, you often get nothing but the record you started from. Which is super-annoying.</p></div><div class=paragraph><p>So, just for kicks, I ran some numbers.</p></div><div class=sect1><h2 id=_the_process>The process</h2><div class=sectionbody><div class=paragraph><p>I extracted all the field 650, indicator2="0" from our catalog, threw away the subfield 6’s, and threw away any trailing punctuation in any of the subfields. I called the concatenation of what was left a unique LCSH.</p></div><div class=paragraph><p>Then I printed them out and put them all onto index cards, using tick-marks to indicate…​</p></div><div class=paragraph><p>No, of course not. I used <code>sort</code>, <code>uniq -c</code>, and <code>wc -l</code>. Here’s what I found.</p></div></div></div><div class=sect1><h2 id=_counts_of_lcsh>Counts of LCSH</h2><div class=sectionbody><div class=paragraph><p>…​in round numbers.</p></div><div class=paragraph><p>In our catalog, there are:</p></div><div class=ulist><ul><li><p>8.50M subject headings (using the definition above)</p></li><li><p>1.87M unique subject headings</p></li><li><p>…​66% of which (1.23M) appear exactly once</p></li></ul></div><div class=paragraph><p>We only have to go out to 30K subjects to account for half of all subject entries. The top 1000 most-used subjects account for 14.5% of all 8.5M subject entries.</p></div><div class=paragraph><p>The top ten subjects by count are:</p></div><div class=ulist><ul><li><p>6029 $$aSermons, American</p></li><li><p>6131 $$aPhilosophy</p></li><li><p>7224 $$aFeature films</p></li><li><p>7591 $$aPiano music</p></li><li><p>7968 $$aSocialism</p></li><li><p>8796 $$aEconomics</p></li><li><p>9185 $$aCommunism</p></li><li><p>12440 aSermons, Englishy17th century</p></li><li><p>13539 aBills, PrivatezUnited States</p></li><li><p>58823 aEconomicsxHistory$$vSources</p></li></ul></div></div></div><div class=sect1><h2 id=_from_a_records_point_of_view>From a record’s point of view</h2><div class=sectionbody><div class=paragraph><p>Our catalog has:</p></div><div class=ulist><ul><li><p>7M records</p></li><li><p>4.4M records with at least one subject (as defined above)</p></li><li><p>2.4M records with more than one subject</p></li><li><p>2.0M records with exactly one subject</p></li><li><p>2.6M records with zero subjects</p></li></ul></div><div class=paragraph><p>The records with the most subject headings tend to be collections of stuff (theses, photos, etc). Our local standout is the <a href=http://mirlyn.lib.umich.edu/Record/004078801>Dept. of Medicine and Surgery (University of Michigan) theses, 1851-1878</a> with 208 subject entries. 14 records have at least 30 subject entries.</p></div></div></div><div class=sect1><h2 id=_what_it_means>What it means</h2><div class=sectionbody><div class=paragraph><p>Gee, lady, I don’t know.</p></div><div class=paragraph><p>One way to look at it: suppose you’re considering defining subjects in this way, and making them "hot" in the catalog interface. For our data, 2/3 of records would have either no subjects or a subject that found only the record you’re at. So…​think again.</p></div><div class=paragraph><p>In real life, we index lots of possible subject fields, and we additionally index the $$a as well as the whole string, so ours are a little bit more useful. A little.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

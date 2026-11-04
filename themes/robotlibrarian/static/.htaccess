@@ -1,0 +1,23 @@
+# htmx 4 partial-swap support for a plain static file tree.
+#
+# htmx 4 tags every request with HX-Request-Type: "partial" for a targeted
+# swap and "full" for a body-level or hx-select request. When the request is
+# partial and a prebuilt fragment exists next to the directory index, serve
+# the fragment instead of the whole page. No application server involved.
+RewriteEngine On
+
+RewriteCond %{HTTP:HX-Request-Type} ^partial$ [NC]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/frag.html -f
+RewriteRule ^(.*?)/?$ $1/frag.html [L]
+
+# Serve 404.html for any URL that does not resolve, so boosted nav to a bad
+# link shows full site chrome instead of Apache's bare "Not Found".
+ErrorDocument 404 /404.html
+
+# Cache policy: fragments must not be outlived by the pages they come from.
+<FilesMatch "\.html$">
+  <IfModule mod_headers.c>
+    Header set Vary "HX-Request-Type"
+  </IfModule>
+</FilesMatch>

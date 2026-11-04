@@ -1,0 +1,110 @@
+---
+title: How to rig an election
+date: '2008-11-03'
+draft: false
+slug: how-to-rig-an-election
+tags:
+- fun
+- personal
+- old
+author: billdueber
+---
+
+No matter where I've gone today and for the past few days, I keep running into people (on both sides) who are sure that if Their Guy Doesn't Win, it's going to be because of dirty tactics.
+
+I'm not an expert in this stuff. Not by a long shot. But I thought it would be fun to work out, for my own benefit, types of election fraud and what to really worry about.
+
+Note that how you might interpret all of this really depends on what you consider the greater evil: a voteÂ  cast that shouldn't have been, or a vote suppressed that shouldn't have been. I lean toward the latter.
+
+&#91;More specific disclaimer: I'm a bed-wetting liberal.]
+
+In each case I'll define what I'm talking about, what class it goes into, how hard it is to do once, and ratio of people-in-the-conspiracy to votes affected.
+
+As examples, voter non-registration (telling someone you're registering them and not doing it) is easy to do at all (_Difficulty_: Easy) and one person can screw over a few tens of others, depending on how dedicated you are (_Ratio: _medium). Re-programming a voting machine is very hard, but has the potential to mess with hundreds and hundreds of votes (hence the high ratio).
+
+Obviously, all this below is (a) pulled out of my ass, and (b) depends on the size of the electorate. A local race where only 300 people will be voting can be turned by any method at all. I'm looking mostly at national races, where lots of people vote so a few fraudulent votes aren't likely to be problematic.
+
+*Voter Non-Registration *
+
+* _Definition_: Tell people you're registering them to vote, but don't
+* _Class: _voter suppression
+* _Difficulty_: easy
+* _Ratio_: medium
+* _Effect: _small-medium
+* _Notes_: To do this up right, you need lots of people out there registering folks and then throwing the registrations away or a centralized system where one or two people can collect the data and then throw it away. The former involves a pretty big conspiracy; the latter leaves a lot of people who could testify that they turned in registrations that disappeared. Most voters are registered and stay that way. Voter non-registration as a suppression tactic is most useful against those that traditionally don't vote, or those that have never voted or recently moved (e.g., college kids).Would seem to favor Republicans.
+
+Fraudulent registration of voters
+
+* _Definition_: Register people who don't exist, are dead, or aren't planning on voting themselves.
+* _Class:_ voting fraud
+* _Difficulty:_ ridiculously easy
+* _Ratio_: medium-ish
+* _Effect:_ zero -- nothing happens until a fraudulent vote is entered
+* _Notes_: This is what the ACORN dustup is about. Not speaking one way or the other about ACORN, organizations that register voters have a tough time in that (a) they're required by law to pass along all registrations (see above) even if they know they're fakes, and (b) organizations willing to pay people to registering voters tend to be most interested in finding individuals traditionally undeserved in that area -- the homeless, the poor, illiterate etc. That means that the data you're going to get tends to be less that great. Note the zero effect: nothing to screw with the election happens until someone actually casts a fraudulent vote. Which leads us to...
+
+Fraudulent voting
+
+* _Definition_: Casting a vote you shouldn't be allowed to cast, usually while pretending to be someone else.
+* _Class_: voting fraud
+* _Dificulty: _pretty hard (note: requires voter registration fraud)
+* _Ratio:_ very small
+* _Effect_: pretty small
+* _Notes_: While some areas of the country are famous for voting fraud (I'm looking at you, Chicago), actually walking into a place and voting as someone else takes some serious balls. And with long lines expected this year, any one person, no matter how dedicated, isn't going to be able to vote that often. A different version of this is filing out people's absentee voting slips "for them" and has been around forever; this is a tactic I tend to associate with "machine" politics that tend to favor Democrats.
+
+After Hour Ballot stuffing
+
+* _Definition_: Placing votes "after hours" as done by an individual with no (human or technical) oversight, or by a conspiracy of people who are supposed to be overlooking each other.
+* _Class_: voting fraud
+* _Dificulty: _medium
+* _Ratio:_ large
+* _Effect_: medium-large
+* _Notes_: Again, first this requires some sort of voter registration fraud if you're going to do it in any serious numbers. Then you need ridiculously lax oversight of the balloting / counting process, which is not that hard to find, unfortunatley.
+
+"Losing" votes
+
+* _Definition_: Have ballot boxes take a detour to your basement or the dump
+* _Class_: voting fraud
+* _Dificulty: _pretty hard
+* _Ratio:_ very large
+* _Effect_: very large
+* _Notes_: Ah, a classic. As voters, we tend to group geographically -- Ann Arbor, for example, is almost devoid of Republicans. So, you let everyone vote, and then "disappear" the ballot boxes from Ann Arbor, while doing your best to make sure the Democrats don't do the same thing in predominantly Republican areas. This is only slightly easier than after hour ballot stuffing, but still hard. Payoff is huge, though.
+
+Voter misdirection
+
+* _Definition_: Give people bad information about when/how to vote
+* _Class_: voter suppression
+* _Dificulty: _easy
+* _Ratio:_ large
+* _Effect_: Depends on how good you are, doesn't it?
+* _Notes_: We're finally heading into the gray areas -- things that, depending on how you do them, likely aren't actually illegal. That makes them easier to do, because you don't have to worry about members of your conspiracy squealing. We're seeing a lot of this already this election, most notably in robo-calls telling people that they should vote on Wednesday, or that their polling place has changed, or whatnot. Mostly anonymous, very difficult to trace, and can be pretty effective if your database of friendly/unfriendly voters is good.
+
+Voter de-registration
+
+* _Definition_: Sue to get whole classes of people removed from the roles
+* _Class_: voter suppression
+* _Dificulty: _pretty hard
+* _Ratio:_ Gigundous
+* _Effect_: Very large
+* _Notes_: This has been all over the news, and for good reason. Anything that causes someone to have to cast a provisional ballot makes it a pain in the ass for that ballot to get counted. For lots of folks (esp. "working class" people who punch a clock), taking a couple hours off to go down to the courthouse and prove you're who you say you are is a non-starter. This is why everyone wants their people to vote early if they can -- it avoids anything that might screw with the voting process, like this or challenges.
+
+Profiled voter challenges
+
+* _Definition_: Challenge the votes of people that don't look like you
+* _Class_: voter suppression
+* _Dificulty: _pretty easy
+* _Ratio:_ large
+* _Effect_: depends on how good the poll workers are and the state laws
+* _Notes_: This is easy. You post someone at a polling station, and challenge anyone who looks like "the other guys" (because Black and Hispanic voters tend to go Democrat; identifiying Republicans on sight might be harder). Some states make this hard; others allow anyone at all to challenge anyone else and force them to use a provisional ballot.
+
+Break voting
+
+* _Definition_: Make voting so difficult or slow that people give up and go home
+* _Class_: voter suppression
+* _Dificulty: _varies
+* _Ratio:_ large
+* _Effect_: large
+* _Notes_: If I'm at a place with three mechanical voting machines and I stick a bunch of gum in one of them, rendering it useless, I've just made it a hell of a lot harder for people to vote. Less extreme examples would be challenging everyone who walks through the door, or having a poll worker who takes for freakin' ever (on purpose, I mean; nothing in general against our dedicated poll workers-- whose average age is 72, I heard).
+
+Cause bad weather
+
+I'm not sure how to go about this, but the little men in my head say flooding is a great way to keep people from the polls.

@@ -1,0 +1,74 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>May 2011 | Robot Librarian</title><meta name=description content><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><h1 class=page-title>May 2011 archive</h1><div class=post-list><article class=post-summary><h2 class=post-title><a href=/2011/05/using-sqlite3-from-jruby-without-activerecord-2/>Using SQLite3 from JRuby without ActiveRecord</a></h2><div class=post-meta><time datetime=2011-05-26>May 26, 2011</time>
+&#183;</div><div class=post-excerpt><div class=paragraph><p>I spent way too long asking my friend, The Internet, how to get a normal DBI connection to SQLIte3 using JRuby. Apparently, everyone except me is <a href=http://jruby-extras.rubyforge.org/activerecord-jdbc-adapter/>using ActiveRecord and/or Rails</a> and doesn’t <em>want</em> to just connect to the database.</p></div><div class=paragraph><p>But I do. Here’s how.</p></div><div class=paragraph><p>First, get the gems:</p></div><div class=listingblock><div class=content><a class=post-more href=/2011/05/using-sqlite3-from-jruby-without-activerecord-2/ hx-preload=mouseover><span style=display:inline-flex;align-items:center;gap:.4em;vertical-align:middle;font-weight:700><span style=transform:translateY(-.1em)>&xlarr;</span>more<span style=transform:translateY(-.1em)>&xrarr;</span></span></a></div></article><article class=post-summary><h2 class=post-title><a href=/2011/05/how-good-is-our-relevancy-ranking/>How good is our relevancy ranking?</a></h2><div class=post-meta><time datetime=2011-05-25>May 25, 2011</time>
+&#183;</div><div class=post-excerpt><div class=paragraph><p>For those of us that spend our days trying to tweak <a href=http://mirlyn.lib.umich.edu/>Mirlyn</a> to make it better, one of the most important — and, in many ways, most opaque — questions is, "How good is our relevancy ranking?"</p></div><div class=paragraph><p>Research from the UMich Library’s Usability Group (<a href=http://www.lib.umich.edu/files/services/usability/MirlynSearchSurvey_Feb2011.pdf>pdf; 600k</a>) points to the importance of relevancy ranking Â for both known-item searches and discovery, but mapping search terms to the "best" results involves crawling deep inside the searcher’s head to know what she’s looking for.</p></div><a class=post-more href=/2011/05/how-good-is-our-relevancy-ranking/ hx-preload=mouseover><span style=display:inline-flex;align-items:center;gap:.4em;vertical-align:middle;font-weight:700><span style=transform:translateY(-.1em)>&xlarr;</span>more<span style=transform:translateY(-.1em)>&xrarr;</span></span></a></div></article><article class=post-summary><h2 class=post-title><a href=/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/>Ruby gem library_stdnums goes to version 1.0</a></h2><div class=post-meta><time datetime=2011-05-06>May 6, 2011</time>
+&#183;</div><div class=post-excerpt><div class=paragraph><p>I just released another (this time pretty good) version of my gem for normalizing/validating library standard numbers, <code>library_stdnums</code> (<a href=https://github.com/billdueber/library_stdnums>github source</a> / <a href=http://rubydoc.info/github/billdueber/library_stdnums/master/frames>docs</a>).</p></div><div class=paragraph><p>The short version of the functions available:</p></div><div class=ulist><ul><li><p><strong>ISBN</strong>: get checkdigit, validate, convert isbn10 to/from isbn13, normalize (to 13-digit)</p></li><li><p><strong>ISSN</strong>: get checkdigit, validate, normalize</p></li><li><p><strong>LCCN</strong>: validate, normalize</p></li></ul></div><div class=paragraph><p>Validation of LCCNs doesn’t involve a checkdigit; I basically just normalize whatever is sent in and then see if the result is syntactically valid.</p></div><a class=post-more href=/2011/05/ruby-gem-library_stdnums-goes-to-version-1-0/ hx-preload=mouseover><span style=display:inline-flex;align-items:center;gap:.4em;vertical-align:middle;font-weight:700><span style=transform:translateY(-.1em)>&xlarr;</span>more<span style=transform:translateY(-.1em)>&xrarr;</span></span></a></div></article><article class=post-summary><h2 class=post-title><a href=/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/>A short ruby diversion: cost of flow control under Ruby</a></h2><div class=post-meta><time datetime=2011-05-03>May 3, 2011</time>
+&#183;</div><div class=post-excerpt><div class=paragraph><p>A couple days ago I decided to finally get back to working on <a href=https://github.com/billdueber/threach><code>threach</code></a> to try to deal with problems it had — essentially, it didn’t deal well with non-local exits due to calls to <code>break</code> or even something simple like a <code>NoMethodError</code>.</p></div><div class=paragraph><p>[BTW, I think I managed it. As near as I can tell, <code>threach</code> version 0.4 won’t deadlock anymore]</p></div><div class=paragraph><p>Along the way, while trying to figure out how threads affect the behavior of different non-local exits, I noticed that in some cases there was still work being done by one or more threads long after there was an exception raised.</p></div><a class=post-more href=/2011/05/a-short-ruby-diversion-cost-of-flow-control-under-ruby/ hx-preload=mouseover><span style=display:inline-flex;align-items:center;gap:.4em;vertical-align:middle;font-weight:700><span style=transform:translateY(-.1em)>&xlarr;</span>more<span style=transform:translateY(-.1em)>&xrarr;</span></span></a></div></article></div></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

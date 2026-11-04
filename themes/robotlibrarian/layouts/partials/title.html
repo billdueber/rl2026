@@ -1,0 +1,8 @@
+{{- /* Single source of truth for <title>, shared by the full page and the
+       htmx fragment (baseof.fragment.html) so boosted navigation updates the
+       tab title and therefore bookmarks. */ -}}
+{{- if .IsHome }}
+<title>{{ .Site.Title }} &ndash; {{ .Site.Params.tagline }}</title>
+{{- else }}
+<title>{{ .Title }} | {{ .Site.Title }}</title>
+{{- end }}

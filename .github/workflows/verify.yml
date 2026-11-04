@@ -1,0 +1,30 @@
+name: Verify Build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.164.0'
+
+      # Hugo spawns the asciidoctor binary, so it must be a plain gem install
+      # on PATH — a bundler binstub fails in the spawned child.
+      - name: Install Asciidoctor
+        run: gem install asciidoctor --no-document --version 2.0.26
+
+      - name: Generate month archive stubs
+        run: ruby bin/generate_month_archives.rb
+
+      - name: Build site
+        run: hugo --minify

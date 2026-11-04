@@ -1,0 +1,55 @@
+baseURL = 'https://robotlibrarian.billdueber.com/'
+locale = 'en-US'
+title = 'Robot Librarian'
+theme = 'robotlibrarian'
+
+[pagination]
+  pagerSize = 12
+  path = 'page'
+defaultContentLanguage = 'en'
+
+# htmx 4 can announce a targeted (partial) swap via HX-Request-Type.
+# Emit a bare fragment per page so .htaccess can serve it without a server.
+[outputs]
+  home     = ['html', 'rss', 'fragment']
+  section  = ['html', 'fragment']
+  taxonomy = ['html', 'fragment']
+  term     = ['html', 'fragment']
+  page     = ['html', 'fragment']
+
+[outputFormats.fragment]
+  mediaType = 'text/html'
+  baseName = 'frag'
+  isPlainText = false
+  rel = 'fragment'
+  notAlternative = true
+
+[params]
+  tagline = 'Disclaimer: I am neither a robot nor a librarian'
+
+[permalinks]
+  posts = '/:year/:month/:slug/'
+  archive = '/:year/:month/'
+
+[taxonomies]
+  tag = 'tags'
+
+[markup]
+  [markup.asciidocExt]
+    backend = 'html5'
+    failureLevel = 'fatal'
+    safeMode = 'unsafe'
+    workingFolderCurrent = true
+    preserveTabs = true
+
+[security]
+  [security.exec]
+    allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^git$', '^node$', '^postcss$', '^tailwindcss$', '^asciidoctor$']
+
+
+[sitemap]
+  changeFreq = ''
+  disable = false
+  filename = 'sitemap.xml'
+  priority = -1
+

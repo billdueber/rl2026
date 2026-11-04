@@ -1,0 +1,89 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Solr and boolean operators | Robot Librarian</title><meta name=description content="
+[Summary: ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!]
+
+
+What does Solr do, given the following query?
+
+
+
+  a OR b AND c
+
+
+
+I’ll give you three guesses, but you’ll get the first two wrong and won’t have any idea how to generate a third, so don’t spend too much time on it.
+
+
+Boolean algebra and operator precedence
+
+
+Anyone who’s had even a passing introduction to boolean alegebra knows that it specifies a strict order to how the operators are bound: NOT before AND before OR. So, one might expect the following grouping:
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Solr and boolean operators</h1><div class=post-content><div class=paragraph><p>[Summary: <strong>ALWAYS ALWAYS ALWAYS USE PARENTHESES TO GROUP BOOLEANS IN SOLR!!!</strong>]</p></div><div class=paragraph><p>What does Solr do, given the following query?</p></div><div class=listingblock><div class=content><pre>  a OR b AND c</pre></div></div><div class=paragraph><p>I’ll give you three guesses, but you’ll get the first two wrong and won’t have any idea how to generate a third, so don’t spend too much time on it.</p></div><div class=sect1><h2 id=_boolean_algebra_and_operator_precedence>Boolean algebra and operator precedence</h2><div class=sectionbody><div class=paragraph><p>Anyone who’s had even a passing introduction to boolean alegebra knows that it specifies a strict order to how the operators are bound: NOT before AND before OR. So, one might expect the following grouping:</p></div><div class=listingblock><div class=content><pre>   a OR (b AND c)</pre></div></div><div class=paragraph><p>That’s guess one. It’s not how Solr does it.</p></div></div></div><div class=sect1><h2 id=_left_to_right>Left to right?</h2><div class=sectionbody><div class=paragraph><p>Some naive students, and at least one programming language (Smalltalk), do a simple left-to-right evaluation. So you might go with:</p></div><div class=listingblock><div class=content><pre>   (a OR b) AND c</pre></div></div><div class=paragraph><p>Nope. Wrong again.</p></div></div></div><div class=sect1><h2 id=_so_whats_left>So what’s left???</h2><div class=sectionbody><div class=paragraph><p>Excellent question. I don’t know the code well enough to know what’s going on underneath, but here’s what we get under the lucene query parser.</p></div><div class=listingblock><div class=content><pre>     (b AND c)</pre></div></div><div class=paragraph><p>That’s right. The first term is thrown away.(More correctly, the first term is deemed "optional").</p></div></div></div><div class=sect1><h2 id=_do_you_let_your_users_put_andornot_in_their_queries>Do you let your users put AND/OR/NOT in their queries?</h2><div class=sectionbody><div class=paragraph><p>Hopefully, they don’t know any boolean algebra. If they do, hopefully they use parentheses, or you parse it out for them. And if not, well, they’re gonna be pretty damn confused.</p></div></div></div><div class=sect1><h2 id=_it_gets_weirder>It gets weirder</h2><div class=sectionbody><div class=paragraph><p>I populated a fresh solr (3.5) index with all possible subsets of the strings "curly", "larry", "moe", and "shemp" (not Joe. Don’t talk to me about Joe). There are 15 of them, from the one-item 'curly' to all four at once.</p></div><div class=paragraph><p>I wrote a script to run a set of queries against the index under both lucene and edismax to see what I would get. In all cases the default lucene operator is 'AND' and the edismax mm parameter is set to 100% (equivalent to "all required").</p></div><div class=listingblock><div class=content><pre>         Lucene                    EDismax   -------------------------------------------------------    1. curly AND larry         curly larry               curly larry         curly larry moe           curly larry moe         curly larry shemp         curly larry shemp         curly larry moe shemp     curly larry moe shemp    2. curly AND larry OR moe         curly                     curly larry         curly larry               curly larry moe         curly moe                 curly larry shemp         curly shemp               curly larry moe shemp         curly larry moe         curly larry shemp         curly moe shemp         curly larry moe shemp    3. curly OR larry AND moe         larry moe                 larry moe         curly larry moe           curly larry moe         larry moe shemp           larry moe shemp         curly larry moe shemp     curly larry moe shemp    4. curly AND larry OR moe AND shemp         curly moe shemp           curly larry moe shemp         curly larry moe shemp    5. moe AND shemp OR curly AND larry         curly larry moe           curly larry moe shemp         curly larry moe shemp</pre></div></div><div class=paragraph><p>Query 1 is as expected. Query 2 apparently reduces to just 'curly' under the lucene parser and 'curly AND larry' under edismax (and query 3 similarly reduces to the two AND’d words). Queries 4 and 5 are…​well, you can look at the debugQuery output to see what it gets, but not <strong>why</strong>. And then tell me how to explain it to a user.</p></div></div></div><div class=sect1><h2 id=_where_does_this_leave_us>Where does this leave us?</h2><div class=sectionbody><div class=paragraph><p>The good news is that both lucene and edismax behave predictably when you use parentheses for grouping. So do that.</p></div><div class=paragraph><p>I’m generally not one to complain about open-source software, at least partially because I don’t have the chops to do anything about it most of the time, but I don’t understand how this could seem OK to anyone. There are a couple lucene Jira tickets (<a href=https://issues.apache.org/jira/browse/LUCENE-167>Lucene-167</a> and <a href=https://issues.apache.org/jira/browse/LUCENE-1823>Lucene-1823</a>) and a <a href=http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html>2005 mailing list thread</a> denouncing the current behavior, but it persists.</p></div><div class=paragraph><p>Until the Solr/Lucene powers that be decide to tackle this, the rest of us will either have to write pre-parsers to make sure users get something sensible, or cripple our applications to disallow unrestricted boolean queries.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

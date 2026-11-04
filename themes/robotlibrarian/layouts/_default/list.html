@@ -1,0 +1,26 @@
+{{ define "main" }}
+  <h1 class="page-title">{{ if eq .Kind "home" }}Recent posts{{ else }}{{ .Title }}{{ end }}</h1>
+
+  {{ if and (eq .Kind "taxonomy") (eq .Type "tags") }}
+    <div class="tag-cloud">
+      {{ range .Data.Terms.Alphabetical }}
+        <a class="tag tag-cloud-item" href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <span class="tag-count">{{ .Count }}</span></a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <div class="post-list">
+      {{ $pag := .Paginate .Pages }}
+      {{ range $pag.Pages }}
+        <article class="post-summary">
+          <h2 class="post-title"><a href="{{ .RelPermalink }}" hx-preload="mouseover">{{ .Title }}</a></h2>
+          <div class="post-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+            {{ with .Params.tags }} &middot; {{ partial "tags.html" $ }}{{ end }}
+          </div>
+          {{ partial "snippet.html" . }}
+        </article>
+      {{ end }}
+    </div>
+    {{ template "partials/pagination.html" . }}
+  {{ end }}
+{{ end }}

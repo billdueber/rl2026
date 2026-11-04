@@ -1,0 +1,382 @@
+:root {
+  --bg: #f2f2f2;
+  --card: #ffffff;
+  --text: #333333;
+  --muted: #6b6b6b;
+  --accent: #1a5276;
+  --border: #e2e2e2;
+  --code-bg: #f6f8fa;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.site-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 1.4rem 0 1rem;
+}
+.header-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+.site-logo {
+  width: auto;
+  height: auto;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+.brand .site-title {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+}
+.brand .site-title a { color: #111; }
+.brand .tagline { margin: 0.15rem 0 0; color: var(--muted); font-size: 0.9rem; }
+.site-nav {
+  display: flex;
+  gap: 1.1rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.site-nav a { color: var(--muted); }
+.site-nav a:hover { color: var(--accent); text-decoration: none; }
+
+/* Main */
+.site-main { padding: 2.2rem 0 3rem; scroll-margin-top: 180px; }
+
+.post-list { display: flex; flex-direction: column; gap: 1.4rem; }
+.post-summary {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+.post-summary .post-title {
+  margin: 0 0 0.15rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.22rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.post-summary .post-title a { color: #111; }
+.post-meta { color: var(--muted); font-size: 0.84rem; font-family: "Montserrat", sans-serif; }
+.post-excerpt { margin: 0.7rem 0 0; color: #444; }
+
+.tag {
+  display: inline-block;
+  background: #eaf1f8;
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  font-size: 0.74rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  margin: 0 0.2rem 0.15rem 0;
+  white-space: nowrap;
+}
+.tag:hover { background: #d6e4f2; text-decoration: none; }
+
+/* Single post */
+.post {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.8rem 2.2rem;
+}
+.post .post-title {
+  margin: 0 0 0.25rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.3;
+  font-weight: 700;
+}
+.post-content h2 { margin-top: 1.7em; font-size: 1.5rem; }
+.post-content h3 { margin-top: 1.5em; font-size: 1.2rem; }
+.post-content h4 { margin-top: 1.4em; font-size: 1.05rem; }
+
+.post-content blockquote {
+  margin: 1.2rem 0;
+  padding: 0.05rem 1.2rem;
+  border-left: 4px solid var(--accent);
+  background: #f6f9fc;
+  color: #333;
+}
+.post-content pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.post-content code {
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 0.08em 0.3em;
+  font-size: 0.86em;
+}
+.post-content pre code { background: none; padding: 0; border: none; font-size: 0.82rem; }
+
+.post-content table {
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  width: 100%;
+  font-size: 0.92rem;
+}
+.post-content th,
+.post-content td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.post-content th { background: #f0f4f8; font-family: "Montserrat", sans-serif; font-weight: 600; }
+
+.post-content img { max-width: 100%; height: auto; border-radius: 4px; margin: 0.5rem 0; }
+
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.84rem;
+}
+.post-nav a { color: var(--accent); }
+
+/* List / taxonomy pages */
+.page-title { font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 1.6rem; margin-top: 0; }
+.tag-cloud {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  line-height: 1.9;
+}
+.tag-cloud-item { font-size: 0.8rem; }
+.tag-count { opacity: 0.7; }
+
+/* Pagination */
+.pagination {
+  margin: 1.8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.84rem;
+}
+.page-info { color: var(--muted); }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--card);
+  padding: 1.4rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.site-footer p { margin: 0.2rem 0; }
+.site-footer a { color: var(--accent); }
+
+@media (max-width: 600px) {
+  .post { padding: 1.3rem 1.2rem; }
+}
+
+/* Two-column layout: content + right-hand sidebar */
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 1120px;
+}
+.content-grid .site-main { min-width: 0; }
+
+/* Sidebar */
+.sidebar { display: flex; flex-direction: column; gap: 1.4rem; }
+.sidebar-widget {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+}
+.sidebar-widget h3 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li { margin: 0 0 0.5rem; font-size: 0.86rem; line-height: 1.4; }
+.sidebar a { color: var(--accent); }
+.widget-date { color: var(--muted); font-size: 0.76rem; white-space: nowrap; }
+.widget-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; line-height: 1.9; }
+
+@media (max-width: 820px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .header-inner { grid-template-columns: 1fr; gap: 0.75rem; }
+}
+
+/* Stock admonitions (NOTE / TIP / IMPORTANT / CAUTION / WARNING):
+   boxed callouts with the type label kept — theme has no default styling,
+   and the generic table rules would otherwise render them as data tables */
+.admonitionblock {
+  margin: 1.2rem 0;
+}
+.admonitionblock table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.admonitionblock td {
+  border: 0;
+  padding: 0;
+  vertical-align: top;
+}
+/* The type label lives in its own cell ("Note", "Tip", ... in default mode) */
+.admonitionblock td.icon {
+  width: 1%;
+  white-space: nowrap;
+  padding: 0.9rem 0.7rem 0.9rem 0.2rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+/* If :icons: font is ever enabled, style the glyph instead of the text label */
+.admonitionblock td.icon i {
+  font-style: normal;
+  font-size: 1.15em;
+  color: var(--accent);
+}
+/* The box: accent border + soft wash on the content cell */
+.admonitionblock td.content {
+  border-left: 4px solid var(--accent);
+  background: #f6f9fc;
+  padding: 0.85rem 1.1rem;
+}
+.admonitionblock td.content > :first-child { margin-top: 0; }
+.admonitionblock td.content > :last-child,
+.admonitionblock td.content p:last-child { margin-bottom: 0; }
+/* Semantic colors per type (muted, theme-friendly) */
+.admonitionblock.tip td.icon { color: #2e7d32; }
+.admonitionblock.tip td.content { border-left-color: #2e7d32; }
+.admonitionblock.important td.icon { color: #6a4fa3; }
+.admonitionblock.important td.content { border-left-color: #6a4fa3; }
+.admonitionblock.caution td.icon { color: #b26a00; }
+.admonitionblock.caution td.content { border-left-color: #b26a00; }
+.admonitionblock.warning td.icon { color: #c0392b; }
+.admonitionblock.warning td.content { border-left-color: #c0392b; }
+
+/* Pull-quote: admonition with the label stripped, floated left at 30% width */
+.admonitionblock.pullquote {
+  float: left;
+  width: 30%;
+  margin: 0.4em 1.5em 0.6em 0;
+  background: none;
+}
+/* Right-floated variant: [.pullquote.right] */
+.admonitionblock.pullquote.right {
+  float: right;
+  margin: 0.4em 0 0.6em 1.5em;
+}
+/* The label/icon lives in its own table cell; remove it entirely */
+.admonitionblock.pullquote td.icon { display: none; }
+/* Strip the generic post-table styling so the quote isn't boxed like data */
+.admonitionblock.pullquote table {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+}
+.admonitionblock.pullquote td.content {
+  border: 0;
+  border-left: 4px solid var(--accent);
+  background: #f6f9fc;
+  padding: 0.9em 1em;
+  font-size: 1.2em;
+  font-style: italic;
+  color: #444;
+  line-height: 1.5;
+}
+/* Next heading starts below the float instead of hugging it */
+.post-content h2,
+.post-content h3,
+.post-content h4 { clear: both; }
+
+@media (max-width: 600px) {
+  .admonitionblock.pullquote,
+  .admonitionblock.pullquote.right {
+    float: none;
+    width: 100%;
+    margin: 1rem 0;
+  }
+}
+
+/* htmx 4 view transitions (hx-boost="... transition:true").
+   The UA default is a 250ms cross-fade, which reads as lag at this page size. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 120ms;
+  }
+}

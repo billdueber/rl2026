@@ -1,0 +1,81 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Solr: Forcing items with all query terms to the top of a Solr search | Robot Librarian</title><meta name=description content="
+[Note: I’ve since made a better explanation of, and solution for, this problem.]
+
+
+Here at UMich, we’re apparently in the minority in that we have Mirlyn, our catalog discovery interface (a very hacked version of VuFind), set up to find records that match only a subset of the query terms.
+
+
+Put more succinctly: everyone else seem to join all terms with 'AND', whereas we do a DisMax variant on 'OR'.
+
+
+Now, I’m actually quite proud of how our searching behaves. Reference desk anecdotes and our statistics all point to the idea that people tend to find what they’re looking for. I invite you to try our current configuration out — and, of course, let me know if something feels off to you. We have control of our OPAC now, and can actually fix things.
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Solr: Forcing items with all query terms to the top of a Solr search</h1><div class=post-content><div class=paragraph><p>[Note: I’ve since made a <a href=http://robotlibrarian.billdueber.com/using-localparams-in-solr-sst-2/>better explanation of, and solution for, this problem</a>.]</p></div><div class=paragraph><p>Here at <a href=http://lib.umich.edu/>UMich</a>, we’re apparently in the minority in that we have <a href=http://mirlyn.lib.umich.edu/>Mirlyn</a>, our catalog discovery interface (a very hacked version of <a href=http://vufind.org/>VuFind</a>), set up to find records that match only a subset of the query terms.</p></div><div class=paragraph><p>Put more succinctly: everyone else seem to join all terms with 'AND', whereas we do a <a href=http://www.lucidimagination.com/blog/2010/05/23/whats-a-dismax/>DisMax</a> variant on 'OR'.</p></div><div class=paragraph><p>Now, I’m actually quite proud of how our searching behaves. Reference desk anecdotes and our statistics all point to the idea that people tend to find what they’re looking for. I invite you to try <a href=http://mirlyn.lib.umich.edu/>our current configuration</a> out — and, of course, let me know if something feels off to you. We have control of our OPAC now, and can actually fix things.</p></div><div class=sect1><h2 id=_the_problem_dismax_is_weird>The "problem": DisMax is weird</h2><div class=sectionbody><div class=paragraph><p>The DisMax algorithm is complex. Even if you ignore the fact that we weight some fields (title, author) much higher than others, a fundamental feature of DisMax is that it basically gives ranking based on the question, "What percentage of the words in the document match one of our query terms"?</p></div><div class=paragraph><p>Most of the time, that’s exactly what you want. In general, items that have all the keywords, and more of them, appear at the top of the search results.</p></div><div class=paragraph><p>But sometimes you can have just, say, two of your three search terms appearing like a rash all across a relatively short record, and it’ll pop to the top, appearing ahead of records that actually contain all three search terms. Or maybe three of four search terms appear in both title and author (highly-weighted fields) and the same thing happens.</p></div><div class=paragraph><p>And, yeah, it really happens.</p></div></div></div><div class=sect1><h2 id=_an_actual_real_life_example>An actual, real-life example</h2><div class=sectionbody><div class=paragraph><p>Searching for the three terms <a href="http://mirlyn.lib.umich.edu/Search/Home?inst=all&amp;lookfor=information+AND+architecture+AND+usability">information AND architecture AND usability</a>, explicitly requiring all three, gives 12 results.</p></div><div class=paragraph><p>The <a href="http://mirlyn.lib.umich.edu/Search/Home?inst=all&amp;lookfor=information+architecture+usability">equivalent DisMax search</a> (where only two of three need to be found) nets about 4300 results. Which is great — we’re casting a much wider net, with some pretty common words. That doesn’t matter so long as the most relevant results float to the top.</p></div><div class=paragraph><p>The kicker? The first time an item in the first set appears in the second is at record number <strong>62</strong>. Our user is more than three pages in before she even see a record that contains all three terms.</p></div><div class=paragraph><p>Again, most of the time, our current algorithm does really, really well in my opinion. But noticing this led to talk about artificially pushing all the "all terms are present" items to the top.</p></div></div></div><div class=sect1><h2 id=_pushing_records_that_contain_all_the_terms_to_the_top>Pushing records that contain all the terms to the top</h2><div class=sectionbody><div class=paragraph><p>So, I wanted to:</p></div><div class=ulist><ul><li><p>Push records with all search terms to the top, but</p></li><li><p>…​don’t otherwise change their scores. i.e., don’t otherwise re-order them in any way, 'cause I’m already happy with my ordering.</p></li></ul></div><div class=paragraph><p>It turns out to be harder than I initially thought. I fought with my code for a whole day, then asked for help, and <a href=http://www.lucidimagination.com/search/document/1f2e58ecc9c16a9c/function_query_to_boost_scores_by_a_constant_if_all_terms_are_present>help was provided</a>.</p></div><div class=paragraph><p>So, with special thanks to Jan HÃ¸ydahl for his solution, we get this, in Ruby psuedocode:</p></div><div class=paragraph><p>andedTerms = allMyTerms.join(' AND ') bf = map(query($qq),0,0,0,100000.0) # Add this value to the ranking score qq = "allFields:(#{andedTerms})" # Use this as the query</p></div></div></div><div class=sect1><h2 id=_add_bf_and_qq_to_your_solr_query>add bf and qq to your solr query</h2><div class=sectionbody><div class=paragraph><p>The <code>qq</code> is easy enough — it basically says that to get any relevancy score at all, the record must have all the terms in the <code>allFields</code> Solr field.</p></div><div class=paragraph><p>For the <code>map</code>, we want to say > If the record matches all the terms, give it an extra 100K points. If not, don’t.</p></div><div class=paragraph><p>The <code>map</code> takes 5 arguments:</p></div><div class=ulist><ul><li><p>An initial value. In this case, we’re getting the relevancy ranking score based on the <code>qq</code> query. Basically, items that don’t have all the terms will have a score of zero; items that <em>do</em> have all three terms will have something bigger than zero.</p></li><li><p>The beginning of range to compare to. In this case, 0.</p></li><li><p>The end of the range. Another zero, so basically, we’ll be seeing if our initial value is between 0 and 0, e.g., if it’s exactly 0.</p></li><li><p>The value to return if the initial value fits in the range — zero. So, if the records doesn’t have all the terms, return a 0.</p></li><li><p>The value to return if the initial value falls outside the given range. 100K — a random very-large number I picked.</p></li></ul></div></div></div><div class=sect1><h2 id=_and>And…​?</h2><div class=sectionbody><div class=paragraph><p>I just pushed this to our beta site, and folks are still looking at it, but so far, it looks awesome. I’ll do a little update post if/when it goes into production. And if it doesn’t, I’ll say why.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

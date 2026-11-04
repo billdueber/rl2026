@@ -1,0 +1,85 @@
+<!doctype html><html lang=en-US><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=htmx-config content='{"noSwap":[204,304,"4xx","5xx"]}'><title>Please: don't return your books | Robot Librarian</title><meta name=description content="
+So, I’m at code4lib 2013 right now, where side conversations and informal exchanges tend to be the most interesting part.
+
+
+Last night I had an conversation with the inimitable Michael B. Klein, and after complaining about faculty members that keep books out for decades at a time, we ended up asking a simple question:
+
+
+
+
+How much more shelving would we need if everyone returned their books?
+
+
+
+
+Assuming we could get them all checked in and such, well, where would we put them?
+"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel=stylesheet><link rel=stylesheet href=/css/style.css><script src=/js/htmx.min.js defer></script><script>(function(){var e=null;document.addEventListener("htmx:before:swap",function(){e={url:location.href,y:scrollY}}),document.addEventListener("htmx:after:swap",function(){if(!e)return;var t=e;e=null,requestAnimationFrame(function(){var e=document.querySelector(".site-main");e&&t.url===location.href&&scrollTo({top:t.y,behavior:"instant"})})})})()</script></head><body hx-boost:inherited="true transition:true" hx-target:inherited=.site-main hx-swap:inherited=outerMorph><header class=site-header><div class=header-inner><div class=brand><a class=brand-link href=/><img class=site-logo src=/images/robot_alpha.png alt width=29 height=33>
+<span class=brand-text><span class=site-title>Robot Librarian</span>
+<span class=tagline>Disclaimer: I am neither a robot nor a librarian</span></span></a></div><nav class=site-nav aria-label=Main><a href=/>Home</a>
+<a href=/about-bill/>About Bill</a></nav></div></header><div class=site-body><div class="container content-grid"><main class=site-main><article class=page><h1 class=page-title>Please: don't return your books</h1><div class=post-content><div class=paragraph><p>So, I’m at <a href=http://code4lib.org/conference/2013>code4lib 2013</a> right now, where side conversations and informal exchanges tend to be the most interesting part.</p></div><div class=paragraph><p>Last night I had an conversation with the inimitable <a href=https://twitter.com/mbklein>Michael B. Klein</a>, and after complaining about faculty members that keep books out for <em>decades</em> at a time, we ended up asking a simple question:</p></div><div class=quoteblock><blockquote><div class=paragraph><p>How much more shelving would we need if everyone returned their books?</p></div></blockquote></div><div class=paragraph><p>Assuming we could get them all checked in and such, well, where would we put them?</p></div><div class=paragraph><p>I’m looking at this in the simplest, most conservative way possible:</p></div><div class=ulist><ul><li><p>Assume they’re all paperbacks, so we don’t worry about how thick a cover is (cover width = 0)</p></li><li><p>Assume items for which we don’t have page count information are "average"</p></li></ul></div><div class=sect1><h2 id=_starting_data>Starting data</h2><div class=sectionbody><div class=paragraph><p>What’s my current situation at Michigan?</p></div><div class=ulist><ul><li><p>Total bibs: about 10M (but that includes a bunch of HathiTrust items and other electronic-only items that could never be checked out)</p></li><li><p>Total items checked out right now: 162,080</p></li></ul></div><div class=paragraph><p>The first problem I run into is that I don’t know how many pages are in a given book. Well, in theory I can look in MARC field 300$a, and it will tell me.</p></div></div></div><div class=sect1><h2 id=_finding_the_number_of_pages_in_a_book>Finding the number of pages in a book</h2><div class=sectionbody><div class=paragraph><p>I went through a recent dump of all our records and pulled out page counts from the 300 (those that matched the regular expression $$a\\d+\\s+[pP].).</p></div><div class=paragraph><p>Problem solved, right? Well, kind of</p></div><div class=ulist><ul><li><p>3,085,433 total bibs with page count data (about 30%)</p></li><li><p>40,872 checked out items with page count data (about 25%)</p></li></ul></div><div class=paragraph><p>OK, so I don’t have data for everything. Plus, some of those are multi-volume works that list the total page count, even though only a single volume may be checked out.</p></div><div class=paragraph><p>We’ll have to drop down into statistics:</p></div><div class=ulist><ul><li><p>Average number of pages in a checked-out item: 270</p></li><li><p>Median number of pages in a checked-out item: 244</p></li></ul></div><div class=paragraph><p>The median is lower, so we’ll go with that. Being conservative, remember?</p></div></div></div><div class=sect1><h2 id=_bringing_it_all_together>Bringing it all together</h2><div class=sectionbody><div class=paragraph><p>Obviously we need to make a lot of assumptions.</p></div><div class=ulist><ul><li><p>All paperbacks (== no space allowance for covers)</p></li><li><p>244 pages per item (the median of checked out items for which we have data)</p></li><li><p>Pages = 244 \* 162,080 = 39,547,520 pages</p></li></ul></div></div></div><div class=sect1><h2 id=_sowhats_the_damage>So…​what’s the damage?</h2><div class=sectionbody><div class=paragraph><p>But how to do the calculation?</p></div><div class=paragraph><p>It turns out that simply googling <a href="https://www.google.com/search?num=30&amp;hl=en&amp;safe=off&amp;tbo=d&amp;noj=1&amp;site=webhp&amp;source=hp&amp;q=book+spine+width+calculator&amp;oq=book+spine+widt">book spine width calculator</a> a few come up.</p></div><div class=paragraph><p>I picked one and input 39,547,520 pages and assumed 50lb paper (the lightest paper in the tool).</p></div><div class=paragraph><p><strong>Total width: 77,241.25 inches, or 6437 feet, or 1.22 miles</strong></p></div></div></div><div class=sect1><h2 id=_1_22_miles>1.22 miles???</h2><div class=sectionbody><div class=paragraph><p>Well, we had a lot of assumptions,but most of them were pretty conservative. And I have no idea if the book spine calculator is at all accurate.</p></div><div class=paragraph><p>But…​it’s gonna be a big number no matter what. Add in that many of them are hardcover, and this seems like a pretty good guess at a lower end.</p></div></div></div><div class=sect1><h2 id=_what_is_this_good_for_again>What is this good for again?</h2><div class=sectionbody><div class=paragraph><p>Oh, nothing at all. Just a little fun while I’m at code4lib.</p></div></div></div><div class=sect1><h2 id=_next_steps>Next steps</h2><div class=sectionbody><div class=paragraph><p>Well, the best next step would be to walk away. This is a huge waste of time.</p></div><div class=paragraph><p>But…​we could look in the 020s for a hint of whether it’s hardcover or paperback (which is <a href=http://robotlibrarian.billdueber.com/isbn-parenthetical-notes-bad-marc-data-1/>really hard</a>. And maybe try to figure out if multiple volumes of a multi-volume work are all checked out and take that into account.</p></div><div class=paragraph><p>But really: this is enough for me. Whether Michael wants to pursue it further on his own, well, that’s up to him.</p></div></div></div></div></article></main><aside class=sidebar hx-morph-skip aria-label=Sidebar><section class="sidebar-widget recent-posts"><h3>Recent posts</h3><ul><li><a href=/2026/10/eleven_years_and_change/>Eleven Years and Change</a>
+<span class=widget-date>Oct 2026</span></li><li><a href=/2015/02/reintroducing-traject/>Reintroducing Traject: Traject 2.0</a>
+<span class=widget-date>Feb 2015</span></li><li><a href=/2014/11/how_goodbad_is_marc_data_the_case_of_place-of-publication/>How good/bad is MARC data? The case of place-of-publication</a>
+<span class=widget-date>Nov 2014</span></li><li><a href=/2014/10/marc_serialization_revisited/>Ruby MARC serialization/deserialization revisited</a>
+<span class=widget-date>Oct 2014</span></li><li><a href=/2014/10/schemaless-solr-with-dynamicfield-and-copyfield/>Schemaless" solr with dynamicField and copyField</a>
+<span class=widget-date>Oct 2014</span></li></ul></section><section class="sidebar-widget widgets-tags"><h3>Tags</h3><div class=widget-tags><a class=tag href=/tags/old/>Old<span class=tag-count> 78</span></a>
+<a class=tag href=/tags/tutorial/>Tutorial<span class=tag-count> 23</span></a>
+<a class=tag href=/tags/marc/>Marc<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/ruby/>Ruby<span class=tag-count> 20</span></a>
+<a class=tag href=/tags/solr/>Solr<span class=tag-count> 17</span></a>
+<a class=tag href=/tags/announcement/>Announcement<span class=tag-count> 11</span></a>
+<a class=tag href=/tags/data-quality/>Data-Quality<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/discovery/>Discovery<span class=tag-count> 10</span></a>
+<a class=tag href=/tags/jruby/>Jruby<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/rant/>Rant<span class=tag-count> 9</span></a>
+<a class=tag href=/tags/serialization/>Serialization<span class=tag-count> 8</span></a>
+<a class=tag href=/tags/benchmark/>Benchmark<span class=tag-count> 7</span></a>
+<a class=tag href=/tags/cataloging/>Cataloging<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/vufind/>Vufind<span class=tag-count> 6</span></a>
+<a class=tag href=/tags/fun/>Fun<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/personal/>Personal<span class=tag-count> 5</span></a>
+<a class=tag href=/tags/apis/>Apis<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/code4lib/>Code4lib<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/e-resources/>E-Resources<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/standard-numbers/>Standard-Numbers<span class=tag-count> 4</span></a>
+<a class=tag href=/tags/callnumbers/>Callnumbers<span class=tag-count> 3</span></a>
+<a class=tag href=/tags/hathitrust/>Hathitrust<span class=tag-count> 3</span></a></div></section><section class="sidebar-widget archives"><h3>Archives</h3><ul><li><a href=/2026/10/>October 2026</a>
+<span class=widget-date>(1)</span></li><li><a href=/2015/02/>February 2015</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/11/>November 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2014/10/>October 2014</a>
+<span class=widget-date>(2)</span></li><li><a href=/2014/01/>January 2014</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/12/>December 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/10/>October 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/04/>April 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2013/02/>February 2013</a>
+<span class=widget-date>(1)</span></li><li><a href=/2012/03/>March 2012</a>
+<span class=widget-date>(4)</span></li><li><a href=/2012/02/>February 2012</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/12/>December 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/10/>October 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/07/>July 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2011/05/>May 2011</a>
+<span class=widget-date>(4)</span></li><li><a href=/2011/04/>April 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/02/>February 2011</a>
+<span class=widget-date>(2)</span></li><li><a href=/2011/01/>January 2011</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/11/>November 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/09/>September 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/08/>August 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2010/04/>April 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/03/>March 2010</a>
+<span class=widget-date>(3)</span></li><li><a href=/2010/02/>February 2010</a>
+<span class=widget-date>(4)</span></li><li><a href=/2010/01/>January 2010</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/12/>December 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/11/>November 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/10/>October 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/09/>September 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/08/>August 2009</a>
+<span class=widget-date>(5)</span></li><li><a href=/2009/05/>May 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2009/04/>April 2009</a>
+<span class=widget-date>(3)</span></li><li><a href=/2009/03/>March 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/02/>February 2009</a>
+<span class=widget-date>(2)</span></li><li><a href=/2009/01/>January 2009</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/12/>December 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/11/>November 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/10/>October 2008</a>
+<span class=widget-date>(1)</span></li><li><a href=/2008/07/>July 2008</a>
+<span class=widget-date>(2)</span></li><li><a href=/2008/05/>May 2008</a>
+<span class=widget-date>(5)</span></li></ul></section></aside></div></div><footer class=site-footer><div class=container><p>&copy; 2026 Robot Librarian &mdash; Disclaimer: I am neither a robot nor a librarian</p><p class=footer-note>Generated with <a href=https://gohugo.io/>Hugo</a> from a WordPress export.</p></div></footer></body></html>

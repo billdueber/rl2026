@@ -1,0 +1,35 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{{- /* htmx 4 swaps 4xx/5xx by default; restore htmx 2 semantics so a bad URL
+       leaves the reader where they are instead of morphing an error page in. */}}
+<meta name="htmx-config" content='{"noSwap":[204,304,"4xx","5xx"]}' />
+{{- partial "title.html" . }}
+<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .IsHome }}{{ .Site.Params.tagline }}{{ else }}{{ .Summary }}{{ end }}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}" />
+<script src="{{ "js/htmx.min.js" | relURL }}" defer></script>
+{{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" href="{{ .RelPermalink }}" />{{ end }}
+<script>
+  // Scroll-position memory for htmx boosted nav.
+  // Save position before each swap so Back can restore it after the refetch.
+  (function () {
+    var pending = null;
+    document.addEventListener('htmx:before:swap', function () {
+      pending = { url: location.href, y: scrollY };
+    });
+    document.addEventListener('htmx:after:swap', function () {
+      if (!pending) return;
+      var saved = pending; pending = null;
+      // Only restore on Back (history-restore requests).
+      // Forward nav is handled by htmx's scrollIntoView on .site-main.
+      requestAnimationFrame(function () {
+        var elt = document.querySelector('.site-main');
+        if (elt && saved.url === location.href) {
+          scrollTo({ top: saved.y, behavior: 'instant' });
+        }
+      });
+    });
+  })();
+</script>
