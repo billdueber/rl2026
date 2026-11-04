@@ -67,7 +67,11 @@ if ! ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel 2>/dev/null)"; then
 fi
 
 # Single-flight: a slow fetch must not overlap the next cron tick.
-LOCK="${TMPDIR:-/tmp}/rl2026-deploy.lock"
+#
+# Kept inside .git rather than $TMPDIR: cron and interactive shells routinely
+# disagree about TMPDIR, and two different lock paths means no lock at all.
+# .git is per-checkout, always writable, and never served.
+LOCK="$ROOT/.git/rl2026-deploy.lock"
 if [ -d "$LOCK" ]; then
   # Recover from a run that was killed before its trap fired.
   if [ -n "$(find "$LOCK" -maxdepth 0 -mmin +60 2>/dev/null)" ]; then
@@ -85,18 +89,21 @@ trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT
 BEFORE="$(git -C "$ROOT" rev-parse HEAD 2>/dev/null || echo none)"
 
 git -C "$ROOT" fetch --depth 1 --no-tags --force "$REMOTE" "$BRANCH"
+
+# Validate the incoming build BEFORE touching the served tree. A build that
+# produced no index.html is not one we want to serve, and reset --hard would
+# have already destroyed the working one by the time a post-check ran.
+if ! git -C "$ROOT" cat-file -e "FETCH_HEAD:public/index.html" 2>/dev/null; then
+  echo "error: fetched $BRANCH has no public/index.html; leaving the site untouched" >&2
+  exit 1
+fi
+
 git -C "$ROOT" reset --hard FETCH_HEAD --quiet
 # Drop anything untracked left behind (e.g. from an older branch layout).
 # Ignored files are kept, so a stray editor swap file is harmless either way.
 git -C "$ROOT" clean -fdq
 
 AFTER="$(git -C "$ROOT" rev-parse HEAD)"
-
-# A build that produced no index.html is not a build we want to serve.
-if [ ! -f "$ROOT/public/index.html" ]; then
-  echo "error: $ROOT/public/index.html missing after reset to $AFTER" >&2
-  exit 1
-fi
 
 if [ "$BEFORE" = "$AFTER" ]; then
   echo "up to date at ${AFTER:0:7}"
