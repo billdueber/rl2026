@@ -11,3 +11,4 @@ content/archive/
 
 # pi session data
 .pi/
+/vendor/bundle

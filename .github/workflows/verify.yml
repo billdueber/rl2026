@@ -22,5 +22,7 @@ jobs:
       - name: Generate month archive stubs
         run: bundle exec ruby bin/generate_month_archives.rb
 
+      # Hugo shells out to `asciidoctor`; bundler puts the bundled binstub on
+      # PATH. See build-and-publish.yml for the full explanation.
       - name: Build site
-        run: hugo --minify
+        run: bundle exec hugo --minify
