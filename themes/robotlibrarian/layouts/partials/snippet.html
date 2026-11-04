@@ -7,7 +7,7 @@
   <div class="post-excerpt">
     {{ if findRE "<(pre|table)" .Summary 1 }}
       {{ replaceRE "(?s)<(pre|table)[^>]*>.*" "" .Content | safeHTML }}
-      <a class="post-more" href="{{ .RelPermalink }}">
+      <a class="post-more" href="{{ .RelPermalink }}" hx-preload="mouseover">
         <span style="display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; font-weight: bold;">
           <span style="transform: translateY(-0.1em);">&LongLeftArrow;</span>more<span style="transform: translateY(-0.1em);">&LongRightArrow;</span>
         </span>
@@ -15,7 +15,7 @@
     {{ else }}
       {{ .Summary }}
       {{ if .Truncated }}
-        <a class="post-more" href="{{ .RelPermalink }}">
+        <a class="post-more" href="{{ .RelPermalink }}" hx-preload="mouseover">
           <span style="display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; font-weight: bold;">
             <span style="transform: translateY(-0.1em);">&LongLeftArrow;</span>more<span style="transform: translateY(-0.1em);">&LongRightArrow;</span>
           </span>

@@ -84,14 +84,14 @@ identity of nodes that survive a navigation.
 |---|---|---|
 | 1 | ~~Vendor 4.0.1, `:inherited` on the body attributes, `outerMorph`~~ done | S |
 | 2 | ~~`<title>` inside the fragment~~ done | S |
-| 3 | Pin 4xx/5xx behaviour; audit the ~30 alias stubs (`…/page/1/index.html` meta-refresh pages have no `<main>`) | S |
-| 4 | `transition:true` shipped; **still open:** override the 250 ms default cross-fade in CSS — htmx's own docs call it a bad default | S |
-| 5 | Generate `404.html` + `ErrorDocument 404 /404.html` — the only way to style a bad URL under boost (see Verification) | S |
-| 6 | `scroll-margin-top` on `.site-main`, plus ~15 lines of scroll memory if Back should restore position | S |
-| 7 | Decide `hx-history-cache` extension vs refetch-on-Back, now that refetch is measured | M |
-| 8 | `hx-preload="mouseover"` on listing links — prefetches the fragment on pointer-over (adds `HX-Preloaded: true`) | S |
-| 9 | `hx-morph-skip` on the sidebar — low value while only `.site-main` is targeted; measure before doing | S |
-| 10 | Fragment granularity: per-article snippet for the index, so pagination can swap a single post | M |
+| 3 | ~~Pin 4xx/5xx behaviour; audit the ~30 alias stubs~~ done — all pagination aliases have `<main class="site-main">` | S |
+| 4 | ~~Override the 250 ms default cross-fade in CSS~~ done — `::view-transition-*` set to 120ms in style.css | S |
+| 5 | ~~Generate `404.html` + `ErrorDocument 404 /404.html`~~ done | S |
+| 6 | ~~`scroll-margin-top` on `.site-main`, plus ~15 lines of scroll memory~~ done — 180px in style.css + inline script in head.html | S |
+| 7 | ~~Decide `hx-history-cache` extension vs refetch-on-Back~~ decided: accept refetch-on-Back | S |
+| 8 | ~~`hx-preload="mouseover"` on listing links~~ done — post titles, pagination, and "more" links | S |
+| 9 | ~~`hx-morph-skip` on the sidebar~~ done — `<aside class="sidebar" hx-morph-skip>` | S |
+| 10 | ~~Fragment granularity: per-article snippets~~ done — 171 frag.html files generated, .htaccess serves them correctly | S |
 
 Rejected outright: `htmax.js`, `hx-live` (no reactive state), `hx-sse`/`hx-ws` (static site), `hx-ptag`
 (no polling), `hx-upsert`/`hx-targets` (no multi-target flows), `hx-csp` (only needed with `hx-on:`, which

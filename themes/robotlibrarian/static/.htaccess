@@ -11,6 +11,10 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteCond %{REQUEST_FILENAME}/frag.html -f
 RewriteRule ^(.*?)/?$ $1/frag.html [L]
 
+# Serve 404.html for any URL that does not resolve, so boosted nav to a bad
+# link shows full site chrome instead of Apache's bare "Not Found".
+ErrorDocument 404 /404.html
+
 # Cache policy: fragments must not be outlived by the pages they come from.
 <FilesMatch "\.html$">
   <IfModule mod_headers.c>

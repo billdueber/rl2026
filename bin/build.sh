@@ -11,5 +11,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."   # hugo/
 
-ruby bin/generate_month_archives.rb
-mise exec -- hugo "$@"
+bundle install --quiet
+bundle exec ruby bin/generate_month_archives.rb
+
+# Default to --minify for production parity with CI.
+# Pass explicit args to override: ./bin/build.sh --gc
+if [ $# -eq 0 ]; then
+  mise exec -- hugo --minify
+else
+  mise exec -- hugo "$@"
+fi

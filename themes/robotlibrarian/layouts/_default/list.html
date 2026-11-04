@@ -12,7 +12,7 @@
       {{ $pag := .Paginate .Pages }}
       {{ range $pag.Pages }}
         <article class="post-summary">
-          <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          <h2 class="post-title"><a href="{{ .RelPermalink }}" hx-preload="mouseover">{{ .Title }}</a></h2>
           <div class="post-meta">
             <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
             {{ with .Params.tags }} &middot; {{ partial "tags.html" $ }}{{ end }}

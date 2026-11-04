@@ -11,3 +11,25 @@
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}" />
 <script src="{{ "js/htmx.min.js" | relURL }}" defer></script>
 {{ with .OutputFormats.Get "RSS" }}<link rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}" href="{{ .RelPermalink }}" />{{ end }}
+<script>
+  // Scroll-position memory for htmx boosted nav.
+  // Save position before each swap so Back can restore it after the refetch.
+  (function () {
+    var pending = null;
+    document.addEventListener('htmx:before:swap', function () {
+      pending = { url: location.href, y: scrollY };
+    });
+    document.addEventListener('htmx:after:swap', function () {
+      if (!pending) return;
+      var saved = pending; pending = null;
+      // Only restore on Back (history-restore requests).
+      // Forward nav is handled by htmx's scrollIntoView on .site-main.
+      requestAnimationFrame(function () {
+        var elt = document.querySelector('.site-main');
+        if (elt && saved.url === location.href) {
+          scrollTo({ top: saved.y, behavior: 'instant' });
+        }
+      });
+    });
+  })();
+</script>
