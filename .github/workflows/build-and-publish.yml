@@ -1,0 +1,65 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+# Never let two publishes race: each one force-pushes a single root commit.
+concurrency:
+  group: publish-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.164.0'
+
+      # Must run before Hugo so the /YYYY/MM/ permalinks resolve.
+      - name: Generate month archive stubs
+        run: bundle exec ruby bin/generate_month_archives.rb
+
+      - name: Build site
+        run: hugo --minify
+
+      # Publish the full tree — source *and* generated site — as a single
+      # force-pushed root commit on `build`.
+      #
+      # Why the full tree rather than just public/: the server clones `build`
+      # and symlinks its document root at ./public. That gives the deploy
+      # script a checkout it can locate itself from, keeps .git outside the
+      # served tree, and lets `git reset --hard` delete stale output (tracked
+      # files get removed; untracked ones would linger).
+      #
+      # Why force: history is regenerated from scratch each build. A normal
+      # commit history would add ~7 MB per build.
+      #
+      # Why `git add -f public`: .gitignore lists it, and gitignore still lists
+      # paths that are tracked — but it does block `git add` from staging them
+      # in the first place.
+      - name: Publish source + output to build branch
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout --orphan build-publish
+          git rm -rf --cached . --quiet
+          git add -A
+          git add -f public
+
+          git commit --quiet -m "build: ${GITHUB_SHA::7}"
+          git push --force origin build-publish:build
+
+          echo "published ${GITHUB_SHA::7} ($(git rev-parse --short HEAD))"

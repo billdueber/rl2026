@@ -19,7 +19,7 @@ jobs:
         with:
           hugo-version: '0.164.0'
 
-      - name: Generate month archives
+      - name: Generate month archive stubs
         run: bundle exec ruby bin/generate_month_archives.rb
 
       - name: Build site

@@ -1,5 +1,0 @@
----
-title: February 2012
-date: '2012-02-01'
-draft: false
----
